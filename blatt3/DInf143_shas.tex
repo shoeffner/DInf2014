@@ -32,7 +32,32 @@ In der Vorlesung wurde bereits gezeigt, dass reguläre Grammatiken in reguläre Au
 
 
 \section{Aufgabe 3.2}
+\subsection{Aufgabe 3.2 (a)}
+\begin{align*}
+Z_1 &\rightarrow\ 1\ |\ 1Z_2 \\
+Z_2 &\rightarrow\ 1\ |\ 1Z_2\ |\ 0Z_3 \\
+Z_3 &\rightarrow\ 1\ |\ 0Z_1
+%Z_4 &\rightarrow\ 
+\end{align*}
 
+\subsection{Aufgabe 3.2 (b)}
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2.5cm]
+  \node[initial,state]   (Z1)               {$Z_1$};
+  \node[state]           (Z2) [right of=Z1] {$Z_2$};
+  \node[state]           (Z3) [right of=Z2] {$Z_3$};
+  \node[state,accepting] (Ze) [below of=Z2] {$Z_{end}$};
+
+  \path (Z1) edge [bend right]           node {1} (Ze)
+             edge                        node {1} (Z2)
+        (Z2) edge                        node {1} (Ze)
+             edge [loop above]           node {1} (Z2)
+             edge                        node {0} (Z3)
+        (Z3) edge [bend left]            node {1} (Ze)
+             edge [above, bend right=70] node {0} (Z1)
+        ;
+\end{tikzpicture}
+\end{center}
 
 \section{Aufgabe 3.3}
 
@@ -41,6 +66,10 @@ In der Vorlesung wurde bereits gezeigt, dass reguläre Grammatiken in reguläre Au
 
 
 \section{Aufgabe 3.5}
+%\begin{figure}[h]
+%  \includegraphics[width=\textwidth]{crossword.png}
+%\end{figure}
+
 
 \section{Aufgabe 3.6}
 
