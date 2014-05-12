@@ -16,6 +16,7 @@
   \large{Sebastian Höffner, Andrea Suckro}
 \end{center}
 
+
 \section{Aufgabe 3.1}
 Sei $L \subseteq \Sigma^{*}$ eine endliche Sprache, d.h. eine Sprache mit endlicher Anzahl Wörtern $\omega \in L$ endlicher Länge. Dann können wir eine Grammatik definieren, die individuell alle Wörter aus $L$ generiert.
 \begin{align*}
@@ -59,7 +60,48 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
 \end{tikzpicture}
 \end{center}
 
+
 \section{Aufgabe 3.3}
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state,accepting] (Z1Z2)                               {$Z_1Z_2$};
+  \node[state]                   (Z2Z3)       [below of=Z1Z2]         {$Z_2Z_3$};
+  \node[state]                   (Z2Z3Z5)     [below of=Z2Z3]         {$Z_2Z_3Z_5$};
+  \node[state,accepting]         (Z2Z3Z4Z5Z6) [below of=Z2Z3Z5]       {$Z_2Z_3Z_4Z_5Z_6$};
+  \node[state]                   (Z3)         [right of=Z2Z3]         {$Z_3$};
+  \node[state]                   (Z3Z4)       [right of=Z1Z2]         {$Z_3Z_4$};
+  \node[state,accepting]         (Z3Z4Z5Z6)   [right of=Z2Z3Z5]       {$Z_3Z_4Z_5Z_6$};
+  \node[state,accepting]         (Z4Z5Z6)     [right of=Z3Z4Z5Z6]     {$Z_4Z_5Z_6$};
+  \node[state,accepting]         (Z4Z6)       [right of=Z3]           {$Z_4Z_6$};
+  \node[state]                   (Z5)         [right of=Z3Z4]         {$Z_5$};
+  \node[state,accepting]         (Z3Z4Z6)     [below right of=Z4Z5Z6] {$Z_3Z_4Z_6$};
+
+  \path (Z1Z2)       edge [] node {0} (Z3Z4)
+                     edge [] node {1} (Z2Z3)
+        (Z2Z3)       edge [] node {0} (Z3)
+                     edge [] node {1} (Z2Z3Z5)
+        (Z2Z3Z5)     edge [] node {0} (Z3Z4Z5Z6)
+                     edge [] node {1} (Z2Z3Z4Z5Z6)
+        (Z2Z3Z4Z5Z6) edge [bend right] node {0} (Z3Z4Z6)
+                     edge [loop left]  node {1} (Z2Z3Z4Z5Z6)
+        (Z3)         %edge [] node {0} ()
+                     edge [] node {1} (Z5)
+        (Z3Z4)       %edge [] node {0} ()
+                     edge [] node {1} (Z5)
+        (Z3Z4Z5Z6)   edge [] node {0} (Z4Z6)
+                     edge [] node {1} (Z4Z5Z6)
+        (Z4Z5Z6)     edge []           node {0} (Z3Z4Z6)
+                     edge [loop below] node {1} (Z4Z5Z6)
+        (Z4Z6)       %edge [] node {0} ()
+                     edge [bend left, pos=0.2] node {1} (Z5)
+        (Z5)         %edge [] node {0} (Z4Z6)
+                     %edge [] node {1} (Z4Z6)
+                     edge [bend left, pos=0.8] node {0, 1} (Z4Z6)
+        (Z3Z4Z6)     %edge [] node {0} ()
+                     edge [bend right] node {1} (Z5)
+        ;
+\end{tikzpicture}
+\end{center}
 
 
 \section{Aufgabe 3.4}
@@ -69,8 +111,16 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
 %\begin{figure}[h]
 %  \includegraphics[width=\textwidth]{crossword.png}
 %\end{figure}
+\begin{enumerate}
+	\item bbbbb
+  \item bcbca
+  \item bdda
+  \item adadc
+  \item bbaadd
+\end{enumerate}
 
 
 \section{Aufgabe 3.6}
+
 
 \end{document}
