@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew ]{inputenc}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tikzsymbols}
+\usepackage{lmodern}
+\usetikzlibrary{arrows,automata}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  \Large{Informatik D - Übungsblatt 3}
+
+  \large{Sebastian Höffner, Andrea Suckro}
+\end{center}
+
+\section{Aufgabe 3.1}
+Sei $L \subseteq \Sigma^{*}$ eine endliche Sprache, d.h. eine Sprache mit endlicher Anzahl Wörtern $\omega \in L$ endlicher Länge. Dann können wir eine Grammatik definieren, die individuell alle Wörter aus $L$ generiert.
+\begin{align*}
+S\ \rightarrow\ \omega_i\ |\ \omega_{i+1}\ |\ ...
+\end{align*}
+Diese Grammatik kann in eine reguläre Grammatik überführt werden, indem jedes Wort $\omega_i$ als Verkettung von Regeln dargestellt wird.
+\begin{align*}
+S\ &\rightarrow\ O_{i,0}\ |\ O_{i+1,0}\ |\ ...\\
+O_{i,0}\ &\rightarrow\ \omega_{i,0} O_{i,1} \\
+O_{i,1}\ &\rightarrow\ \omega_{i,1} O_{i,2} \\
+...
+\end{align*}
+In der Vorlesung wurde bereits gezeigt, dass reguläre Grammatiken in reguläre Ausdrücke und endliche Automaten überführt werden können, also ist die endliche Sprache ebenfalls regulär.
+
+
+\section{Aufgabe 3.2}
+
+
+\section{Aufgabe 3.3}
+
+
+\section{Aufgabe 3.4}
+
+
+\section{Aufgabe 3.5}
+
+
+\end{document}
