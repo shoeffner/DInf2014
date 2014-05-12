@@ -18,6 +18,7 @@
 \end{center}
 
 
+
 \section{Aufgabe 3.1}
 Sei $L \subseteq \Sigma^{*}$ eine endliche Sprache, d.h. eine Sprache mit endlicher Anzahl Wörtern $\omega \in L$ endlicher Länge. Dann können wir eine Grammatik definieren, die individuell alle Wörter aus $L$ generiert.
 \begin{align*}
@@ -31,6 +32,7 @@ O_{i,1}\ &\rightarrow\ \omega_{i,1} O_{i,2} \\
 ...
 \end{align*}
 In der Vorlesung wurde bereits gezeigt, dass reguläre Grammatiken in reguläre Ausdrücke und endliche Automaten überführt werden können, also ist die endliche Sprache ebenfalls regulär.
+
 
 
 \section{Aufgabe 3.2}
@@ -60,6 +62,7 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
         ;
 \end{tikzpicture}
 \end{center}
+
 
 
 \section{Aufgabe 3.3}
@@ -103,6 +106,7 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
         ;
 \end{tikzpicture}
 \end{center}
+
 
 
 \section{Aufgabe 3.4}
@@ -228,8 +232,6 @@ Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c
 
 
 
-
-
 \section{Aufgabe 3.5}
 %\begin{figure}[h]
 %  \includegraphics[width=\textwidth]{crossword.png}
@@ -243,7 +245,93 @@ Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c
 \end{enumerate}
 
 
+
 \section{Aufgabe 3.6}
+% leeren auslassen? ist das der richtige approach? oder ist die Formel anders gemeint?
+\begin{align*}
+k=&0:\\
+L_{i,j}^0&=\{\}\\
+k=&1:\\
+L_{1,1}^1&=\{\}\\
+L_{1,2}^1&=\{b|\delta(Z_1,b)=Z_2\}\\
+L_{1,3}^1&=\{a|\delta(Z_1,a)=Z_3\}\\
+L_{1,4}^1&=\{\}\\
+L_{2,1}^1&=\{\}\\
+L_{2,2}^1&=\{\}\\
+L_{2,3}^1&=\{\}\\
+L_{2,4}^1&=\{\}\\
+L_{3,1}^1&=\{\}\\
+L_{3,2}^1&=\{\}\\
+L_{3,3}^1&=\{a,b|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
+L_{3,4}^1&=\{c|\delta(Z_3,c)=Z_4\}\\
+L_{4,1}^1&=\{a|\delta(Z_4,a)=Z_1\}\\
+L_{4,2}^1&=\{\}\\
+L_{4,3}^1&=\{\}\\
+L_{4,4}^1&=\{\}
+\end{align*}
+\begin{align*}
+k=&2:\\
+L_{1,1}^2&=\{\}\\
+L_{1,2}^2&=\{\}\\
+L_{1,3}^2&=\{a|\delta(Z_1,a)=Z_3\}\\
+L_{1,4}^2&=\{ac|\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4\}\\
+L_{2,1}^2&=\{\}\\
+L_{2,2}^2&=\{\}\\
+L_{2,3}^2&=\{\}\\
+L_{2,4}^2&=\{\}\\
+L_{3,1}^2&=\{ca|\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
+L_{3,2}^2&=\{\}\\
+L_{3,3}^2&=\{aa,ab,ba,bb|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
+L_{3,4}^2&=\{ac,bc|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
+L_{4,1}^2&=\{\}\\
+L_{4,2}^2&=\{ab|\delta(Z_4,a)=Z_1,\delta(Z_1,b)=Z_2\}\\
+L_{4,3}^2&=\{aa|\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3\}\\
+L_{4,4}^2&=\{\}
+\end{align*}
+\begin{align*}
+k=&3:\\
+L_{1,1}^3&=\{aca|\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
+L_{1,2}^3&=\{\}\\
+L_{1,3}^3&=\{aaa,aab,aba,abb|\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
+L_{1,4}^3&=\{aac,abc|\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
+L_{2,1}^3&=\{\}\\
+L_{2,2}^3&=\{\}\\
+L_{2,3}^3&=\{\}\\
+L_{2,4}^3&=\{\}\\
+L_{3,1}^3&=\{aca,bca|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
+L_{3,2}^3&=\{cab|\delta(Z_1,b)=Z_2,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
+L_{3,3}^3&=\{aaa,aab,aba,abb,baa,bab,bba,bbb|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
+L_{3,4}^3&=\{aac,abc,bac,bbc|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
+L_{4,1}^3&=\{\}\\
+L_{4,2}^3&=\{\}\\
+L_{4,3}^3&=\{aaa,aab|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_1,a)=Z_3,\delta(Z_4,a)=Z_1\}\\
+L_{4,4}^3&=\{aac|\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4\}
+\end{align*}
+\begin{align*}
+k=&4:\\
+L_{1,1}^4&=\{aaca,abca|\\&\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
+L_{1,2}^4&=\{acab|\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1,\delta(Z_1,b)=Z_2\}\\
+L_{1,3}^4&=\{aaaa,aaab,aaba,aabb,abaa,abab,abba,abbb|\\&\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
+L_{1,4}^4&=\{aaac,aabc,abac,abbc|\\&\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
+L_{2,1}^4&=\{\}\\
+L_{2,2}^4&=\{\}\\
+L_{2,3}^4&=\{\}\\
+L_{2,4}^4&=\{\}\\
+L_{3,1}^4&=\{aaca,abca,baca,bbca|\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
+L_{3,2}^4&=\{acab,bcab|\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1,\delta(Z_1,b)=Z_2\}\\
+L_{3,3}^4&=\{aaaa,aaab,aaba,aabb,abaa,abab,abba,abbb,baaa,\\&baab,baba,babb,bbaa,bbab,bbba,bbbb\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
+L_{3,4}^4&=\{aaac,aabc,abac,abbc,baac,babc,bbac,bbbc|\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
+L_{4,1}^4&=\{aaca|\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4\}\\
+L_{4,2}^4&=\{\}\\
+L_{4,3}^4&=\{aaaa,aaab,aaba,aabb|\\&\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
+L_{4,4}^4&=\{aaac,aabc|\\&\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}
+\end{align*}
+
+I have no clue how the algorithm works, but this is a regex:
+\begin{align*}
+(b | (a(a|b)^*c a)^* a(a|b)^*c)
+\end{align*}
+
 
 
 \end{document}
