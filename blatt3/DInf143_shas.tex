@@ -5,6 +5,7 @@
 \usepackage{tikz}
 \usepackage{tikzsymbols}
 \usepackage{lmodern}
+\usepackage{xcolor}
 \usetikzlibrary{arrows,automata}
 \setlength\parindent{0pt}
 
@@ -105,6 +106,128 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
 
 
 \section{Aufgabe 3.4}
+Wir betrachten zuerst die äußerste Alternative: $($\colorbox{gray!25}{$(b|a)^*d$}$|$\colorbox{gray!25}{$c$}$)$. Unser NDEA bekommt also je einen $\epsilon$-Übergang zu $(b|a)^*d$ (beginnend bei $Z_2$) und $c$ (beginnend bei $Z_9$). Der Automat zu $c$ ist trivial:
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state]   (Z9)                {$Z_9$};
+  \node[state,accepting] (Z10) [right of=Z9] {$Z_{10}$};
+
+  \path (Z9) edge node {$c$} (Z10)
+        ;
+\end{tikzpicture}
+\end{center}
+
+Der Teilautomat $(b|a)^*d$ ist etwas komplizierter. Zuerst hat er erneut eine Alternative: $($\colorbox{gray!25}{$b$}$|$\colorbox{gray!25}{$a$}$)$. 
+Die Teilautomaten zu $b$ (beginnend bei $Z_3$) und $a$ (beginnend bei $Z_4$) sind wieder trivial:
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state]   (Z3)               {$Z_3$};
+  \node[state,accepting] (Z5) [right of=Z3] {$Z_5$};
+  \node[initial,state]   (Z4) [right of=Z5, node distance=4cm] {$Z_4$};
+  \node[state,accepting] (Z6) [right of=Z4] {$Z_6$};
+
+  \path (Z3) edge node {$b$} (Z5)
+        (Z4) edge node {$a$} (Z6)
+        ;
+\end{tikzpicture}
+\end{center}
+
+Um die Alternative $(b|a)$ darzustellen können wir diese beiden Teilautomaten mit $\epsilon$-Übergängen von Zustand $Z_2$ aus verknüpfen (dabei ändern sich die Start\-zu\-stän\-de):
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state]   (Z2)                     {$Z_2$};
+  \node[state]           (Z3) [above right of=Z2] {$Z_3$};
+  \node[state,accepting] (Z5) [above of=Z3]       {$Z_5$};
+  \node[state]           (Z4) [below right of=Z2] {$Z_4$};
+  \node[state,accepting] (Z6) [below of=Z4]       {$Z_6$};
+
+  \path (Z2) edge node {$\epsilon$} (Z3)
+             edge node {$\epsilon$} (Z4)
+        (Z3) edge node {$b$}        (Z5)
+        (Z4) edge node {$a$}        (Z6)
+        ;
+\end{tikzpicture}
+\end{center}
+
+Als nächstes können wir den Kleene-Stern dazu nehmen, um $(a|b)^*$ zu erhalten. Hierzu müssen wir den Automaten nur leicht erweitern und die Endzustände ändern:
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state,accepting] (Z2)                     {$Z_2$};
+  \node[state]                   (Z3) [above right of=Z2] {$Z_3$};
+  \node[state]                   (Z5) [above of=Z3]       {$Z_5$};
+  \node[state]                   (Z4) [below right of=Z2] {$Z_4$};
+  \node[state]                   (Z6) [below of=Z4]       {$Z_6$};
+
+  \path (Z2) edge [bend right] node {$\epsilon$} (Z3)
+             edge [bend left]  node {$\epsilon$} (Z4)
+        (Z3) edge              node {$b$}        (Z5)
+        (Z4) edge              node {$a$}        (Z6)
+        (Z5) edge [bend right] node {$\epsilon$} (Z2)
+        (Z6) edge [bend left]  node {$\epsilon$} (Z2)
+        ;
+\end{tikzpicture}
+\end{center}
+
+Die Verkettung $(a|b)^*d$ folgt als nächstes. Hierzu muss aus dem Endzustand des aktuellen Automaten ein $\epsilon$-Übergang zu einem weiteren trivialen Automaten, der $d$ akzeptiert, gezogen werden (und erneut der Endzustand verschoben werden).
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state]   (Z2)                     {$Z_2$};
+  \node[state]           (Z3) [above right of=Z2] {$Z_3$};
+  \node[state]           (Z5) [above of=Z3]       {$Z_5$};
+  \node[state]           (Z4) [below right of=Z2] {$Z_4$};
+  \node[state]           (Z6) [below of=Z4]       {$Z_6$};
+  \node[state]           (Z7) [below right of=Z3] {$Z_7$};
+  \node[state,accepting] (Z8) [right of=Z7]       {$Z_8$};
+
+  \path (Z2) edge [bend right] node {$\epsilon$} (Z3)
+             edge [bend left]  node {$\epsilon$} (Z4)
+        (Z3) edge              node {$b$}        (Z5)
+        (Z4) edge              node {$a$}        (Z6)
+        (Z5) edge [bend right] node {$\epsilon$} (Z2)
+        (Z6) edge [bend left]  node {$\epsilon$} (Z2)
+        (Z2) edge              node {$\epsilon$} (Z7)
+        (Z7) edge              node {$d$}        (Z8)
+        ;
+\end{tikzpicture}
+\end{center}
+
+Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c$, beginnend mit $Z_9$) erneut mit der Regel für Alternativen über Zustand $Z_1$ verknüpfen:
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state]   (Z1)                      {$Z_1$};
+  \node[state]           (Z2)  [right of=Z1]       {$Z_2$};
+  \node[state]           (Z3)  [above right of=Z2] {$Z_3$};
+  \node[state]           (Z5)  [above of=Z3]       {$Z_5$};
+  \node[state]           (Z4)  [below right of=Z2] {$Z_4$};
+  \node[state]           (Z6)  [below of=Z4]       {$Z_6$};
+  \node[state]           (Z7)  [below right of=Z3] {$Z_7$};
+  \node[state,accepting] (Z8)  [right of=Z7]       {$Z_8$};
+  \node[state]           (Z9)  [below of=Z1]       {$Z_9$};
+  \node[state,accepting] (Z10) [below of=Z9]       {$Z_{10}$};
+
+  \path (Z1) edge              node {$\epsilon$} (Z2)
+        (Z1) edge              node {$\epsilon$} (Z9)
+        (Z2) edge [bend right] node {$\epsilon$} (Z3)
+             edge [bend left]  node {$\epsilon$} (Z4)
+        (Z3) edge              node {$b$}        (Z5)
+        (Z4) edge              node {$a$}        (Z6)
+        (Z5) edge [bend right] node {$\epsilon$} (Z2)
+        (Z6) edge [bend left]  node {$\epsilon$} (Z2)
+        (Z2) edge              node {$\epsilon$} (Z7)
+        (Z7) edge              node {$d$}        (Z8)
+        (Z9) edge              node {$c$}        (Z10)
+        ;
+\end{tikzpicture}
+\end{center}
+
+
+
 
 
 \section{Aufgabe 3.5}
