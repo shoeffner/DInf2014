@@ -1,14 +1,15 @@
 \documentclass{article}
 \usepackage{amsmath, amssymb}
 \usepackage[T1]{fontenc}
-% removed the tree package, but included graphicx
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
 \usepackage{graphicx}
 
 \begin{document}
 
 \begin{center}
 \LARGE Informatik D Aufgabenblatt 1\\
-\small Andrea Suckro (945326)
+\small Andrea Suckro, Sebastian Höffner
 \end{center}
 \vspace{0.3cm}
 \normalsize
@@ -21,21 +22,21 @@ Sortierung der Funktionen nach $f_i\in\mathcal{O}(f_{i+1})$:
   \log(n) 
 < \sqrt{n}
 < \frac{n}{\sqrt{n}}
-< \frac{n}{log^2(n)}
-< \frac{n}{log(n)}
 < n^{0.99}
+< \frac{n}{\log(n)}
+< \frac{n}{\log^2(n)}
 < n                   
-< n^{1.01} \\
-< nlog(n) 
-< nlog^2(n)           
-< nlog(n^2)
+< n\log(n) \\
+< n\log(n^2)
+< n\log^2(n)           
+< n^{1.01}
 < 2^n 
 < 2^{n+1}
 < 2^{2n}
 \end{align*}
 
 \noindent Funktionen die auch in $\Theta(f_{i+1})$ liegen:\\ % moved ``liegen'' out of the math thing
-$\sqrt{n},\ 2^n$
+$\sqrt{n},\ n \log(n),\ 2^n$
 
 \section*{Aufgabe 1.2}
 
@@ -46,6 +47,8 @@ n^2+1000n &\leq cn^2 \\
 1000 &\leq n(c-1)\\
 1000 &\leq 1000n, \forall n\geq n_0
 \end{align*}
+
+Alternative: $n^2+1000n\leq n^2+1000n^2 = 1001 n^2 \leq cn^2$
 
 \noindent (b) Zeigen, dass $f_3 \in \mathcal{O}(f_4)$ liegt.
 \begin{align*}
@@ -79,7 +82,7 @@ L_{min}\setminus L_{max} &= \{aa\}
 \end{align*}
 
 \noindent (b) Komplement der Sprache. $\overline{L_{min}}$:
-$\left\{(b,c)^2(a,b,c)^i | i\geq 0,i\in \mathbb{N}\right\} $\\
+$\left\{\epsilon, a, b, c, (b,c)^2, (a,b,c)^i | i\geq 3,i\in \mathbb{N}\right\} $\\alternativ: $\{\epsilon\}\cup\{a,b,c\}\cup\{(b,c)^2\}\cup\Sigma^3\Sigma^*$\\
 (c) $(L_{min} \setminus L_{max})^*=\left\{(aa)^i | i\geq 0,i\in \mathbb{N} \right\}$
 
 \section*{Exercise 1.4}
@@ -97,8 +100,8 @@ Ich kodiere die  :) = (s)mile, :| = (n)eutral, :( = (f)rown.
 \begin{align*}
 S &\rightarrow\ sA\\
 A &\rightarrow\ sB\\
-B &\rightarrow\ sB\ |\ nB\ |\ fB\ |\ fE\\  %% added fb here
-E &\rightarrow\ f\ |\ sB\ |\ nB
+B &\rightarrow\ sB\ |\ nB\ |\ fB\ |\ fE\\
+E &\rightarrow\ f\ %|\ sB\ |\ nB
 \end{align*}
 
 \noindent (b) Grammatik f\"ur alle W\"orter mit mindestens drei mal nn.
@@ -118,7 +121,7 @@ S &\rightarrow\ sA\ |\ fS\ |\ nS\\
 A &\rightarrow\ sB\ |\ fS\ |\ nS\\
 B &\rightarrow\ fC\ |\ nC\\
 C &\rightarrow\ sD\ |\ fC\ |\ nC\\
-D &\rightarrow\ sE\ |\ fC\ |\ nC\\
+D &\rightarrow\ sE\ |\ fC\ |\ nC\ |\ s\\
 E &\rightarrow\ f\ |\ n\ |\ fF\ |\ nF\\
 F &\rightarrow\ s\ |\ f\ |\ n\ |\ fF\ |\ nF\ |\ sE
 \end{align*}
