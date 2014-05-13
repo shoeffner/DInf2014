@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{tikz}
 \usepackage{tikzsymbols}
@@ -147,24 +148,25 @@ Alternativ:
 \newpage
 \section{Aufgabe 2.4}
 
-%\textbf{Einfacher Automat}
-%
-%\begin{center}
-%\begin{tikzpicture}[->,auto, node distance=2cm]
-  %\node[initial,state,accepting](A)              {A};
-  %\node[state]                  (B) [below of=A] {B};
-  %\node[state]                  (C) [right of=A] {C};
-  %\node[state,accepting]        (D) [right of=C] {D};
-%
-  %\path (A) edge [bend left]  node {1}   (B)
-            %edge [bend left]  node {0}   (C)
-        %(B) edge [bend left]  node {1}   (A)
-        %(C) edge [bend left]  node {0}   (A)
-            %edge              node {1}   (D)
-        %(D) edge [loop below] node {0,1} (D)
-        %;
-%\end{tikzpicture}
-%\end{center}
+\textbf{Minimal gültiger Automat}
+
+\begin{center}
+\begin{tikzpicture}[->,auto, node distance=3cm]
+  \node[initial,state]   (A)              {};
+  \node[state]           (B) [below of=A] {};
+  \node[state]           (C) [right of=A] {};
+  \node[state,accepting] (D) [below of=C] {};
+
+  \path (A) edge [bend left]  node {1}      (B)
+            edge [bend left]  node {0}      (C)
+            edge [pos=0.8]    node {\#}     (D)
+        (B) edge [bend left]  node {1}      (A)
+        (C) edge [bend left]  node {0}      (A)
+            edge              node {1}      (D)
+        (D) edge [loop right] node {0,1,\#} (D)
+        ;
+\end{tikzpicture}
+\end{center}
 
 %\textbf{Garantiert gerade Anzahl Stellen}
 %
