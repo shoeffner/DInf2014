@@ -74,17 +74,15 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
   \node[state,accepting]         (Z2Z3Z4Z5Z6) [below of=Z2Z3Z5]       {$Z_2Z_3Z_4Z_5Z_6$};
   \node[state]                   (Z3)         [right of=Z2Z3]         {$Z_3$};
   \node[state]                   (Z3Z4)       [right of=Z1Z2]         {$Z_3Z_4$};
-  \node[state,accepting]         (Z3Z4Z5Z6)   [right of=Z2Z3Z5]       {$Z_3Z_4Z_5Z_6$};
-  \node[state,accepting]         (Z4Z5Z6)     [right of=Z3Z4Z5Z6]     {$Z_4Z_5Z_6$};
-  \node[state,accepting]         (Z4Z6)       [right of=Z3]           {$Z_4Z_6$};
-  \node[state]                   (Z5)         [right of=Z3Z4]         {$Z_5$};
-  \node[state,accepting]         (Z3Z4Z6)     [below right of=Z4Z5Z6] {$Z_3Z_4Z_6$};
+  \node[state]                   (Z5)         [right of=Z3]           {$Z_5$};
+  \node[state]                   (Z4Z6)       [above of=Z5]           {$Z_4Z_6$};
+  \node[state,accepting]         (Z3Z4Z6)     [below of=Z5]           {$Z_3Z_4Z_6$};
 
   \path (Z1Z2)       edge [] node {0} (Z3Z4)
                      edge [] node {1} (Z2Z3)
         (Z2Z3)       edge [] node {0} (Z3)
                      edge [] node {1} (Z2Z3Z5)
-        (Z2Z3Z5)     edge [] node {0} (Z3Z4Z5Z6)
+        (Z2Z3Z5)     edge [] node {0} (Z3Z4Z6)
                      edge [] node {1} (Z2Z3Z4Z5Z6)
         (Z2Z3Z4Z5Z6) edge [bend right] node {0} (Z3Z4Z6)
                      edge [loop left]  node {1} (Z2Z3Z4Z5Z6)
@@ -92,15 +90,10 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
                      edge [] node {1} (Z5)
         (Z3Z4)       %edge [] node {0} ()
                      edge [] node {1} (Z5)
-        (Z3Z4Z5Z6)   edge [] node {0} (Z4Z6)
-                     edge [] node {1} (Z4Z5Z6)
-        (Z4Z5Z6)     edge []           node {0} (Z3Z4Z6)
-                     edge [loop below] node {1} (Z4Z5Z6)
         (Z4Z6)       %edge [] node {0} ()
-                     edge [bend left, pos=0.2] node {1} (Z5)
-        (Z5)         %edge [] node {0} (Z4Z6)
-                     %edge [] node {1} (Z4Z6)
-                     edge [bend left, pos=0.8] node {0, 1} (Z4Z6)
+                     edge [bend right] node {1} (Z5)
+        (Z5)         edge [bend right] node {0} (Z3Z4Z6)
+                     edge [bend right] node {1} (Z4Z6)
         (Z3Z4Z6)     %edge [] node {0} ()
                      edge [bend right] node {1} (Z5)
         ;
@@ -247,90 +240,7 @@ Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c
 
 
 \section{Aufgabe 3.6}
-% leeren auslassen? ist das der richtige approach? oder ist die Formel anders gemeint?
-\begin{align*}
-k=&0:\\
-L_{i,j}^0&=\{\}\\
-k=&1:\\
-L_{1,1}^1&=\{\}\\
-L_{1,2}^1&=\{b|\delta(Z_1,b)=Z_2\}\\
-L_{1,3}^1&=\{a|\delta(Z_1,a)=Z_3\}\\
-L_{1,4}^1&=\{\}\\
-L_{2,1}^1&=\{\}\\
-L_{2,2}^1&=\{\}\\
-L_{2,3}^1&=\{\}\\
-L_{2,4}^1&=\{\}\\
-L_{3,1}^1&=\{\}\\
-L_{3,2}^1&=\{\}\\
-L_{3,3}^1&=\{a,b|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
-L_{3,4}^1&=\{c|\delta(Z_3,c)=Z_4\}\\
-L_{4,1}^1&=\{a|\delta(Z_4,a)=Z_1\}\\
-L_{4,2}^1&=\{\}\\
-L_{4,3}^1&=\{\}\\
-L_{4,4}^1&=\{\}
-\end{align*}
-\begin{align*}
-k=&2:\\
-L_{1,1}^2&=\{\}\\
-L_{1,2}^2&=\{\}\\
-L_{1,3}^2&=\{a|\delta(Z_1,a)=Z_3\}\\
-L_{1,4}^2&=\{ac|\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4\}\\
-L_{2,1}^2&=\{\}\\
-L_{2,2}^2&=\{\}\\
-L_{2,3}^2&=\{\}\\
-L_{2,4}^2&=\{\}\\
-L_{3,1}^2&=\{ca|\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
-L_{3,2}^2&=\{\}\\
-L_{3,3}^2&=\{aa,ab,ba,bb|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
-L_{3,4}^2&=\{ac,bc|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
-L_{4,1}^2&=\{\}\\
-L_{4,2}^2&=\{ab|\delta(Z_4,a)=Z_1,\delta(Z_1,b)=Z_2\}\\
-L_{4,3}^2&=\{aa|\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3\}\\
-L_{4,4}^2&=\{\}
-\end{align*}
-\begin{align*}
-k=&3:\\
-L_{1,1}^3&=\{aca|\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
-L_{1,2}^3&=\{\}\\
-L_{1,3}^3&=\{aaa,aab,aba,abb|\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
-L_{1,4}^3&=\{aac,abc|\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
-L_{2,1}^3&=\{\}\\
-L_{2,2}^3&=\{\}\\
-L_{2,3}^3&=\{\}\\
-L_{2,4}^3&=\{\}\\
-L_{3,1}^3&=\{aca,bca|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
-L_{3,2}^3&=\{cab|\delta(Z_1,b)=Z_2,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
-L_{3,3}^3&=\{aaa,aab,aba,abb,baa,bab,bba,bbb|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
-L_{3,4}^3&=\{aac,abc,bac,bbc|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
-L_{4,1}^3&=\{\}\\
-L_{4,2}^3&=\{\}\\
-L_{4,3}^3&=\{aaa,aab|\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_1,a)=Z_3,\delta(Z_4,a)=Z_1\}\\
-L_{4,4}^3&=\{aac|\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4\}
-\end{align*}
-\begin{align*}
-k=&4:\\
-L_{1,1}^4&=\{aaca,abca|\\&\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
-L_{1,2}^4&=\{acab|\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1,\delta(Z_1,b)=Z_2\}\\
-L_{1,3}^4&=\{aaaa,aaab,aaba,aabb,abaa,abab,abba,abbb|\\&\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
-L_{1,4}^4&=\{aaac,aabc,abac,abbc|\\&\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
-L_{2,1}^4&=\{\}\\
-L_{2,2}^4&=\{\}\\
-L_{2,3}^4&=\{\}\\
-L_{2,4}^4&=\{\}\\
-L_{3,1}^4&=\{aaca,abca,baca,bbca|\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1\}\\
-L_{3,2}^4&=\{acab,bcab|\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4,\delta(Z_4,a)=Z_1,\delta(Z_1,b)=Z_2\}\\
-L_{3,3}^4&=\{aaaa,aaab,aaba,aabb,abaa,abab,abba,abbb,baaa,\\&baab,baba,babb,bbaa,bbab,bbba,bbbb\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
-L_{3,4}^4&=\{aaac,aabc,abac,abbc,baac,babc,bbac,bbbc|\\&\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}\\
-L_{4,1}^4&=\{aaca|\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,c)=Z_4\}\\
-L_{4,2}^4&=\{\}\\
-L_{4,3}^4&=\{aaaa,aaab,aaba,aabb|\\&\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3\}\\
-L_{4,4}^4&=\{aaac,aabc|\\&\delta(Z_4,a)=Z_1,\delta(Z_1,a)=Z_3,\delta(Z_3,a)=Z_3,\delta(Z_3,b)=Z_3,\delta(Z_3,c)=Z_4\}
-\end{align*}
 
-I have no clue how the algorithm works, but this is a regex:
-\begin{align*}
-(b | (a(a|b)^*c a)^* a(a|b)^*c)
-\end{align*}
 
 
 
