@@ -4,6 +4,7 @@
 \usepackage{amsmath, amssymb}
 \usepackage{tikz}
 \usepackage{tikzsymbols}
+\usepackage{wasysym} %for the notes
 \usepackage{lmodern}
 \usepackage{xcolor}
 \usetikzlibrary{arrows,automata}
@@ -51,6 +52,17 @@ Automat zur Addition zweier Binärzahlen.
 \section*{Aufgabe 4.2}
 
 \section*{Aufgabe 4.3}
+\subsection*{a)}
+Wir nehmen an $L_1=\left\{\eighthnote^i\halfnote^{2i} | i \geq 0\right\}$ sei regulär, damit gelte für $L_1$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\eighthnote^n\halfnote^{2n} \in L_1$.
+Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
+\begin{align}
+|v| = l \geq 1\\
+|uv| \leq n\\
+\eighthnote^{n-l}\halfnote^{2n} \notin L_1
+\end{align}
+$\eighthnote^{n-l}\halfnote^{2n}$ kann nicht in $L_1$ liegen, da $2(n-l) = 2n$ nur gilt wenn $l=0$ ist, was allerdings nach (1) nicht erfüllt ist. $L_1$ ist somit nicht regulär.
+
+\subsection*{b)}
 
 \section*{Aufgabe 4.4}
 

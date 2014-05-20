@@ -1,0 +1,83 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{tikzsymbols}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usetikzlibrary{arrows,automata}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  \Large{Informatik D - Übungsblatt 4}
+
+  \large{Sebastian Höffner, Andrea Suckro}
+\end{center}
+
+
+
+\section*{Aufgabe 4.1}
+<<<<<<< HEAD
+Automat zur Addition zweier bin\"arer Zahlen.
+=======
+Automat zur Addition zweier Binärzahlen.
+>>>>>>> e253e3f5f73f50d3dc4bd87779520e75a6983494
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state]   (Z1)               {$Z_1$};
+  \node[state]           (Z2) [right of=Z1] {$Z_2$};
+  \node[state]           (Z3) [right of=Z2] {$Z_3$};
+	\node[state]           (Z4) [right of=Z3] {$Z_4$};
+<<<<<<< HEAD
+	\node[state]           (Z5) [right of=Z4] {$Z_5$};
+  \node[state,accepting] (Z6) [below of=Z4] {$Z_6$};
+
+  \path (Z1) edge [bend left]            node {$1/\epsilon$} (Z3)
+             edge 						           node {$\#/\epsilon$}(Z6)
+						 edge [bend left]            node {$0/\epsilon$} (Z2)
+        (Z2) edge [bend left]            node {$0/0,1/1$}    (Z1)
+        (Z3) edge [bend left]            node {$0/1$}        (Z1)
+             edge [bend left] 					 node {$1/0$}        (Z4)
+				(Z4) edge [bend left]						 node {$1/\epsilon$} (Z5)
+						 edge												 node {$\#/1$}			 (Z6)
+				(Z5) edge [bend left]					   node {$0/0,1/1$}    (Z4)
+=======
+	\node[state]           (Z5) [below of=Z1] {$Z_5$};
+	\node[state]           (Z6) [below of=Z2] {$Z_6$};
+  \node[state,accepting] (Z7) [above of=Z2] {$Z_7$};
+
+  \path (Z1) edge [bend left, pos=0.7] node {$0/\epsilon$} (Z5)
+						 edge [bend left] node {$1/\epsilon$} (Z2)
+             edge             node {$\#/\epsilon$}(Z7)
+        (Z2) edge [bend left, pos=0.3] node {$0/1$}        (Z1)
+             edge             node {$1/1$}        (Z3)
+        (Z3) edge [bend left] node {$0/\epsilon$} (Z6)
+             edge [bend left] node {$1/\epsilon$} (Z4)
+             edge             node {$\#/1$}       (Z7)
+				(Z4) edge [bend left]	node {$0/1, 1/1$}   (Z3)
+				(Z5) edge [bend left]	node {$0/0, 1/1$}   (Z1)
+        (Z6) edge [pos=0.2]            node {$0/1$}        (Z1)
+             edge [bend left, pos=0.2] node {$1/1$}        (Z3)
+>>>>>>> e253e3f5f73f50d3dc4bd87779520e75a6983494
+        ;
+\end{tikzpicture}
+\end{center}
+
+
+\section*{Aufgabe 4.2}
+
+\section*{Aufgabe 4.3}
+
+\section*{Aufgabe 4.4}
+
+\section*{Aufgabe 4.5}
+
+\section*{Aufgabe 4.6}
+
+
+
+
+\end{document}
