@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage[T1]{fontenc}
-\usepackage[ansinew ]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{tikz}
 \usepackage{tikzsymbols}
@@ -12,39 +12,54 @@
 \begin{document}
 
 \begin{center}
-  \Large{Informatik D - Übungsblatt 3}
+  \Large{Informatik D - Ãœbungsblatt 3}
 
-  \large{Sebastian Höffner, Andrea Suckro}
+  \large{Sebastian HÃ¶ffner, Andrea Suckro}
 \end{center}
 
 
 
-\section{Aufgabe 3.1}
-Sei $L \subseteq \Sigma^{*}$ eine endliche Sprache, d.h. eine Sprache mit endlicher Anzahl Wörtern $\omega \in L$ endlicher Länge. Dann können wir eine Grammatik definieren, die individuell alle Wörter aus $L$ generiert.
+\section*{Aufgabe 3.1}
+\textbf{RegulÃ¤rer Ausdruck:}
+
+Sei $L \subseteq \Sigma^{*}$ eine endliche Sprache, d.h. eine Sprache mit endlicher Anzahl WÃ¶rtern $\omega \in L$ endlicher LÃ¤nge. Dann kÃ¶nnen wir einen regulÃ¤ren Ausdruck definieren, der individuell alle WÃ¶rter aus $L$ generiert.
+\begin{align*}
+\left(\omega_i\ |\ \omega_{i+1}\ |\ ...\ |\ \omega_n \right)
+\end{align*}
+
+\textbf{RegulÃ¤re Grammatik:}
+
+Sei $L \subseteq \Sigma^{*}$ eine endliche Sprache, d.h. eine Sprache mit endlicher Anzahl WÃ¶rtern $\omega \in L$ endlicher LÃ¤nge. Dann kÃ¶nnen wir eine Grammatik definieren, die individuell alle WÃ¶rter aus $L$ generiert.
 \begin{align*}
 S\ \rightarrow\ \omega_i\ |\ \omega_{i+1}\ |\ ...
 \end{align*}
-Diese Grammatik kann in eine reguläre Grammatik überführt werden, indem jedes Wort $\omega_i$ als Verkettung von Regeln dargestellt wird.
+Diese Grammatik kann in eine regulÃ¤re Grammatik Ã¼berfÃ¼hrt werden, indem jedes Wort $\omega_i$ als Verkettung von Regeln dargestellt wird.
 \begin{align*}
 S\ &\rightarrow\ O_{i,0}\ |\ O_{i+1,0}\ |\ ...\\
 O_{i,0}\ &\rightarrow\ \omega_{i,0} O_{i,1} \\
 O_{i,1}\ &\rightarrow\ \omega_{i,1} O_{i,2} \\
 ...
 \end{align*}
-In der Vorlesung wurde bereits gezeigt, dass reguläre Grammatiken in reguläre Ausdrücke und endliche Automaten überführt werden können, also ist die endliche Sprache ebenfalls regulär.
 
 
-
-\section{Aufgabe 3.2}
-\subsection{Aufgabe 3.2 (a)}
+\section*{Aufgabe 3.2}
+\subsection*{Aufgabe 3.2 (a)}
 \begin{align*}
 Z_1 &\rightarrow\ 1\ |\ 1Z_2 \\
 Z_2 &\rightarrow\ 1\ |\ 1Z_2\ |\ 0Z_3 \\
 Z_3 &\rightarrow\ 1\ |\ 0Z_1
-%Z_4 &\rightarrow\ 
 \end{align*}
 
-\subsection{Aufgabe 3.2 (b)}
+Alternative um $Z_4$ zu berÃ¼cksichtigen:
+\begin{align*}
+Z_1 &\rightarrow\ 1\ |\ 1Z_2 \\
+Z_2 &\rightarrow\ 1\ |\ 1Z_2\ |\ 0Z_3 \\
+Z_3 &\rightarrow\ 1\ |\ 0Z_1\ |\ 1Z_4 \\
+Z_4 &\rightarrow\ 0Z_4\ |\ 1Z_4
+\end{align*}
+
+
+\subsection*{Aufgabe 3.2 (b)}
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2.5cm]
   \node[initial,state]   (Z1)               {$Z_1$};
@@ -65,7 +80,7 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
 
 
 
-\section{Aufgabe 3.3}
+\section*{Aufgabe 3.3}
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=3cm]
   \node[initial,state,accepting] (Z1Z2)                               {$Z_1Z_2$};
@@ -102,8 +117,8 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
 
 
 
-\section{Aufgabe 3.4}
-Wir betrachten zuerst die äußerste Alternative: $($\colorbox{gray!25}{$(b|a)^*d$}$|$\colorbox{gray!25}{$c$}$)$. Unser NDEA bekommt also je einen $\epsilon$-Übergang zu $(b|a)^*d$ (beginnend bei $Z_2$) und $c$ (beginnend bei $Z_9$). Der Automat zu $c$ ist trivial:
+\section*{Aufgabe 3.4}
+Wir betrachten zuerst die Ã¤uÃŸerste Alternative: $($\colorbox{gray!25}{$(b|a)^*d$}$|$\colorbox{gray!25}{$c$}$)$. Unser NDEA bekommt also je einen $\epsilon$-Ãœbergang zu $(b|a)^*d$ (beginnend bei $Z_2$) und $c$ (beginnend bei $Z_9$). Der Automat zu $c$ ist trivial:
 
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2cm]
@@ -131,7 +146,7 @@ Die Teilautomaten zu $b$ (beginnend bei $Z_3$) und $a$ (beginnend bei $Z_4$) sin
 \end{tikzpicture}
 \end{center}
 
-Um die Alternative $(b|a)$ darzustellen können wir diese beiden Teilautomaten mit $\epsilon$-Übergängen von Zustand $Z_2$ aus verknüpfen (dabei ändern sich die Start\-zu\-stän\-de):
+Um die Alternative $(b|a)$ darzustellen kÃ¶nnen wir diese beiden Teilautomaten mit $\epsilon$-ÃœbergÃ¤ngen von Zustand $Z_2$ aus verknÃ¼pfen (dabei Ã¤ndern sich die Start\-zu\-stÃ¤n\-de):
 
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2cm]
@@ -149,7 +164,7 @@ Um die Alternative $(b|a)$ darzustellen können wir diese beiden Teilautomaten mi
 \end{tikzpicture}
 \end{center}
 
-Als nächstes können wir den Kleene-Stern dazu nehmen, um $(a|b)^*$ zu erhalten. Hierzu müssen wir den Automaten nur leicht erweitern und die Endzustände ändern:
+Als nÃ¤chstes kÃ¶nnen wir den Kleene-Stern dazu nehmen, um $(a|b)^*$ zu erhalten. Hierzu mÃ¼ssen wir den Automaten nur leicht erweitern und die EndzustÃ¤nde Ã¤ndern:
 
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2cm]
@@ -171,7 +186,7 @@ Als nächstes können wir den Kleene-Stern dazu nehmen, um $(a|b)^*$ zu erhalten. 
 \end{tikzpicture}
 \end{center}
 
-Die Verkettung $(a|b)^*d$ folgt als nächstes. Hierzu muss aus dem Endzustand des aktuellen Automaten ein $\epsilon$-Übergang zu einem weiteren trivialen Automaten, der $d$ akzeptiert, gezogen werden (und erneut der Endzustand verschoben werden).
+Die Verkettung $(a|b)^*d$ folgt als nÃ¤chstes. Hierzu muss aus dem Endzustand des aktuellen Automaten ein $\epsilon$-Ãœbergang zu einem weiteren trivialen Automaten, der $d$ akzeptiert, gezogen werden (und erneut der Endzustand verschoben werden).
 
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2cm]
@@ -197,7 +212,7 @@ Die Verkettung $(a|b)^*d$ folgt als nächstes. Hierzu muss aus dem Endzustand des
 \end{tikzpicture}
 \end{center}
 
-Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c$, beginnend mit $Z_9$) erneut mit der Regel für Alternativen über Zustand $Z_0$ verknüpfen:
+Als letzten Schritt kÃ¶nnen wir diesen Automaten und den Automaten vom Beginn ($c$, beginnend mit $Z_9$) erneut mit der Regel fÃ¼r Alternativen Ã¼ber Zustand $Z_0$ verknÃ¼pfen:
 
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2cm]
@@ -231,7 +246,7 @@ Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c
 
 
 
-\section{Aufgabe 3.5}
+\section*{Aufgabe 3.5}
 %\begin{figure}[h]
 %  \includegraphics[width=\textwidth]{crossword.png}
 %\end{figure}
@@ -243,43 +258,44 @@ Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c
   \item bbaadd
 \end{enumerate}
 
+RegulÃ¤re AusdrÃ¼cke:
+\begin{enumerate}
+	\item $b^+$
+  \item $(bc)^*a$
+  \item $c^*b^*dda^*$
+  \item $b^*(ad)^+c^*$
+  \item $(aa|bb|cc)(aa|bb|cc)(bd|d)^*$
+\end{enumerate}
 
 
-\section{Aufgabe 3.6}
-\subsection*{Hilfssubstitutionen und -funktionen}
+
+\section*{Aufgabe 3.6}
+\subsection**{Hilfssubstitutionen und -funktionen}
 \begin{align*}
 x:&=\epsilon|a|b \\
 &\\
-aa^* &= a+ \\
-a|b+a &= b^*a \\
+aa^* &= a^+ \\
+a|b^+a &= b^*a \\
 a|b &= b|a \\
 a|aa^*a &= a+ \\
 a|ab^* &= ab^*\\
-a|ab^*b &= a|ab+ = ab^*\\
-\epsilon|a+ &= a*\\
+a|ab^*b &= a|ab^+ = ab^*\\
+\epsilon|a^+ &= a*\\
 xx^* &= x^* \mbox{ ($\epsilon \in x$)} \\
-x+ &= x^* \mbox{ ($\epsilon \in x$)}
+x^+ &= x^* \mbox{ ($\epsilon \in x$)}
 \end{align*}
 
 
-\subsection*{k=0}
+\subsection**{k=0}
 \begin{align*}
-\alpha^0_{1,1} &= \epsilon \\
-\alpha^0_{1,2} &= b \\
-\alpha^0_{1,3} &= a \\
-\alpha^0_{1,4} &= \emptyset \\
-\alpha^0_{2,1} &= \emptyset \\
-\alpha^0_{2,2} &= \epsilon \\
-\alpha^0_{2,3} &= \emptyset \\
-\alpha^0_{2,4} &= \emptyset \\
-\alpha^0_{3,1} &= \emptyset \\
-\alpha^0_{3,2} &= \emptyset \\
-\alpha^0_{3,3} &= \epsilon|a|b = x\\
-\alpha^0_{3,4} &= c \\
-\alpha^0_{4,1} &= a\\
-\alpha^0_{4,2} &= \emptyset \\
-\alpha^0_{4,3} &= \emptyset \\
-\alpha^0_{4,4} &= \epsilon
+\alpha^0_{1,1} &= \epsilon         & \alpha^0_{1,2} &= b \\
+\alpha^0_{1,3} &= a                & \alpha^0_{1,4} &= \emptyset \\
+\alpha^0_{2,1} &= \emptyset        & \alpha^0_{2,2} &= \epsilon \\
+\alpha^0_{2,3} &= \emptyset        & \alpha^0_{2,4} &= \emptyset \\
+\alpha^0_{3,1} &= \emptyset        & \alpha^0_{3,2} &= \emptyset \\
+\alpha^0_{3,3} &= \epsilon|a|b = x & \alpha^0_{3,4} &= c \\
+\alpha^0_{4,1} &= a                & \alpha^0_{4,2} &= \emptyset \\
+\alpha^0_{4,3} &= \emptyset        & \alpha^0_{4,4} &= \epsilon
 \end{align*}
 
 \begin{center}
@@ -293,7 +309,7 @@ $\delta$ & 1 & 2 & 3 & 4 \\
 \end{tabular}
 \end{center}
 
-\subsection*{k=1}
+\subsection**{k=1}
 \begin{align*}
 \alpha^1_{1,1} &= \left(\alpha^0_{1,1}|\alpha^0_{1,1}\left(\alpha^0_{1,1}\right)^*\alpha^0_{1,1}\right) = \left(\epsilon|\epsilon\left(\epsilon\right)^*\epsilon\right) = \epsilon \\
 \alpha^1_{1,2} &= \left(\alpha^0_{1,2}|\alpha^0_{1,1}\left(\alpha^0_{1,1}\right)^*\alpha^0_{1,2}\right) = \left(b|\epsilon\left(\epsilon\right)^*b\right) = b \\
@@ -324,7 +340,7 @@ $\delta$ & 1 & 2 & 3 & 4 \\
 \end{tabular}
 \end{center}
 
-\subsection*{k=2}
+\subsection**{k=2}
 \begin{align*}
 \alpha^2_{1,1} &= \left(\alpha^1_{1,1}|\alpha^1_{1,2}\left(\alpha^1_{2,2}\right)^*\alpha^1_{2,1}\right) = \left(\epsilon|b\left(\epsilon\right)^*\emptyset\right) = \epsilon \\
 \alpha^2_{1,2} &= \left(\alpha^1_{1,2}|\alpha^1_{1,2}\left(\alpha^1_{2,2}\right)^*\alpha^1_{2,2}\right) = \left(b|b\left(\epsilon\right)^*\epsilon\right) = b \\
@@ -355,11 +371,11 @@ $\delta$ & 1 & 2 & 3 & 4 \\
 \end{tabular}
 \end{center}
 
-\subsection*{k=3}
+\subsection**{k=3}
 \begin{align*}
 \alpha^3_{1,1} &= \left(\alpha^2_{1,1}|\alpha^2_{1,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,1}\right) = \left(\epsilon|a\left(x\right)^*\emptyset\right) = \epsilon \\
 \alpha^3_{1,2} &= \left(\alpha^2_{1,2}|\alpha^2_{1,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,2}\right) = \left(b|a\left(x\right)^*\emptyset\right) = b \\
-\alpha^3_{1,3} &= \left(\alpha^2_{1,3}|\alpha^2_{1,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,3}\right) = \left(a|a\left(x\right)^*x\right) = a|ax^*x = a|ax+ = ax^*\\
+\alpha^3_{1,3} &= \left(\alpha^2_{1,3}|\alpha^2_{1,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,3}\right) = \left(a|a\left(x\right)^*x\right) = a|ax^*x = a|ax^+ = ax^*\\
 \alpha^3_{1,4} &= \left(\alpha^2_{1,4}|\alpha^2_{1,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,4}\right) = \left(\emptyset|a\left(x\right)^*c\right) = ax^*c\\
 \alpha^3_{2,1} &= \left(\alpha^2_{2,1}|\alpha^2_{2,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,1}\right) = \left(\emptyset|\emptyset\left(x\right)^*\emptyset\right) = \emptyset \\
 \alpha^3_{2,2} &= \left(\alpha^2_{2,2}|\alpha^2_{2,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,2}\right) = \left(\epsilon|\emptyset\left(x\right)^*\emptyset\right) = \epsilon \\
@@ -367,8 +383,8 @@ $\delta$ & 1 & 2 & 3 & 4 \\
 \alpha^3_{2,4} &= \left(\alpha^2_{2,4}|\alpha^2_{2,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,4}\right) = \left(\emptyset|\emptyset\left(x\right)^*c\right) = \emptyset \\
 \alpha^3_{3,1} &= \left(\alpha^2_{3,1}|\alpha^2_{3,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,1}\right) = \left(\emptyset|x\left(x\right)^*\emptyset\right) = \emptyset \\
 \alpha^3_{3,2} &= \left(\alpha^2_{3,2}|\alpha^2_{3,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,2}\right) = \left(\emptyset|x\left(x\right)^*\emptyset\right) = \emptyset \\
-\alpha^3_{3,3} &= \left(\alpha^2_{3,3}|\alpha^2_{3,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,3}\right) = \left(x|x\left(x\right)^*x\right) = x|xx^*x = x|xx+ = x+ \\
-\alpha^3_{3,4} &= \left(\alpha^2_{3,4}|\alpha^2_{3,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,4}\right) = \left(c|x\left(x\right)^*c\right) = c|xx^*c = c|x+c = x^*c \\
+\alpha^3_{3,3} &= \left(\alpha^2_{3,3}|\alpha^2_{3,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,3}\right) = \left(x|x\left(x\right)^*x\right) = x|xx^*x = x|xx^+ = x^+ \\
+\alpha^3_{3,4} &= \left(\alpha^2_{3,4}|\alpha^2_{3,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,4}\right) = \left(c|x\left(x\right)^*c\right) = c|xx^*c = c|x^+c = x^*c \\
 \alpha^3_{4,1} &= \left(\alpha^2_{4,1}|\alpha^2_{4,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,1}\right) = \left(a|aa\left(x\right)^*\emptyset\right) = a \\
 \alpha^3_{4,2} &= \left(\alpha^2_{4,2}|\alpha^2_{4,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,2}\right) = \left(ab|aa\left(x\right)^*\emptyset\right) = ab \\
 \alpha^3_{4,3} &= \left(\alpha^2_{4,3}|\alpha^2_{4,3}\left(\alpha^2_{3,3}\right)^*\alpha^2_{3,3}\right) = \left(aa|aa\left(x\right)^*x\right) = aa|aax^*x = aax^* \\
@@ -390,17 +406,17 @@ $\delta$ & 1 & 2 & 3 & 4 \\
   \hline \hline
 1 & $\epsilon$  & $b$         & $ax^*$      & $ax^*c$            \\ \hline
 2 & $\emptyset$ & $\epsilon$  & $\emptyset$ & $\emptyset$        \\ \hline
-3 & $\emptyset$ & $\emptyset$ & $x+$        & $x^*c$             \\ \hline
+3 & $\emptyset$ & $\emptyset$ & $x^*$        & $x^*c$             \\ \hline
 4 & $a$         & $ab$        & $aax^*$     & $\epsilon|aax^*c$  \\
 \end{tabular}
 \end{center}
 
-\subsection*{k=4}
+\subsection**{k=4}
 \begin{align*}
-\alpha^4_{1,1} &= \left(\alpha^3_{1,1}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,1}\right) \\&= \left(\epsilon|ax^*c\left(\epsilon|aax^*c\right)^*a\right) = \left(\epsilon|ax^*c\left(aax^*c\right)^*a\right) = \left(\epsilon|\left(ax^*ca\right)+\right) = \left(ax^*ca\right)^*\\
-\alpha^4_{1,2} &= \left(\alpha^3_{1,2}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,2}\right) \\&= \left(b|ax^*c\left(\epsilon|aax^*c\right)^*ab\right) = \left(b|ax^*c\left(aax^*c\right)^*ab\right) = \left(b|\left(ax^*ca\right)+b\right) \\&= \left(ax^*ca\right)^*b \\
-\alpha^4_{1,3} &= \left(\alpha^3_{1,3}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,3}\right) \\&= \left(\left(a|ax^*x\right)|ax^*c\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) \\&= \left(ax^*|ax^*c\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) = \left(ax^*|ax^*c\left(\epsilon|aax^*c\right)^*aax^*\right) \\&= \left(ax^*|(ax^*ca)+ax^*\right) = (ax^*ca)^*ax^*\\
-\alpha^4_{1,4} &= \left(\alpha^3_{1,4}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,4}\right) \\&= \left(ax^*c|ax^*c\left(\epsilon|aax^*c\right)^*\left(\epsilon|aax^*c\right)\right) = \left(ax^*c|ax^*c\left(aax^*c\right)^*aax^*c\right) \\&= \left(ax^*c|\left(ax^*ca\right)+ax^*c\right) = \left(ax^*ca\right)^*ax^*c \\
+\alpha^4_{1,1} &= \left(\alpha^3_{1,1}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,1}\right) \\&= \left(\epsilon|ax^*c\left(\epsilon|aax^*c\right)^*a\right) = \left(\epsilon|ax^*c\left(aax^*c\right)^*a\right) = \left(\epsilon|\left(ax^*ca\right)^+\right) = \left(ax^*ca\right)^*\\
+\alpha^4_{1,2} &= \left(\alpha^3_{1,2}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,2}\right) \\&= \left(b|ax^*c\left(\epsilon|aax^*c\right)^*ab\right) = \left(b|ax^*c\left(aax^*c\right)^*ab\right) = \left(b|\left(ax^*ca\right)^+b\right) \\&= \left(ax^*ca\right)^*b \\
+\alpha^4_{1,3} &= \left(\alpha^3_{1,3}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,3}\right) \\&= \left(\left(a|ax^*x\right)|ax^*c\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) \\&= \left(ax^*|ax^*c\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) = \left(ax^*|ax^*c\left(\epsilon|aax^*c\right)^*aax^*\right) \\&= \left(ax^*|(ax^*ca)^+ax^*\right) = (ax^*ca)^*ax^*\\
+\alpha^4_{1,4} &= \left(\alpha^3_{1,4}|\alpha^3_{1,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,4}\right) \\&= \left(ax^*c|ax^*c\left(\epsilon|aax^*c\right)^*\left(\epsilon|aax^*c\right)\right) = \left(ax^*c|ax^*c\left(aax^*c\right)^*aax^*c\right) \\&= \left(ax^*c|\left(ax^*ca\right)^+ax^*c\right) = \left(ax^*ca\right)^*ax^*c \\
 \alpha^4_{2,1} &= \left(\alpha^3_{2,1}|\alpha^3_{2,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,1}\right) = \left(\emptyset|\emptyset\left(\epsilon|aax^*c\right)^*a\right) = \emptyset \\
 \alpha^4_{2,2} &= \left(\alpha^3_{2,2}|\alpha^3_{2,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,2}\right) = \left(\epsilon|\emptyset\left(\epsilon|aax^*c\right)^*ab\right) = \epsilon \\
 \alpha^4_{2,3} &= \left(\alpha^3_{2,3}|\alpha^3_{2,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,3}\right) = \left(\emptyset|\emptyset\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) = \emptyset \\
@@ -408,14 +424,14 @@ $\delta$ & 1 & 2 & 3 & 4 \\
 \end{align*}
 
 \begin{align*}
-\alpha^4_{3,1} &= \left(\alpha^3_{3,1}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,1}\right) \\&= \left(\emptyset|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*a\right) = \left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*a = \left(c|xx^*c\right)\left(aax^*c\right)^*a \\&= x^*c\left(aax^*c\right)^*a = \left(x^*caa\right)^*x^*ca \\
-\alpha^4_{3,2} &= \left(\alpha^3_{3,2}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,2}\right) \\&= \left(\emptyset|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*ab\right) = \left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*ab = x^*c\left(aax^*c\right)^*ab \\&= \left(x^*caa\right)^*x^*cab \\
-\alpha^4_{3,3} &= \left(\alpha^3_{3,3}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,3}\right) \\&= \left(\left(x|xx^*x\right)|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) = x+|x^*c\left(aax^*c\right)^*aax^* \\&= x+|\left(x^*caa\right)^*x^* = \left(x^*caa\right)^*x^*\\
-\alpha^4_{3,4} &= \left(\alpha^3_{3,4}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,4}\right) \\&= \left(\left(c|xx^*c\right)|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*\left(\epsilon|aax^*c\right)\right) = x^*c|x^*c\left(aax^*c\right)^*\left(\epsilon|aax^*c\right) \\&= x^*c|x^*c\left(aax^*c\right)^* = x^*c\left(aax^*c\right)^* \\
-\alpha^4_{4,1} &= \left(\alpha^3_{4,1}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,1}\right) \\&= \left(a|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*a\right) = \left(aax^*c\right)^*a \\
-\alpha^4_{4,2} &= \left(\alpha^3_{4,2}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,2}\right) \\&= \left(ab|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*ab\right) = \left(ab|\left(\epsilon|aax^*c\right)^*ab\right) = \left(ab|\left(aax^*c\right)^*ab\right) \\&= \left(aax^*c\right)^*ab \\
-\alpha^4_{4,3} &= \left(\alpha^3_{4,3}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,3}\right) \\&= \left(\left(aa|aax^*x\right)|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) = \left(aax^*|\left(aax^*c\right)^*aax^*\right) \\&= \left(aax^*c\right)^*aax^* \\
-\alpha^4_{4,4} &= \left(\alpha^3_{4,4}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,4}\right) \\&= \left(\left(\epsilon|aax^*c\right)|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*\left(\epsilon|aax^*c\right)\right) = \left(aax^*c\right)^*
+\alpha^4_{3,1} &= \left(\alpha^3_{3,1}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,1}\right) = \left(\emptyset|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*a\right) \\&= \left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*a = \left(c|xx^*c\right)\left(aax^*c\right)^*a \\&= x^*c\left(aax^*c\right)^*a = \left(x^*caa\right)^*x^*ca \\
+\alpha^4_{3,2} &= \left(\alpha^3_{3,2}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,2}\right) = \left(\emptyset|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*ab\right) \\&= \left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*ab = x^*c\left(aax^*c\right)^*ab = \left(x^*caa\right)^*x^*cab \\
+\alpha^4_{3,3} &= \left(\alpha^3_{3,3}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,3}\right) \\&= \left(\left(x|xx^*x\right)|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) = x^+|x^*c\left(aax^*c\right)^*aax^* \\&= x^+|\left(x^*caa\right)^*x^* = \left(x^*caa\right)^*x^*\\
+\alpha^4_{3,4} &= \left(\alpha^3_{3,4}|\alpha^3_{3,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,4}\right) = \left(\left(c|xx^*c\right)|\left(c|xx^*c\right)\left(\epsilon|aax^*c\right)^*\left(\epsilon|aax^*c\right)\right) \\&= x^*c|x^*c\left(aax^*c\right)^*\left(\epsilon|aax^*c\right) = x^*c|x^*c\left(aax^*c\right)^* = x^*c\left(aax^*c\right)^* \\
+\alpha^4_{4,1} &= \left(\alpha^3_{4,1}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,1}\right) = \left(a|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*a\right) = \left(aax^*c\right)^*a \\
+\alpha^4_{4,2} &= \left(\alpha^3_{4,2}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,2}\right) = \left(ab|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*ab\right) \\&= \left(ab|\left(\epsilon|aax^*c\right)^*ab\right) = \left(ab|\left(aax^*c\right)^*ab\right) = \left(aax^*c\right)^*ab \\
+\alpha^4_{4,3} &= \left(\alpha^3_{4,3}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,3}\right) = \left(\left(aa|aax^*x\right)|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*\left(aa|aax^*x\right)\right) \\&= \left(aax^*|\left(aax^*c\right)^*aax^*\right) = \left(aax^*c\right)^*aax^* \\
+\alpha^4_{4,4} &= \left(\alpha^3_{4,4}|\alpha^3_{4,4}\left(\alpha^3_{4,4}\right)^*\alpha^3_{4,4}\right) = \left(\left(\epsilon|aax^*c\right)|\left(\epsilon|aax^*c\right)\left(\epsilon|aax^*c\right)^*\left(\epsilon|aax^*c\right)\right) \\&= \left(aax^*c\right)^*
 \end{align*}
 
 \begin{center}
@@ -429,7 +445,7 @@ $\delta$ & 1 & 2 & 3 & 4 \\
 \end{tabular}
 \end{center}
 
-\subsection*{Regulärer Ausdruck}
+\subsection**{RegulÃ¤rer Ausdruck}
 $Z_1$ ist Startzustand, $Z_2$ und $Z_4$ werden akzeptiert. Wichtig ist also $\alpha^4_{1,2}|\alpha^4_{1,4}$.
 
 \begin{align*}
