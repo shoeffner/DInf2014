@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
 \usepackage{tikz}
 \usepackage{tikzsymbols}
 \usepackage{wasysym} %for the notes
@@ -69,8 +69,14 @@ $\eighthnote^{n-l}\halfnote^{2n}$ kann nicht in $L_1$ liegen, da $2(n-l) = 2n$ n
 \section*{Aufgabe 4.5}
 
 \section*{Aufgabe 4.6}
+Wenn die Sprache regulär ist, dann können wir z.B. einen endlichen Automaten oder regulären Ausdruck finden, der diese Sprache beschreibt.
 
+\subsection*{Regulärer Ausdruck}
+In Übung 2 haben wir $\Smiley^x$ verwendet, um $x$ wiederholungen von $\Smiley$ darzustellen. Mit der gleichen Schreibweise können wir die Sprache $\mathbb{L}$ als regulären Ausdruck darstellen:
 
+\begin{align*}
+a^0a^*b^0|a^1a^*b^1|a^2a^*b^2|...|a^{2000}a^*b^{2000}
+\end{align*}
 
 
 \end{document}
