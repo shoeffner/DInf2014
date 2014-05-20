@@ -32,15 +32,15 @@ Automat zur Addition zweier Binärzahlen.
   \node[state,accepting] (Z7) [above of=Z2] {$Z_7$};
 
   \path (Z1) edge [bend left, pos=0.7] node {$0/\epsilon$} (Z5)
-						 edge [bend left] node {$1/\epsilon$} (Z2)
-             edge             node {$\#/\epsilon$}(Z7)
+						 edge [bend left]          node {$1/\epsilon$} (Z2)
+             edge                      node {$\#/\epsilon$}(Z7)
         (Z2) edge [bend left, pos=0.3] node {$0/1$}        (Z1)
-             edge             node {$1/1$}        (Z3)
-        (Z3) edge [bend left] node {$0/\epsilon$} (Z6)
-             edge [bend left] node {$1/\epsilon$} (Z4)
-             edge             node {$\#/1$}       (Z7)
-				(Z4) edge [bend left]	node {$0/1, 1/1$}   (Z3)
-				(Z5) edge [bend left]	node {$0/0, 1/1$}   (Z1)
+             edge                      node {$1/1$}        (Z3)
+        (Z3) edge [bend left]          node {$0/\epsilon$} (Z6)
+             edge [bend left]          node {$1/\epsilon$} (Z4)
+             edge                      node {$\#/1$}       (Z7)
+				(Z4) edge [bend left]	         node {$0/1, 1/1$}   (Z3)
+				(Z5) edge [bend left]	         node {$0/0, 1/1$}   (Z1)
         (Z6) edge [pos=0.2]            node {$0/1$}        (Z1)
              edge [bend left, pos=0.2] node {$1/1$}        (Z3)
         ;
