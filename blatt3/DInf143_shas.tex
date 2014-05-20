@@ -19,29 +19,29 @@
 
 
 
-\section{Aufgabe 3.1}
+\section*{Aufgabe 3.1}
 Sei $L \subseteq \Sigma^{*}$ eine endliche Sprache, d.h. eine Sprache mit endlicher Anzahl Wörtern $\omega \in L$ endlicher Länge. Dann können wir eine Grammatik definieren, die individuell alle Wörter aus $L$ generiert.
 \begin{align*}
 S\ \rightarrow\ \omega_i\ |\ \omega_{i+1}\ |\ ...
 \end{align*}
-Diese Grammatik kann in eine reguläre Grammatik überführt werden, indem jedes Wort $\omega_i$ als Verkettung von Regeln dargestellt wird.
-\begin{align*}
-S\ &\rightarrow\ O_{i,0}\ |\ O_{i+1,0}\ |\ ...\\
-O_{i,0}\ &\rightarrow\ \omega_{i,0} O_{i,1} \\
-O_{i,1}\ &\rightarrow\ \omega_{i,1} O_{i,2} \\
-...
-\end{align*}
-In der Vorlesung wurde bereits gezeigt, dass reguläre Grammatiken in reguläre Ausdrücke und endliche Automaten überführt werden können, also ist die endliche Sprache ebenfalls regulär.
+%Diese Grammatik kann in eine reguläre Grammatik überführt werden, indem jedes Wort $\omega_i$ als Verkettung von Regeln dargestellt wird.
+%\begin{align*}
+%S\ &\rightarrow\ O_{i,0}\ |\ O_{i+1,0}\ |\ ...\\
+%O_{i,0}\ &\rightarrow\ \omega_{i,0} O_{i,1} \\
+%O_{i,1}\ &\rightarrow\ \omega_{i,1} O_{i,2} \\
+%...
+%\end{align*}
+%In der Vorlesung wurde bereits gezeigt, dass reguläre Grammatiken in reguläre Ausdrücke und endliche Automaten überführt werden können, also ist die endliche Sprache ebenfalls regulär.
 
 
 
-\section{Aufgabe 3.2}
+\section*{Aufgabe 3.2}
 \subsection{Aufgabe 3.2 (a)}
 \begin{align*}
 Z_1 &\rightarrow\ 1\ |\ 1Z_2 \\
 Z_2 &\rightarrow\ 1\ |\ 1Z_2\ |\ 0Z_3 \\
-Z_3 &\rightarrow\ 1\ |\ 0Z_1
-%Z_4 &\rightarrow\ 
+Z_3 &\rightarrow\ 1\ |\ 0Z_1%\ |\ 1Z_4
+%Z_4 &\rightarrow\ 0Z_4\ |\ 1Z_4
 \end{align*}
 
 \subsection{Aufgabe 3.2 (b)}
@@ -65,7 +65,7 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
 
 
 
-\section{Aufgabe 3.3}
+\section*{Aufgabe 3.3}
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=3cm]
   \node[initial,state,accepting] (Z1Z2)                               {$Z_1Z_2$};
@@ -102,7 +102,7 @@ Z_3 &\rightarrow\ 1\ |\ 0Z_1
 
 
 
-\section{Aufgabe 3.4}
+\section*{Aufgabe 3.4}
 Wir betrachten zuerst die äußerste Alternative: $($\colorbox{gray!25}{$(b|a)^*d$}$|$\colorbox{gray!25}{$c$}$)$. Unser NDEA bekommt also je einen $\epsilon$-Übergang zu $(b|a)^*d$ (beginnend bei $Z_2$) und $c$ (beginnend bei $Z_9$). Der Automat zu $c$ ist trivial:
 
 \begin{center}
@@ -231,7 +231,7 @@ Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c
 
 
 
-\section{Aufgabe 3.5}
+\section*{Aufgabe 3.5}
 %\begin{figure}[h]
 %  \includegraphics[width=\textwidth]{crossword.png}
 %\end{figure}
@@ -243,9 +243,18 @@ Als letzten Schritt können wir diesen Automaten und den Automaten vom Beginn ($c
   \item bbaadd
 \end{enumerate}
 
+Reguläre Ausdrücke:
+\begin{enumerate}
+	\item $b+$
+  \item $(bc)^*a$
+  \item $c^*b^*dda^*$
+  \item $b^*(ad)+c^*$
+  \item $(aa|bb|cc)(aa|bb|cc)(bd|d)^*$
+\end{enumerate}
 
 
-\section{Aufgabe 3.6}
+
+\section*{Aufgabe 3.6}
 \subsection*{Hilfssubstitutionen und -funktionen}
 \begin{align*}
 x:&=\epsilon|a|b \\
@@ -390,7 +399,7 @@ $\delta$ & 1 & 2 & 3 & 4 \\
   \hline \hline
 1 & $\epsilon$  & $b$         & $ax^*$      & $ax^*c$            \\ \hline
 2 & $\emptyset$ & $\epsilon$  & $\emptyset$ & $\emptyset$        \\ \hline
-3 & $\emptyset$ & $\emptyset$ & $x+$        & $x^*c$             \\ \hline
+3 & $\emptyset$ & $\emptyset$ & $x^*$        & $x^*c$             \\ \hline
 4 & $a$         & $ab$        & $aax^*$     & $\epsilon|aax^*c$  \\
 \end{tabular}
 \end{center}
