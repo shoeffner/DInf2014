@@ -68,6 +68,8 @@ $\eighthnote^{n-l}\halfnote^{2n}$ kann nicht in $L_1$ liegen, da $2(n-l) = 2n$ n
 
 \section*{Aufgabe 4.5}
 
+
+
 \section*{Aufgabe 4.6}
 Wenn die Sprache regulär ist, dann können wir z.B. einen endlichen Automaten oder regulären Ausdruck finden, der die Sprache $\mathbb{L} = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ beschreibt.
 
@@ -81,7 +83,7 @@ a^0a^*b^0|a^1a^*b^1|a^2a^*b^2|...|a^{2000}a^*b^{2000}
 \subsection*{NDEA}
 Wir können die Sprache $\mathbb{L}$ auch als NDEA darstellen. Angenommen die Bedingung für $j$ ist nicht $j \leq 2000$ sondern $j \leq 0$, $j\leq 1$ oder $j \leq 2$.
 
-Dann wären ein gültige Automaten:
+Dann sind gültige Automaten:
 
 $j \leq 0$:
 
@@ -148,7 +150,7 @@ $j \leq 2$:
 \end{tikzpicture}
 \end{center}
 
-Diesen Automaten können wir nach dem selben Schema erweitern, bis wir $j \leq 2000$ erfüllt haben.
+Diesen Automaten können wir nach dem selben Schema erweitern, solange wir $j \leq 2000$ erfüllen.
 
 \textbf{Die Sprache $\mathbb{L} = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ ist also regulär.}
 
