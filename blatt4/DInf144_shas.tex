@@ -53,16 +53,33 @@ Automat zur Addition zweier Binärzahlen.
 
 \section*{Aufgabe 4.3}
 \subsection*{a)}
-Wir nehmen an $L_1=\left\{\eighthnote^i\halfnote^{2i} | i \geq 0\right\}$ sei regulär, damit gelte für $L_1$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\eighthnote^n\halfnote^{2n} \in L_1$.
-Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
+Wir nehmen an $L_1=\left\{\eighthnote^i\halfnote^{2i} | i \geq 0\right\}$ sei regulär, damit gelte für $L_1$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\eighthnote^n\halfnote^{2n} \in L_1$. Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
+
 \begin{align}
-|v| = l \geq 1\\
-|uv| \leq n\\
-\eighthnote^{n-l}\halfnote^{2n} \notin L_1
+|v| = l &\geq 1\\
+|uv| &\leq n\\
+\eighthnote^{n-l}\halfnote^{2n} &\notin L_1
 \end{align}
+
 $\eighthnote^{n-l}\halfnote^{2n}$ kann nicht in $L_1$ liegen, da $2(n-l) = 2n$ nur gilt wenn $l=0$ ist, was allerdings nach (1) nicht erfüllt ist. $L_1$ ist somit nicht regulär.
+\setcounter{equation}{0}
 
 \subsection*{b)}
+Wir nehmen an $L_2=\left\{\eighthnote^i\halfnote^j | 0\leq i \leq j\right\}$ sei regulär, damit gelte für $L_2$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\eighthnote^n\halfnote^j, j = n + x, x \geq 0 \in L_2$. Wobei $x$ den Unterschied in der Länge zwischen $i$ und $j$ repräsentiert. Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
+
+\begin{align}
+|v| &\geq 1\\
+|uv| &\leq n\\
+\eighthnote^{n+x+1}\halfnote^{j} &\notin L_2
+\end{align}
+
+$\eighthnote^{n+x+1}\halfnote^{j}$ sollte nach dem Pumping Lemma in $L_2$ liegen, kann es allerdings nicht, da $n+x+1 > j $ ist. $L_2$ ist somit nicht regulär.
+\setcounter{equation}{0}
+
+\subsection*{c)}
+Wir nehmen an $L_3=\left\{\quarternote^{k^2}| k\geq0 \right\}$ sei regulär, damit gelte für $L_3$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\quarternote^{n^2} \in L_3$. Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
+
+
 
 \section*{Aufgabe 4.4}
 
