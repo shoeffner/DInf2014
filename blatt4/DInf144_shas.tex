@@ -2,12 +2,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath, amssymb}
-\usepackage{tikz}
-\usepackage{tikzsymbols}
+\usepackage{tikz, tikzsymbols}
 \usepackage{wasysym} %for the notes
 \usepackage{lmodern}
 \usepackage{xcolor}
-\usetikzlibrary{arrows,automata}
+\usepackage[ngerman]{babel}
+\usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
 
 \begin{document}
@@ -49,7 +49,10 @@ Automat zur Addition zweier Binärzahlen.
 \end{center}
 
 
+
 \section*{Aufgabe 4.2}
+
+
 
 \section*{Aufgabe 4.3}
 \subsection*{a)}
@@ -64,6 +67,7 @@ Wir nehmen an $L_1=\left\{\eighthnote^i\halfnote^{2i} | i \geq 0\right\}$ sei re
 $\eighthnote^{n-l}\halfnote^{2n}$ kann nicht in $L_1$ liegen, da $2(n-l) = 2n$ nur gilt wenn $l=0$ ist, was allerdings nach (1) nicht erfüllt ist. $L_1$ ist somit nicht regulär.
 \setcounter{equation}{0}
 
+
 \subsection*{b)}
 Wir nehmen an $L_2=\left\{\eighthnote^i\halfnote^j | 0\leq i \leq j\right\}$ sei regulär, damit gelte für $L_2$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\eighthnote^n\halfnote^j, j = n + x, x \geq 0 \in L_2$. Wobei $x$ den Unterschied in der Länge zwischen $i$ und $j$ repräsentiert. Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
 
@@ -76,6 +80,7 @@ Wir nehmen an $L_2=\left\{\eighthnote^i\halfnote^j | 0\leq i \leq j\right\}$ sei
 $\eighthnote^{n+x+1}\halfnote^{j}$ sollte nach dem Pumping Lemma in $L_2$ liegen, kann es allerdings nicht, da $n+x+1 > j $ ist. $L_2$ ist somit nicht regulär.
 \setcounter{equation}{0}
 
+
 \subsection*{c)}
 Wir nehmen an $L_3=\left\{\quarternote^{k^2}| k\geq0 \right\}$ sei regulär, damit gelte für $L_3$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\quarternote^{n^2} \in L_3$. Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
 \begin{align}
@@ -84,24 +89,64 @@ Wir nehmen an $L_3=\left\{\quarternote^{k^2}| k\geq0 \right\}$ sei regulär, dam
 uv^*w &\in L_3 ?
 \end{align}
 Wenn $z=\quarternote^{n^2} \in L_3$ ist, dann ist das nächste Wort der Sprache $z=\quarternote^{(n+1)^2} \in L_3$. Der Abstand zwischen diesen zwei Wörtern beträgt $\quarternote^{2n+1}$. Da $v$ maximal $n$ lang sein kann, kann mit $v^*$ ein Wort erzeugt werden ($z'=\quarternote^{2n}$) was in diesen Abstand fällt und somit $\notin L_3$ ist. $L_3$ ist somit nicht regulär.
+
+
+
 \section*{Aufgabe 4.4}
 
+
+
 \section*{Aufgabe 4.5}
+Sei $L$ regulär. Dann müssen auf $L$ alle Abschlusseigenschaften erfüllt sein, also Schnitt, Substitution, Verkettung, Vereinigung und Komplementbildung.
+
+Da die Sprache $L$ eine Vereinigung ist, können die Teilmengen getrennt von einander betrachtet werden, wir bezeichnen sie $L_1$ und $L_2$.
+
+Betrachten wir zunächst $L_1 = \left\{ c^ja^ib^i|i,j \geq 0 \right\}$.
+
+\subsection*{Komplementbildung}
+Das Komplement ist $\overline{L_1} = \Sigma^* \backslash L_1 = \left\{ a^jb^k | j,k \geq 0, j \neq k \right\}$.
+
+\subsection*{Verkettung}
+$L_3 = \left\{c^ja^ib^i|i,j \geq 0\right\}$ hat zwei Teile, $c^j$ und $a^ib^i$, die verkettet sind. 
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state]   (Z1)               {};
+  \node[state]           (Z2) [right of=Z1] {};
+  \node[state]           (Z3) [right of=Z2] {};
+  \node[state,accepting] (Z4) [right of=Z3] {};
+  
+  \path (Z2) edge node {$\epsilon$} (Z3);
+  
+  \node (X) [draw=green, fit=(Z1) (Z2), inner sep=0.2cm, fill=green!20, fill opacity=0.2] {};
+  \node     [green] at (X) {"`$c^j$"'};
+  \node (Y) [draw=blue,  fit=(Z3) (Z4), inner sep=0.2cm, fill=blue!20, fill opacity=0.2] {};
+  \node     [blue]  at (Y) {"`$a^ib^i$"'};
+\end{tikzpicture}
+\end{center}
+
+Der erste Teil ist regulär, da wir den Automaten "`$c^j$"' mit dem regulären Ausdruck $c^*$ beschreiben können. 
+
+Der zweite Teil "`$a^ib^i$"' der Verkettung ist nach Voraussetzung nicht regulär, also können wir keinen deterministischen endlichen Automaten finden, der die Sprache beschreibt. Weil aber für die Verkettung zwei deterministische endliche Automaten benötigt werden, ergibt sich ein Widerspruch.
+
+Also ist die Sprache $L_1$ nicht regulär. Weil $L$ die Vereinigung von $L_1$ und $L_2$ ist, ist $L$ ebenfalls nicht regulär.
+
+Es ist unnötig die weiteren Eigenschaften zu prüfen.
 
 
 
 \section*{Aufgabe 4.6}
-Wenn die Sprache regulär ist, dann können wir z.B. einen endlichen Automaten oder regulären Ausdruck finden, der die Sprache $\mathbb{L} = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ beschreibt.
+Wenn die Sprache regulär ist, dann können wir z.B. einen endlichen Automaten oder regulären Ausdruck finden, der die Sprache $L = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ beschreibt.
 
 \subsection*{Regulärer Ausdruck}
-In Übung 2 haben wir $\Smiley^x$ verwendet, um $x$ wiederholungen von $\Smiley$ darzustellen. Mit der gleichen Schreibweise können wir die Sprache $\mathbb{L}$ als regulären Ausdruck darstellen:
+In Übung 2 haben wir $\Smiley^x$ verwendet, um $x$ Wiederholungen von $\Smiley$ darzustellen. Mit der gleichen Schreibweise können wir die Sprache $L$ als regulären Ausdruck darstellen:
 
 \begin{align*}
 a^0a^*b^0|a^1a^*b^1|a^2a^*b^2|...|a^{2000}a^*b^{2000}
 \end{align*}
 
 \subsection*{NDEA}
-Wir können die Sprache $\mathbb{L}$ auch als NDEA darstellen. Angenommen die Bedingung für $j$ ist nicht $j \leq 2000$ sondern $j \leq 0$, $j\leq 1$ oder $j \leq 2$.
+Wir können die Sprache $L$ auch als NDEA darstellen. Angenommen die Bedingung für $j$ ist nicht $j \leq 2000$ sondern $j \leq 0$, $j\leq 1$ oder $j \leq 2$.
 
 Dann sind gültige Automaten:
 
@@ -152,7 +197,6 @@ $j \leq 2$:
   \node[state]            (Z8) [right of=Z7] {};
   \node[state]            (Z9) [right of=Z8] {};
   \node[state,accepting] (Z10) [right of=Z9] {};
-  
 
   \path (Z1) edge              node {$\epsilon$} (Z2)
              edge              node {$\epsilon$} (Z3)
@@ -172,7 +216,7 @@ $j \leq 2$:
 
 Diesen Automaten können wir nach dem selben Schema erweitern, solange wir $j \leq 2000$ erfüllen.
 
-\textbf{Die Sprache $\mathbb{L} = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ ist also regulär.}
+\textbf{Die Sprache $L = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ ist also regulär.}
 
 
 \end{document}
