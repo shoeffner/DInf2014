@@ -1,19 +1,20 @@
 \documentclass{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath, amssymb}
-\usepackage{tikz, tikzsymbols}
-\usepackage{wasysym} %for the notes
 \usepackage{lmodern}
-\usepackage{xcolor}
 \usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{phonetic} % for reversed D
+\usepackage{wasysym}  % for the notes
+\usepackage{tikz, tikzsymbols}
+\usepackage{xcolor}
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
-
+    
 \begin{document}
 
 \begin{center}
-  \Large{Informatik D - Übungsblatt 4}
+  \Large{Informatik \revD: Übungsblatt 4}
 
   \large{Sebastian Höffner, Andrea Suckro, Rasmus Diederichsen}
 \end{center}
@@ -50,6 +51,8 @@ Automat zur Addition zweier Binärzahlen.
 \end{center}
 \end{samepage}
 
+
+
 \section*{Aufgabe 4.2}
 Das Alphabet der Sprache ist $\Sigma = \left\{ (,\ ),\ |,\ { }^*,\ \sigma_1,\ ...,\ \sigma_k \right\}$.
 
@@ -59,6 +62,7 @@ Eine Grammatik ist z.B.:
 \begin{align*}
 S \rightarrow \sigma_1\ |\ ...\ |\ \sigma_k\ |\ (SS)\ |\ (S|S)\ |\ (S)^* 
 \end{align*}
+
 
 
 \section*{Aufgabe 4.3}
@@ -102,18 +106,78 @@ Wenn $z=\quarternote^{n^2} \in L_3$ ist, dann ist das nächste Wort der Sprache 
 
 
 \section*{Aufgabe 4.4}
+\subsection*{a)}
+Sei $L$ eine reguläre Sprache. Es gibt eine Zahl $n := n(L)$, so dass alle Wörter $z \in L$ mit $|z| \geq n$ sich zerlegen lassen als $z = uvw$ mit den Eigenschaften:
+\begin{itemize}
+	\item $|v| \geq 1$
+	\item $|v| \leq n$
+	\item $uv*w \in L$
+\end{itemize}
+
+$L$ ist regulär, es existiert also ein endlicher Automat $A$ mit Zuständen \linebreak$Z = \left\{z_1, ..., z_i\right\}$, der $L$ beschreibt. Wähle $n := |Z|$. Bei der Abarbeitung von $z$ werden werden $|z|+1$ Zustände durchlaufen (inkl. Start).
+
+Dabei wird nach Lesen des letzten Symbols von $u$ (gelesen: $z_1,...,z_k$) der selbe Zustand $z_k$ erreicht, wie nach Lesen des letzten Symbols von $uv$. Das heißt $|v|$ ist Anzahl der Zustände der Folge $z_k, ...,z_k$. Die Folge $z_k,...,z_i$ liest $w$.
+
+Da $|v|$ nur ein Teil der Gesamtzustandsmenge ist, ist $|v| \leq n$ erfüllt.
+
+\vspace{1em} \textit{Geht auch einfach unter Annahme des Pumping Lemmas: \\$|uv|\leq n \Rightarrow |u|+|v|\leq n \Rightarrow |v| \leq n$}
+
+
+\subsection*{b)}
+Das Pumping Lemma besagt $|uv| \leq n$. Also können wir folgern:
+\setcounter{equation}{0}
+\begin{align}
+                 & |uv| \leq n \\
+\Leftrightarrow\ & |u|+|v| \leq n \\
+\Rightarrow    \ & |v| \leq n
+\end{align}
+Damit erfüllen alle Sprachen, die das Pumping Lemma erfüllen, auch das alternative Pumping Lemma.
+
+
+\subsection*{c)}
+Wir nehmen an $L$ sei regulär, damit gelten das Pumping Lemma sowie das alternative Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir jeweils das Wort $z$ mit je einer Zerlegung $uvw=z$ für die gilt:
+
+\begin{itemize}
+	\item $|v| \geq 1$
+	\item $|uv| \leq n$ bzw. $|v| \leq n$
+	\item $uv^*w \in L$
+\end{itemize}
+
+Für $k\ a$s generiert die Sprache auch $k\ b$s, d.h. die Wortlänge $|z|$ ist genau $|z| = n = 2k$.
+
+\subsubsection*{Alternatives Pumping Lemma}
+Angenommen das alternative Pumping Lemma gilt.
+
+Da $|z| = |uv^*w|$ gilt und wir $uv^*w$ mit $|u| = 0, |w| = 0$ setzen können, gilt $|v^*| = n$.
+
+$|v^*| =|z|$ führt zu $z = v^*$, also ist jedes Wort $z \in L$, damit erfüllt die Sprache das alternative Pumping Lemma.
+
+\subsubsection*{Pumping Lemma}
+Angenommen die Sprache ist regulär. Sei $z = a^nb^n$, mit $n$ der Wortmindestlänge. 
+\setcounter{equation}{0}
+\begin{align}
+   u &= a^{n-l},\ l \geq 1 \\
+   v &= a^l \\
+|uv| &\leq n \\
+   w &= b^n
+\end{align}
+Weil $uvw \in L$ muss nach $uv^*w \in L$ auch $uw = a^{n-l}b^n \in L$ sein. Da $uw$ jedoch kein Wort der Sprache ist, liegt ein Widerspruch vor. Die Sprache ist also nicht regulär.
+
+\subsubsection*{Sonstige Fragen}
+Die Sprache ist nicht regulär, da das Pumping Lemma einen Widerspruchsbeweis ermöglicht.
+
+Das Pumping Lemma ist stärker als das alternative Pumping Lemma. Da beide Beweise ähnlich funktionieren ist das originale Pumping Lemma nützlicher.
 
 
 
 \section*{Aufgabe 4.5}
-\textit{Hinweis: Da wir in der Vorlesung gezeigt haben, dass $L_1 \cap L_2$ und $\overline{L_1}$ für die regulären Sprachen $L_i$ und $L_j$ ebenfalls regulär sind, ist auch $L_i \backslash L_j$ regulär, da der Differenzmengenoperator $\backslash$ auch geschrieben werden kann als $L_1 \backslash L_2 = L_1 \cap \overline{L_2}$. Reguläre Sprachen sind also auch unter der Differenz geschlossen.}
+\textit{Hinweis: Da wir in der Vorlesung gezeigt haben, dass $L_1 \cap L_2$ und $\overline{L_1}$ für die regulären Sprachen $L_i$ und $L_j$ ebenfalls regulär sind, ist auch $L_i \backslash L_j$ regulär, da der Differenzmengenoperator $\backslash$ auch als $L_1 \backslash L_2 = L_1 \cap \overline{L_2}$ geschrieben werden kann. Reguläre Sprachen sind also auch unter der Differenz geschlossen.}
 
 \vspace{1em}
 
 Sei $L = L_1 \cup L_2 = \left\{c^ja^ib^i | i,j \geq 0 \right\} \cup \left\{ a^jb^i |i,j \geq 0 \right\}$ regulär.
 
 $L_2$ ist regulär, da für die Sprache mindestens der reguläre Ausdruck $a^*b^*$ existiert.
-
 \begin{align*}
 L_3 = L \backslash L_2 &= \left\{c^ja^ib^i | i,j \geq 0 \right\} \cup \left\{ a^jb^i |i,j \geq 0 \right\}\ \backslash\ \left\{ a^jb^i |i,j \geq 0 \right\}\ \\
                        &= \left\{c^ja^ib^i | i,j \geq 0 \right\} = L_1
@@ -221,10 +285,11 @@ $j \leq 2$:
 \end{tikzpicture}
 \end{center}
 
-Diesen Automaten können wir nach dem selben Schema erweitern, solange wir $j \leq 2000$ erfüllen.
+Diesen Automaten können wir nach dem selben Schema erweitern, solange wir $j \leq 2000$ erfüllen. \textit{(Ohne diese obere Schranke wäre der Automat nicht endlich und die Sprache nicht regulär.)}
 
 \textbf{Die Sprache $L = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ ist also regulär.}
 \end{samepage}
+
 
 
 \end{document}
