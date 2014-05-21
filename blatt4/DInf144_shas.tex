@@ -50,9 +50,15 @@ Automat zur Addition zweier Binärzahlen.
 \end{center}
 \end{samepage}
 
-
 \section*{Aufgabe 4.2}
+Das Alphabet der Sprache ist $\Sigma = \left\{ (,\ ),\ |,\ { }^*,\ \sigma_1,\ ...,\ \sigma_k \right\}$.
 
+Die kleinste Sprachklasse ist Typ 2, kontextfreie Sprachen, um die Klammerung (öffnende mit \textit{korrespondierender} schließender Klammer) korrekt abzubilden.
+
+Eine Grammatik ist z.B.:
+\begin{align*}
+S \rightarrow \sigma_1\ |\ ...\ |\ \sigma_k\ |\ (SS)\ |\ (S|S)\ |\ (S)^* 
+\end{align*}
 
 
 \section*{Aufgabe 4.3}
