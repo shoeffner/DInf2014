@@ -146,11 +146,9 @@ Wir nehmen an $L$ sei regulär, damit gelten das Pumping Lemma sowie das alterna
 Für $k\ a$s generiert die Sprache auch $k\ b$s, d.h. die Wortlänge $|z|$ ist genau $|z| = n = 2k$.
 
 \subsubsection*{Alternatives Pumping Lemma}
-Angenommen das alternative Pumping Lemma gilt.
+Wenn wir zeigen wollen, dass das Alternative Pumping Lemma gilt, müssen wir für alle Wörter der Sprache ($\forall w \in L$) zeigen, dass es mindestens eine Zerlegung gibt, die die Eigenschaften des Alternativen Pumping Lemmas erfüllt.
 
-Da $|z| = |uv^*w|$ gilt und wir $uv^*w$ mit $|u| = 0, |w| = 0$ setzen können, gilt $|v^*| = n$.
-
-$|v^*| =|z|$ führt zu $z = v^*$, also ist jedes Wort $z \in L$, damit erfüllt die Sprache das alternative Pumping Lemma.
+Dazu sei $w$ nun ein beliebiges Wort der Sprache mit $|w|\geq n$. Das bedeutet, dass es mindestens $\frac{n}{2}$ a's und $\frac{n}{2}$ b's in beliebiger Reihenfolge geben muss. Es gibt also insbesondere mindestens eine Stelle in dem Wort bei dem $a$ auf $b$ wechselt (oder andersherum). Wir wählen genau diese Stelle als $v$. Es ist nun klar, dass durch $v^*$ immer noch gleich viele a's und b's in dem Wort sind. Wir können diese Stelle immer in dem Wort wählen (egal wie weit hinten sie steht), da es keine Längenbegrenzung für $u$ gibt. Wir haben somit eine Zerlegung für $\forall w \in L$ gefunden, die die Eigenschaften des Alternativen Pumping Lemmas erfüllt.
 
 \subsubsection*{Pumping Lemma}
 Angenommen die Sprache ist regulär. Sei $z = a^nb^n$, mit $n$ der Wortmindestlänge. 
