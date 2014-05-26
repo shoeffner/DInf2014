@@ -70,9 +70,10 @@ S \rightarrow \sigma_1\ |\ ...\ |\ \sigma_k\ |\ (SS)\ |\ (S|S)\ |\ (S)^*\ |\ \em
 Wir nehmen an $L_1=\left\{\eighthnote^i\halfnote^{2i} | i \geq 0\right\}$ sei regulär, damit gelte für $L_1$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\eighthnote^n\halfnote^{2n} \in L_1$. Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
 
 \begin{align}
-|v| = l &\geq 1\\
-|uv| &\leq n\\
-\eighthnote^{n-l}\halfnote^{2n} &\notin L_1
+|v| = l &\geq 1 \\
+|uv| &\leq n \\
+u &= \eighthnote^{n-l}, v = \eighthnote^l, w = \halfnote^{2n} \\
+uv^0w &= \eighthnote^{n-l}\halfnote^{2n} \notin L_1
 \end{align}
 
 $\eighthnote^{n-l}\halfnote^{2n}$ kann nicht in $L_1$ liegen, da $2(n-l) = 2n$ nur gilt wenn $l=0$ ist, was allerdings nach (1) nicht erfüllt ist. $L_1$ ist somit nicht regulär.
@@ -85,7 +86,8 @@ Wir nehmen an $L_2=\left\{\eighthnote^i\halfnote^j | 0\leq i \leq j\right\}$ sei
 \begin{align}
 |v| &\geq 1\\
 |uv| &\leq n\\
-\eighthnote^{n+x+1}\halfnote^{j} &\notin L_2
+u &= \eighthnote^{n-1}, v = \eighthnote, w = \halfnote^j \\
+uv^{x+1}w &= \eighthnote^{n+x+1}\halfnote^{j} \notin L_2
 \end{align}
 
 $\eighthnote^{n+x+1}\halfnote^{j}$ sollte nach dem Pumping Lemma in $L_2$ liegen, kann es allerdings nicht, da $n+x+1 > j $ ist. $L_2$ ist somit nicht regulär.
@@ -103,6 +105,28 @@ uv^*w &\in L_3 ?
 
 Wenn $z=\quarternote^{n^2} \in L_3$ ist, dann ist das nächste Wort der Sprache $z=\quarternote^{(n+1)^2} \in L_3$. Der Abstand zwischen diesen zwei Wörtern beträgt $\quarternote^{2n+1}$. Da $v$ maximal $n$ lang sein kann, kann mit $v^*$ ein Wort erzeugt werden ($z'=\quarternote^{2n}$) was in diesen Abstand fällt und somit $\notin L_3$ ist. $L_3$ ist somit nicht regulär.
 
+\subsection*{Alternative: c)}
+Wir nehmen an $L_3=\left\{\quarternote^{k^2}| k\geq0 \right\}$ sei regulär, damit gelte für $L_3$ das Pumping Lemma. Sei $n$ die entsprechende Wortmindestgröße. Dann betrachten wir das Wort $z=\quarternote^{n^2} \in L_3$. Es existiert nun eine Zerlegung $uvw=z$ für die gilt:
+
+\setcounter{equation}{0}
+\begin{align}
+|v|  &\geq 1 \\
+|uv| &\leq n \\
+uv*w &\in L_3
+\end{align}
+
+In der Sprache können wir die Wörter anordnen. Auf $\quarternote^{n^2}$ folgt dann $\quarternote^{(n+1)^2}$. 
+
+\begin{align*}
+u &= \epsilon \\
+v &= \quarternote^{n} \\
+w &= \quarternote^{n(n-1)} \\
+\Rightarrow uv^*w &= \left(\quarternote^{n}\right)^*\quarternote^{n(n-1)} \\
+uv^2w &= \quarternote^{n}\quarternote^{n}\quarternote^{n(n-1)} = \quarternote^{n+n+n^2-n} \\
+\Rightarrow |\quarternote^{n+n+n^2-n}| &= n^2+n < (n+1)^2 = |\quarternote^{(n+1)^2}|
+\end{align*}
+
+Damit ist das Wort $uv^2w \notin L_3$, also ist $L_3$ nicht regulär.
 
 
 \section*{Aufgabe 4.4}
@@ -171,17 +195,16 @@ Das Pumping Lemma ist stärker als das alternative Pumping Lemma. Da beide Bewei
 \section*{Aufgabe 4.5}
 \textit{Hinweis: Da wir in der Vorlesung gezeigt haben, dass $L_1 \cap L_2$ und $\overline{L_1}$ für die regulären Sprachen $L_i$ und $L_j$ ebenfalls regulär sind, ist auch $L_i \backslash L_j$ regulär, da der Differenzmengenoperator $\backslash$ auch als $L_1 \backslash L_2 = L_1 \cap \overline{L_2}$ geschrieben werden kann. Reguläre Sprachen sind also auch unter der Differenz geschlossen.}
 
-\vspace{1em}
-
+\begin{samepage}
 Sei $L = L_1 \cup L_2 = \left\{c^ja^ib^i | i,j \geq 0 \right\} \cup \left\{ a^jb^i |i,j \geq 0 \right\}$ regulär.
 
 $L_2$ ist regulär, da für die Sprache mindestens der reguläre Ausdruck $a^*b^*$ existiert.
 \begin{align*}
 L_3 = L \backslash L_2 &= \left\{c^ja^ib^i | i,j \geq 0 \right\} \cup \left\{ a^jb^i |i,j \geq 0 \right\}\ \backslash\ \left\{ a^jb^i |i,j \geq 0 \right\}\ \\
-                       &= \left\{c^ja^ib^i | i,j \geq 0 \right\} = L_1
+                       &= \left\{c^ja^ib^i | i \geq 0, j \geq 1 \right\}
 \end{align*}
 
-$L_1$ ist nach Annahme, dass $L$ regulär ist, weiterhin regulär. 
+$L_3$ ist nach Annahme, dass $L$ regulär ist, weiterhin regulär. 
 
 \vspace{1em}
 
@@ -189,12 +212,12 @@ Die Sprache $L_4$ über dem selben Alphabet können wir definieren als $L_4 = \l
 
 Die Differenz $L_5 = L_1 \backslash L_4$ ist
 \begin{align*}
-L_5 = L_1 \backslash L_4 &= \left\{c^ja^ib^i | i,j \geq 0 \right\} \backslash \left\{c^ia^jb^k | i \geq 1, j, k \geq 0 \right\} \\
+L_5 = L_3 \backslash L_4 &= \left\{c^ja^ib^i | i \geq 0, j \geq 1 \right\} \backslash \left\{c^ia^jb^k | i \geq 1, j, k \geq 0 \right\} \\
                          &= \left\{a^ib^i | i \geq 0 \right\}
 \end{align*}
 
 $L_5$ ist jedoch nach Beweis in der Vorlesung nicht regulär. Dies ist ein Widerspruch, aus dem folgt: Die Sprache $L$ ist nicht regulär.
-
+\end{samepage}
 
 
 \section*{Aufgabe 4.6}
