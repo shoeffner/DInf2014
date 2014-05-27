@@ -34,7 +34,107 @@
 
 
 \section*{Aufgabe 5.4}
+\begin{enumerate}
+	\item bc
+	\item cbadbacd
+	\item abaaba
+	\item cbadc
+	\item aababbabaabb
+	\item ccaa
+	\item cabab
+	\item bbbbb
+  \item cabab
+	\item dccb
+  \item acbd
+\end{enumerate}
 
+\subsection*{Erklärungen}
+Als Tipp ist gegeben bei 9 zu starten.
+
+\vspace{1ex}
+
+9 hat zu Beginn \textbf{drei Möglichkeiten}: ein Symbol lesen und es auf das aktuelle Symbol legen, ein $c$ lesen und es auf das aktuelle Symbol lesen oder ein $c$ lesen falls \# auf dem Stack liegt und den Stack unverändert lassen.
+
+Um zu akzeptieren müssen wir letztlich zur Regel kommen, die ein beliebiges Symbol liest wenn \# auf dem Stack liegt, und $\epsilon$ auf den Stack legt.
+
+Wenn wir die erste Möglichkeit nutzen, legen wir Symbole auf den Stack, dadurch verhindern wir, dass wir die dritte Möglichkeit nutzen können, haben aber die Möglichkeit, in die zweite überzugehen.
+
+Wichtig ist, dass die zweite Möglichkeit vom Einlesen und auf den Stack legen eines $d$ gefolgt wird. Da der Kellerautomat durch \textbf{leeren Keller} akzeptiert, ist dies das KO-Kriterium: das $d$ können wir nach den Regeln im ``letzten'' Zustand nicht mehr löschen, der Keller kann also nicht leer werden.
+
+Dadurch bleibt nur die dritte Möglichkeit, $c,\#/\#$. Das heißt, unser Wort muss mit $c$ beginnen.
+
+Nun müssen wir noch vier weitere Zeichen genrieren, bevor wir wieder \# allein auf dem Stack haben. Da es nur eine Regel gibt, die \# auf dem Stack erlaubt, ist das nächste Symbol klar $a$. Darauf folgt eben so logisch $b$, worauf wieder $ab$ folgt, bevor wir \# löschen und akzeptieren.
+
+Das Wort 9 ist also $cabab$.
+
+\vspace{1ex}
+
+Als nächstes bietet sich 1 an. Diese Sprache kann nur zwei zweibuchstabige Wörter generieren: $ab$ ($S\rightarrow aA, A\rightarrow C, C\rightarrow b$) und $bc$ ($S\rightarrow bB, B\rightarrow c$). $bc$ passt dank 9.
+
+\vspace{1ex}
+
+8 ist das selbe Symbol fünf mal wiederholt. Da wir durch 1 ein $b$ haben, ist 8 $bbbbb$.
+
+\vspace{1ex}
+
+Nun bietet sich 2 an, hier haben wir bereits zwei Buchstaben.
+Analysiert man den Automaten, stellt man fest, dass die Sprache verschiedene Bausteine mit einem Schleifendurchlauf generieren kann.
+\begin{enumerate}
+	\item $cd$
+  \item $cada$, $cbdb$
+  \item $caadaa$, $cabdab$, $cbadba$, $cbbdbb$
+  \item $caaadaaa$ $caabdaab$, $cabadaba$, $cbaadbaa$, $cabbdabb$, $cbbadbba$, $cbabdbab$, $cbbbdbbb$
+\end{enumerate}
+Diese Bausteine können wir beliebig kombinieren, um achtstellige Wörter zu erzeugen. Durch 8 und 9 sind allerdings das fünfte und sechste Zeichen beschränkt: sie können nur $ba$ sein.
+Damit fallen alle Wörter aus Fall 4 heraus (fünftes Zeichen $d$), die vierfache Wiederholung von Fall 1, Kombinationen aus Fall 1 und 2 (fünftes oder sechstes Zeichen $c$ oder $d$) sowie alle anderen Kombinationen mit zweimal Fall 2 (fünftes Zeichen $c$).
+Lediglich Fall 3 kombiniert mit Fall 1 kann also noch möglich sein. Aus den 8 generierbaren möglichkeiten gibt es nur eine, die $ba$ als fünftes und sechstes Zeichen enthält: $cbadbacd$. Das ist unser Wort.
+
+\vspace{1ex}
+
+7 muss auf $ab$ enden und dank 2 ein $a$ an zweiter Stelle haben. Also kann 7 nur $cabab$ sein.
+
+\vspace{1ex}
+
+3 sind die bereits bekannten Palindrome mit $a$ und $b$. Da die dritte, fünfte und sechste Stelle gegeben sind ($\_,\_,a,\_,b,a$) können wir das Wort einfach zu $abaaba$ ergänzen.
+
+\vspace{1ex}
+
+6 kann mit Wörtern der Länge 4 nur generieren: $c^2ba^{2-1}$ und $c^2a^2$. Da 3 mit a beginnt, geht nur $ccaa$.
+
+\vspace{1ex}
+
+10 kann durch einfaches Starten mit $d$ (aus 2) deterministisch gelöst werden und wird $dccb$.
+
+\vspace{1ex}
+
+Da 4 nun durch 10 mit $c$ beginnt, kann sie nur $cbadc$ sein.
+
+\vspace{1ex}
+
+11 hat nur den Hinweis, dass der dritte Buchstabe $d$ ist. Damit $d$ gelesen weden kann, muss $c$ auf dem Stack liegen, was ein Symbol löscht. Da der Automat durch leeren Keller akzeptiert, muss aber noch ein weiteres Zeichen auf dem Stack verbleiben, damit $d$ das vorletzte Symbol sein kann. Da 5 nur $a$ und $b$ enthalten darf, muss das akzeptierte Zeichen ein $a$ oder $b$ sein. Es gibt nur eine Regel, die das erfüllt: $b,a/\epsilon$. Also muss unter dem $c$ noch ein $a$ auf dem Stack liegen. Die Eingabe muss auf $db$ enden.
+
+\begin{table*}[h]
+	\centering
+		\begin{tabular}{l|r}
+      Eingabe & Stack \\
+      \hline
+      initial & $\#$ \\
+      $a$ & $\# a$ \\
+      $c$ & $\# ca$ \\
+      $\epsilon$ & $ca$ \\
+      $d$ & $a$ \\
+      $b$ & $\emptyset$
+		\end{tabular}
+\end{table*}
+
+\vspace{1ex}
+
+Als letztes ist noch 5 zu lösen. Hier haben wir bereits gegeben: \\ $a,\_,b,\_,b,b,\_,b,\_,\_,b,\_$. 
+
+Um das $bb$ erzeugen zu können, müssen wir $aSb$ verwenden, das einzig mögliche passende $a$ für das zweite $b$ ist das allererste. Da nach $a$ ein $\_,b,\_,b$ folgt, das nur durch $S\rightarrow ab$ erzeugt werden kann, muss der erste Teil folgendermaßen struktiert sein: $S \rightarrow aSb \rightarrow aSSb \rightarrow aabSb \rightarrow aababb$.
+Der erste Teil ist gefolgt von einem $\_,b$, das durch $S \rightarrow ab$ erzeugt, und durch $S \rightarrow SS$ mit dem bereits vorhandenen ersten Teil verkettet werden kann.
+
+Dieser neue erste Teil kann nun mit den letzten vier Zeichen $\_,\_,b,\_$ erneut durch $S \rightarrow SS$ verbunden werden. Um die letzten Zeichen sinnvoll zu erfüllen, muss für das gegebene $b$ die Regel $S \rightarrow ab$ angewandt werden ($\_,a,b,\_$). Die letzte anzuwendende Regel ist offensichtlich $S \rightarrow aSb$. Damit ist das Wort \linebreak $a--ab-ab--b---ab---a-ab-b = aababbabaabb$.
 
 
 \section*{Aufgabe 5.5}
