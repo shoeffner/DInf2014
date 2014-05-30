@@ -22,8 +22,38 @@
 
 
 \section*{Aufgabe 5.1}
+Sie sind gleich mächtig.
 
+Jede Schleife kann durch mehrere Zustände dargestellt werden:
 
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state]   (Z1)               {$Z_1$};
+  \node[state]           (Z2) [right of=Z1] {$Z_2$};
+  \node[state,accepting] (Z3) [right of=Z2] {$Z_3$};
+
+  \path (Z1) edge              node {$\epsilon$} (Z2)
+        (Z2) edge [loop below] node {$a$}        (Z2)
+             edge              node {$\epsilon$} (Z3)
+        ;
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state]   (Z1)               {$Z_1$};
+  \node[state]           (Z2) [right of=Z1] {$Z_2$};
+  \node[state]           (Z4) [below of=Z2] {$Z_4$};
+  \node[state,accepting] (Z3) [right of=Z2] {$Z_3$};
+
+  \path (Z1) edge              node {$\epsilon$} (Z2)
+        (Z2) edge [bend right] node {$a$}        (Z4)
+             edge [bend right] node {$a$}        (Z3)
+             edge [bend left]  node {$\epsilon$} (Z3)
+        (Z4) edge [bend right] node {$a$}        (Z2) 
+        ;
+\end{tikzpicture}
+\end{center}
 
 \section*{Aufgabe 5.2}
 
@@ -51,7 +81,7 @@
 \subsection*{Erklärungen}
 Als Tipp ist gegeben bei 9 zu starten.
 
-\vspace{1ex}
+\bigskip
 
 9 hat zu Beginn \textbf{drei Möglichkeiten}: ein Symbol lesen und es auf das aktuelle Symbol legen, ein $c$ lesen und es auf das aktuelle Symbol lesen oder ein $c$ lesen falls \# auf dem Stack liegt und den Stack unverändert lassen.
 
@@ -67,15 +97,15 @@ Nun müssen wir noch vier weitere Zeichen genrieren, bevor wir wieder \# allein 
 
 Das Wort 9 ist also $cabab$.
 
-\vspace{1ex}
+\bigskip
 
 Als nächstes bietet sich 1 an. Diese Sprache kann nur zwei zweibuchstabige Wörter generieren: $ab$ ($S\rightarrow aA, A\rightarrow C, C\rightarrow b$) und $bc$ ($S\rightarrow bB, B\rightarrow c$). $bc$ passt dank 9.
 
-\vspace{1ex}
+\bigskip
 
 8 ist das selbe Symbol fünf mal wiederholt. Da wir durch 1 ein $b$ haben, ist 8 $bbbbb$.
 
-\vspace{1ex}
+\bigskip
 
 Nun bietet sich 2 an, hier haben wir bereits zwei Buchstaben.
 Analysiert man den Automaten, stellt man fest, dass die Sprache verschiedene Bausteine mit einem Schleifendurchlauf generieren kann.
@@ -89,27 +119,27 @@ Diese Bausteine können wir beliebig kombinieren, um achtstellige Wörter zu erz
 Damit fallen alle Wörter aus Fall 4 heraus (fünftes Zeichen $d$), die vierfache Wiederholung von Fall 1, Kombinationen aus Fall 1 und 2 (fünftes oder sechstes Zeichen $c$ oder $d$) sowie alle anderen Kombinationen mit zweimal Fall 2 (fünftes Zeichen $c$).
 Lediglich Fall 3 kombiniert mit Fall 1 kann also noch möglich sein. Aus den 8 generierbaren möglichkeiten gibt es nur eine, die $ba$ als fünftes und sechstes Zeichen enthält: $cbadbacd$. Das ist unser Wort.
 
-\vspace{1ex}
+\bigskip
 
 7 muss auf $ab$ enden und dank 2 ein $a$ an zweiter Stelle haben. Also kann 7 nur $cabab$ sein.
 
-\vspace{1ex}
+\bigskip
 
 3 sind die bereits bekannten Palindrome mit $a$ und $b$. Da die dritte, fünfte und sechste Stelle gegeben sind ($\_,\_,a,\_,b,a$) können wir das Wort einfach zu $abaaba$ ergänzen.
 
-\vspace{1ex}
+\bigskip
 
 6 kann mit Wörtern der Länge 4 nur generieren: $c^2ba^{2-1}$ und $c^2a^2$. Da 3 mit a beginnt, geht nur $ccaa$.
 
-\vspace{1ex}
+\bigskip
 
 10 kann durch einfaches Starten mit $d$ (aus 2) deterministisch gelöst werden und wird $dccb$.
 
-\vspace{1ex}
+\bigskip
 
 Da 4 nun durch 10 mit $c$ beginnt, kann sie nur $cbadc$ sein.
 
-\vspace{1ex}
+\bigskip
 
 11 hat nur den Hinweis, dass der dritte Buchstabe $d$ ist. Damit $d$ gelesen weden kann, muss $c$ auf dem Stack liegen, was ein Symbol löscht. Da der Automat durch leeren Keller akzeptiert, muss aber noch ein weiteres Zeichen auf dem Stack verbleiben, damit $d$ das vorletzte Symbol sein kann. Da 5 nur $a$ und $b$ enthalten darf, muss das akzeptierte Zeichen ein $a$ oder $b$ sein. Es gibt nur eine Regel, die das erfüllt: $b,a/\epsilon$. Also muss unter dem $c$ noch ein $a$ auf dem Stack liegen. Die Eingabe muss auf $db$ enden.
 
@@ -127,7 +157,7 @@ Da 4 nun durch 10 mit $c$ beginnt, kann sie nur $cbadc$ sein.
 		\end{tabular}
 \end{table*}
 
-\vspace{1ex}
+\bigskip
 
 Als letztes ist noch 5 zu lösen. Hier haben wir bereits gegeben: \\ $a,\_,b,\_,b,b,\_,b,\_,\_,b,\_$. 
 
