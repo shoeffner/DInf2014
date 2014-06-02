@@ -4,6 +4,7 @@
 \usepackage{lmodern}
 \usepackage[ngerman]{babel}
 \usepackage{amsmath, amssymb}
+\usepackage{array}
 \usepackage{phonetic} % for reversed D
 \usepackage{wasysym}  % for the notes
 \usepackage{tikz, tikzsymbols}
@@ -99,6 +100,27 @@ Algorithmisch ist dies für $\omega_i \rightarrow \omega_{i+1}$:
 \text{Für Einfügen von $00$: }&
 \omega_{i+1} = \left(\omega_i-1\right)\cdot 2^2 + 1 = 2^2\omega_i-3\\
 \end{align*}
+Oder anders:
+\begin{center}
+\begin{tabular}{>{\ttfamily}rrr}
+   Bin\"ar & Operation & Dezimal \\\hline
+   1001 & -1 & 9 \\
+   1000 & $\div 2$ \\
+   100 & +1 \\
+   101 & $\cdot 4$ \\
+   10100 & +1 \\
+   10101 & & 21
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{>{\ttfamily}rrr}
+   Bin\"ar & Operation & Dezimal \\\hline
+   1001 & -1 & 9 \\
+   1000 & $\cdot 2^2$ \\
+   100000 & +1 \\
+   100001 & & 33 \\
+\end{tabular}
+\end{center}
 
 Für $k > 0$ stellen wir beim Einfügen also folgende Gesetzmäßigkeiten zwischen den Dezimalwerten von $\omega_i$ und $\omega_{i+1}$ fest:
 \begin{itemize}
@@ -272,21 +294,6 @@ Der erste Teil ist gefolgt von einem $\_,b$, das durch $S \rightarrow ab$ erzeug
 Dieser neue erste Teil kann nun mit den letzten vier Zeichen $\_,\_,b,\_$ erneut durch $S \rightarrow SS$ verbunden werden. Um die letzten Zeichen sinnvoll zu erfüllen, muss für das gegebene $b$ die Regel $S \rightarrow ab$ angewandt werden ($\_,a,b,\_$). Die letzte anzuwendende Regel ist offensichtlich $S \rightarrow aSb$. Damit ist das Wort \linebreak $a--ab-ab--b---ab---a-ab-b = aababbabaabb$.
 
 
-\section*{Aufgabe 5.5}
-Nach dem Vorgehen in der Vorlesung muss man nur die einzelnen Regeln auflösen und als Übergänge schreiben.
-\begin{center}
-\begin{tikzpicture}[->, auto, node distance=3cm]
-  \node[initial,state] (Z1) {$Z_1$};
-  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
-             edge [loop above,align=center] node {$\epsilon,S/A$ \\ $\epsilon,S/AS$ \\ $\epsilon,S/\revrpt D$ \\ 
-                                                  $\epsilon,A/BB$ \\$\epsilon,A/CBC$ \\ $\epsilon,B/CC$ \\
-                                                  $\epsilon,B/\halfnote$ \\ $\epsilon,C/\quarternote$ \\
-                                                  $\epsilon,C/\twonotes$ \\ $\epsilon,D/S\rpt$ \\ $\epsilon,D/S\rpt S$}  (Z1);
-\end{tikzpicture}
-\end{center}
-
-
-
 
 \section*{Aufgabe 5.6}
 Um zu zeigen, dass alle korrekt geklammerten Klammerfolgen sich als deterministisch kontextfreie Sprache darstellen lassen, malen wir doch einfach mal einen DeterministischenKellerAutomaten:
@@ -300,6 +307,68 @@ Um zu zeigen, dass alle korrekt geklammerten Klammerfolgen sich als deterministi
              edge [loop right,align=center] node {$(,(/(($ \\ $),(/\epsilon$}  (Z2);
 \end{tikzpicture}
 \end{center}
+
+
+
+\section*{Aufgabe 5.5}
+Nach dem Vorgehen in der Vorlesung muss man nur die einzelnen Regeln auflösen und als Übergänge schreiben.
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state] (Z1) {$Z_1$};
+  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
+             edge [loop above,align=center] node {$\epsilon,S/A$ \\ $\epsilon,S/AS$ \\ $\epsilon,S/\revrpt D$ \\ 
+                                                  $\epsilon,A/BB$ \\$\epsilon,A/CBC$ \\ $\epsilon,B/CC$ \\
+                                                  $\epsilon,B/\halfnote$ \\ $\epsilon,C/\quarternote$ \\
+                                                  $\epsilon,C/\twonotes$ \\ $\epsilon,D/S\rpt$ \\ $\epsilon,D/S\rpt S$}  (Z1);
+\end{tikzpicture}
+\end{center}
+
+\newcommand{\w}{\halfnote\quarternote\quarternote\revrpt\twonotes\halfnote\quarternote\rpt}
+\setlength{\tabcolsep}{1em}
+\renewcommand{\arraystretch}{1.5}
+\begin{center}
+   \begin{tabular}{llr}
+      \hline
+      \"Ubergang & Stack & Wort \\\hline
+                 & $S$ & \w\\
+      $\varepsilon,S$/$AS$ & $AS$ & \w \\
+      $\varepsilon,A$/$BB$ & $BBS$ & \w \\
+      $\varepsilon,B$/$CC$ & $BCCS$ & \w \\
+      $\varepsilon,B/\halfnote$ & $\halfnote CCS$ &
+      \halfnote\quarternote\quarternote\revrpt\twonotes\halfnote\quarternote\rpt \\
+      $\halfnote,\halfnote$/$\varepsilon$ & $CCS$ &
+      \quarternote\quarternote\revrpt\twonotes\halfnote\quarternote\rpt \\
+      $\varepsilon,C$/\quarternote & $\quarternote CS$ &
+      \quarternote\quarternote\revrpt\twonotes\halfnote\quarternote\rpt  \\
+      $\quarternote,\quarternote$/$\varepsilon$ & $CS$ &
+      \quarternote\revrpt\twonotes\halfnote\quarternote\rpt \\
+      $\varepsilon,C$/\quarternote & $\quarternote S$ &
+      \quarternote\revrpt\twonotes\halfnote\quarternote\rpt  \\
+      $\quarternote,\quarternote$/$\varepsilon$ & $S$ &
+      \revrpt\twonotes\halfnote\quarternote\rpt \\
+      $\varepsilon,S$/$\revrpt D$ & $\revrpt D$ & \revrpt\twonotes\halfnote\quarternote\rpt \\
+      $\revrpt,\revrpt$/$\varepsilon$ & $D$ & \twonotes\halfnote\quarternote\rpt \\
+      $\varepsilon,D$/$S\rpt$ & $S\rpt$ & \twonotes\halfnote\quarternote\rpt \\
+      $\varepsilon,S$/$A$ & $A\rpt$ & \twonotes\halfnote\quarternote\rpt \\ 
+      $\varepsilon,A$/$CBC$ & $CBC\rpt$ & \twonotes\halfnote\quarternote\rpt \\ 
+      $\varepsilon,C$/\twonotes & $\twonotes BC\rpt$ & \twonotes\halfnote\quarternote\rpt \\ 
+      $\twonotes,\twonotes$/$\varepsilon$ & $BC\rpt$ & \halfnote\quarternote\rpt \\ 
+      $\varepsilon,B$/\halfnote & $\halfnote C\rpt$ & \halfnote\quarternote\rpt \\ 
+      $\halfnote,\halfnote$/$\varepsilon$ & $C\rpt$ & \quarternote\rpt \\ 
+      $\varepsilon,C$/\quarternote & $\quarternote\rpt$ & \quarternote\rpt \\ 
+      $\quarternote,\quarternote$/$\varepsilon$ & $\rpt$ & \rpt \\ 
+      $\rpt,\rpt$/$\varepsilon$ & $\langle leer \rangle$ & $\varepsilon$
+   \end{tabular}
+\end{center}
+
+Hingegen ist $w_2$ nicht akzeptabel, da die eizige Möglichkeit, es zu
+generieren, eine Satzform $BC$ wäre. Diese ist in der Grammatik nicht
+herleitbar. 
+
+
+
+
+
 
 
 
