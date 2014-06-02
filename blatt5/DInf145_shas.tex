@@ -56,8 +56,70 @@ Jede Schleife kann durch mehrere Zustände dargestellt werden:
 \end{center}
 
 \section*{Aufgabe 5.2}
+Zuerst zeigen wir, dass wenn $\omega \in L$, dann ist auch $\omega 0^* \in L$.
 
+\bigskip
 
+Sei $\omega$ durch 3 teilbar und somit $\omega \in L$. Dann ist das Wort $\omega 0^* \rightarrow \omega 0^n = \omega \cdot 2^n$ ($n \geq 0$). Da $\omega$ durch 3 teilbar ist, dann ist $\omega \cdot 2^n$ durch 3 teilbar und somit $\omega 0^* \in L$.
+
+\bigskip
+
+Für $r$ gibt es zwei Fälle, der erste Fall ist $110^*$. Dieser Fall ist trivial: $11$ ist durch $3$ teilbar und es wurde bereits gezeigt, dass $\omega 0^* \in L$, somit ist $110^* \in L$.
+
+\bigskip
+
+Nun zeigen wir den zweiten Fall, dass $\bigcup_{k\geq 0} L_k, L_k = \left\{10\right\}\left\{1,00\right\}^k\left\{01\right\}$.
+
+\subsection*{Induktionsannahme}
+$\bigcup_{k=0}^n L_k = L_0 \cup L_1 \cup \cdots \cup L_n \in L$.
+
+\subsection*{Basis Schritt}
+\begin{align*}
+\bigcup_{k=0}^0 L_k &= L_0 = \left\{10\right\}\left\{1,00\right\}^0\left\{01\right\} \\
+                        &= 1001 \in L\ (1001_2 = 9_{10}) \\
+\bigcup_{k=0}^1 L_k &= L_0 \cup L_1 = L_0 \cup \left\{10\right\}\left\{1,00\right\}^1\left\{01\right\} \\
+                        &= \left\{10101,100001\right\} \in L\ (10101_2 = 21_{10}, 100001_2 = 33_{10}) \\
+\end{align*}
+Wir können garantieren, dass $\left\{1,00\right\}$ immer an der selben Stelle eingefügt wird, da wir jedes Wort so generieren können. Z.B.:
+\begin{itemize}
+	\item $1001 \rightarrow 10101$
+	\item $1001 \rightarrow 100001$
+	\item $1000100101 \rightarrow 10001001101$
+	\item $1000100101 \rightarrow 100010010001$
+\end{itemize}
+
+Algorithmisch ist dies für $\omega_i \rightarrow \omega_{i+1}$:
+\begin{align*}
+\text{Für Einfügen von $1$: }&
+\omega_{i+1} = \left(\frac{\omega_i-1}{2}+1\right)\cdot 4 +1 = 2\omega_i+3\\
+\text{Für Einfügen von $00$: }&
+\omega_{i+1} = \left(\omega_i-1\right)\cdot 2^2 + 1 = 2^2\omega_i-3\\
+\end{align*}
+
+Für $k > 0$ stellen wir beim Einfügen also folgende Gesetzmäßigkeiten zwischen den Dezimalwerten von $\omega_i$ und $\omega_{i+1}$ fest:
+\begin{itemize}
+	\item Fügen wir $00$ an der o.g. Stelle in $\omega_i$ ein (z.B. $1001 \rightarrow 100001$, oder $10100101 \rightarrow 1010010001$), so erhalten wir ${\omega_{10}}_{i+1} = 2^2 {\omega_{10}}_i - 3$.
+	\item Fügen wir $1$ an der o.g. Stelle in $\omega_i$ ein (z.B. $1001 \rightarrow 10101$, oder $10100101 \\ \rightarrow 101001101$), so erhalten wir ${\omega_{10}}_{i+1} = 2 {\omega_{10}}_i + 3$.
+\end{itemize}
+
+Diese Gesetzmäßigkeit können wir im Induktionsschritt verwenden.
+
+\subsection*{Induktionsschritt}
+\begin{align*}%{rcl}
+\bigcup_{k=0}^{n+1} L_k &= L_0 \cup L_1 \cup \cdots \cup L_{n+1} \\
+\bigcup_{k=0}^{n+1} L_k &= \bigcup_{k=0}^{n} L_k \cup L_{n+1} \\
+&= \bigcup_{k=0}^{n} L_k \cup \left\{10 \right\} \left\{1,00 \right\}^{n+1} \left\{ 01 \right\} \\
+&= \bigcup_{k=0}^{n} L_k \cup \left\{10 \right\} \left\{1,00 \right\}^n \left\{ 1,00 \right\}^1 \left\{ 01 \right\} \\
+&= \bigcup_{k=0}^{n} L_k \cup \left( \left\{ 10 \right\} \left\{ 1,00 \right\}^n 00 \left\{ 01 \right\} \cup \left\{ 10 \right\} \left\{ 1,00 \right\}^n 1 \left\{ 01 \right\}  \right) \\
+&= \bigcup_{k=0}^{n} L_k \cup \left( 2^2 \left( \left\{ 10 \right\} \left\{ 1,00 \right\}^n \left\{ 01 \right\} \right)_{10} - 3 \cup 2 \left( \left\{10\right\} \left\{1,00\right\}^n \left\{01\right\} \right)_{10} + 3 \right)\\
+&= \bigcup_{k=0}^{n} L_k \cup \left( 2^2 \left( L_n \right)_{10} - 3 \cup 2 \left( L_n \right)_{10} + 3 \right) \\
+&\text{Nach Induktionsannahme und Basissschritt gilt: } \\
+&2^2 \left( L_n \right)_{10} - 3 \in L \\
+&2 \left( L_n \right)_{10} + 3 \in L \\
+&\text{Also ist auch } \\
+&\left( 2^2 \left( L_n \right)_{10} - 3 \cup 2 \left( L_n \right)_{10} + 3 \right) \in L\\
+&\left( 2^2 \left( L_n \right)_{10} - 3 \cup 2 \left( L_n \right)_{10} + 3 \right) = L_{n+1} \in L
+\end{align*}
 
 \section*{Aufgabe 5.3}
 
@@ -66,16 +128,16 @@ Jede Schleife kann durch mehrere Zustände dargestellt werden:
 \section*{Aufgabe 5.4}
 \begin{enumerate}
 	\item bc
-	\item cbadbacd
+	\item cabdbacd
 	\item abaaba
 	\item cbadc
 	\item aababbabaabb
 	\item ccaa
-	\item cabab
+	\item cbaab
 	\item bbbbb
   \item cabab
 	\item dccb
-  \item acbd
+  \item acdb
 \end{enumerate}
 
 \subsection*{Erklärungen}
@@ -112,16 +174,16 @@ Analysiert man den Automaten, stellt man fest, dass die Sprache verschiedene Bau
 \begin{enumerate}
 	\item $cd$
   \item $cada$, $cbdb$
-  \item $caadaa$, $cabdab$, $cbadba$, $cbbdbb$
-  \item $caaadaaa$ $caabdaab$, $cabadaba$, $cbaadbaa$, $cabbdabb$, $cbbadbba$, $cbabdbab$, $cbbbdbbb$
+  \item $caadaa$, $cabdba$, $cbadab$, $cbbdbb$
+  \item $caaadaaa$ $caabdbaa$, $cabadaba$, $cbaadaab$, $cabbdbba$, $cbbadabb$, $cbabdbab$, $cbbbdbbb$
 \end{enumerate}
 Diese Bausteine können wir beliebig kombinieren, um achtstellige Wörter zu erzeugen. Durch 8 und 9 sind allerdings das fünfte und sechste Zeichen beschränkt: sie können nur $ba$ sein.
 Damit fallen alle Wörter aus Fall 4 heraus (fünftes Zeichen $d$), die vierfache Wiederholung von Fall 1, Kombinationen aus Fall 1 und 2 (fünftes oder sechstes Zeichen $c$ oder $d$) sowie alle anderen Kombinationen mit zweimal Fall 2 (fünftes Zeichen $c$).
-Lediglich Fall 3 kombiniert mit Fall 1 kann also noch möglich sein. Aus den 8 generierbaren möglichkeiten gibt es nur eine, die $ba$ als fünftes und sechstes Zeichen enthält: $cbadbacd$. Das ist unser Wort.
+Lediglich Fall 3 kombiniert mit Fall 1 kann also noch möglich sein. Aus den 8 generierbaren Möglichkeiten gibt es nur eine, die $ba$ als fünftes und sechstes Zeichen enthält: $cabdbacd$. Das ist unser Wort.
 
 \bigskip
 
-7 muss auf $ab$ enden und dank 2 ein $a$ an zweiter Stelle haben. Also kann 7 nur $cabab$ sein.
+7 muss auf $ab$ enden und dank 2 ein $b$ an zweiter Stelle haben. Also kann 7 nur $cbaab$ sein.
 
 \bigskip
 
@@ -143,7 +205,7 @@ Da 4 nun durch 10 mit $c$ beginnt, kann sie nur $cbadc$ sein.
 
 11 hat nur den Hinweis, dass der dritte Buchstabe $d$ ist. Damit $d$ gelesen weden kann, muss $c$ auf dem Stack liegen, was ein Symbol löscht. Da der Automat durch leeren Keller akzeptiert, muss aber noch ein weiteres Zeichen auf dem Stack verbleiben, damit $d$ das vorletzte Symbol sein kann. Da 5 nur $a$ und $b$ enthalten darf, muss das akzeptierte Zeichen ein $a$ oder $b$ sein. Es gibt nur eine Regel, die das erfüllt: $b,a/\epsilon$. Also muss unter dem $c$ noch ein $a$ auf dem Stack liegen. Die Eingabe muss auf $db$ enden.
 
-\begin{table*}[h]
+\begin{table*}[ht]
 	\centering
 		\begin{tabular}{l|r}
       Eingabe & Stack \\
