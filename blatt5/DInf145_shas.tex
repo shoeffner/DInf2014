@@ -10,6 +10,13 @@
 \usepackage{xcolor}
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
+
+\newcommand{\rpt}{%
+        \raisebox{.2ex}{:}%
+        \raisebox{-.4ex}{\rule{.1ex}{2.5ex}\,\rule{.2ex}{2.5ex}}}
+\newcommand{\revrpt}{%
+        \raisebox{-.2ex}{\rule{.2ex}{2.5ex}\,\rule{.1ex}{2.5ex}}%
+        \raisebox{.2ex}{:}}
     
 \begin{document}
 
@@ -168,6 +175,18 @@ Dieser neue erste Teil kann nun mit den letzten vier Zeichen $\_,\_,b,\_$ erneut
 
 
 \section*{Aufgabe 5.5}
+Nach dem Vorgehen in der Vorlesung muss man nur die einzelnen Regeln auflösen und als Übergänge schreiben.
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state] (Z1) {$Z_1$};
+  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
+             edge [loop above,align=center] node {$\epsilon,S/A$ \\ $\epsilon,S/AS$ \\ $\epsilon,S/\revrpt D$ \\ 
+                                                  $\epsilon,A/BB$ \\$\epsilon,A/CBC$ \\ $\epsilon,B/CC$ \\
+                                                  $\epsilon,B/\halfnote$ \\ $\epsilon,C/\quarternote$ \\
+                                                  $\epsilon,C/\twonotes$ \\ $\epsilon,D/S\rpt$ \\ $\epsilon,D/S\rpt S$}  (Z1);
+\end{tikzpicture}
+\end{center}
+
 
 
 
