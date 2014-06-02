@@ -10,6 +10,13 @@
 \usepackage{xcolor}
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
+
+\newcommand{\rpt}{%
+        \raisebox{.2ex}{:}%
+        \raisebox{-.4ex}{\rule{.1ex}{2.5ex}\,\rule{.2ex}{2.5ex}}}
+\newcommand{\revrpt}{%
+        \raisebox{-.2ex}{\rule{.2ex}{2.5ex}\,\rule{.1ex}{2.5ex}}%
+        \raisebox{.2ex}{:}}
     
 \begin{document}
 
@@ -22,9 +29,7 @@
 
 
 \section*{Aufgabe 5.1}
-Sie sind gleich mächtig.
-
-Jede Schleife kann durch mehrere Zustände dargestellt werden:
+Sie sind gleich mächtig, da jede Schleife durch mehrere Zustände dargestellt werden kann.
 
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=3cm]
@@ -32,13 +37,13 @@ Jede Schleife kann durch mehrere Zustände dargestellt werden:
   \node[state]           (Z2) [right of=Z1] {$Z_2$};
   \node[state,accepting] (Z3) [right of=Z2] {$Z_3$};
 
-  \path (Z1) edge              node {$\epsilon$} (Z2)
-        (Z2) edge [loop below] node {$a$}        (Z2)
-             edge              node {$\epsilon$} (Z3)
+  \path (Z1) edge              node {$a$} (Z2)
+        (Z2) edge [loop below] node {$b$}        (Z2)
+             edge              node {$c$} (Z3)
         ;
 \end{tikzpicture}
 \end{center}
-
+wird umgeformt in:
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=3cm]
   \node[initial,state]   (Z1)               {$Z_1$};
@@ -46,11 +51,10 @@ Jede Schleife kann durch mehrere Zustände dargestellt werden:
   \node[state]           (Z4) [below of=Z2] {$Z_4$};
   \node[state,accepting] (Z3) [right of=Z2] {$Z_3$};
 
-  \path (Z1) edge              node {$\epsilon$} (Z2)
-        (Z2) edge [bend right] node {$a$}        (Z4)
-             edge [bend right] node {$a$}        (Z3)
-             edge [bend left]  node {$\epsilon$} (Z3)
-        (Z4) edge [bend right] node {$a$}        (Z2) 
+  \path (Z1) edge              node {$a$}        (Z2)
+        (Z2) edge [bend right] node {$b$}        (Z4)
+             edge              node {$c$}        (Z3)
+        (Z4) edge [bend right] node {$\epsilon$} (Z2) 
         ;
 \end{tikzpicture}
 \end{center}
@@ -122,8 +126,47 @@ Diese Gesetzmäßigkeit können wir im Induktionsschritt verwenden.
 \end{align*}
 
 \section*{Aufgabe 5.3}
+Hier benutzen wir den selben Trick mit den Grammatiken wie in 5.5.
+\subsection*{(a)}
+$w\in\{a,b\}^* \backslash \{\epsilon\} |$ w enthält gleich viele a und b. Grammatik dazu ist:\\ S $\rightarrow$ ba|ab|bSa|aSb|SS.
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state] (Z1) {$Z_1$};
+  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
+             edge [loop above,align=center] node {$\epsilon,S/ab$ \\ $\epsilon,S/ba$ \\ $\epsilon,S/bSa$ \\ 
+                                                  $\epsilon,S/aSb$ \\$\epsilon,S/SS$} (Z1);
+\end{tikzpicture}
+\end{center}
 
+\subsection*{(b)}
+$\{\eighthnote^i\halfnote^i|i\geq1\}$. Grammatik dazu ist: \\
+S $\rightarrow$ \eighthnote\halfnote\halfnote | \eighthnote S\halfnote\halfnote
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state] (Z1) {$Z_1$};
+  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
+             edge [loop above,align=center] node {$\epsilon,S/\eighthnote\halfnote\halfnote$ \\ 
+                                                  $\epsilon,S/\eighthnote S\halfnote\halfnote$} (Z1);
+\end{tikzpicture}
+\end{center}
 
+\subsection*{(c)}
+$\{c^ja^ib^i | i,j \geq1\} \cup \{a^jb^i|i,j \geq1 \}$. Die Grammatik dazu ist ein wenig komplizierter: \\
+S $\rightarrow$ CD | AB\\
+C $\rightarrow$ cC | c\\
+D $\rightarrow$ aDb | ab\\
+A $\rightarrow$ aA | a\\
+B $\rightarrow$ bB | b
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state] (Z1) {$Z_1$};
+  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
+             edge [loop above,align=center] node {$\epsilon,S/CD$ \\ $\epsilon,S/AB$ \\ $\epsilon,C/c$ \\ $\epsilon,C/cC$ \\
+                                                  $\epsilon,D/aDb$ \\ $\epsilon,D/ab$ \\ $\epsilon,A/aA$ \\ $\epsilon,A/a$ \\
+                                                  $\epsilon,B/bB$ \\ $\epsilon,B/b$} (Z1);
+\end{tikzpicture}
+\end{center}
 
 \section*{Aufgabe 5.4}
 \begin{enumerate}
@@ -230,10 +273,33 @@ Dieser neue erste Teil kann nun mit den letzten vier Zeichen $\_,\_,b,\_$ erneut
 
 
 \section*{Aufgabe 5.5}
+Nach dem Vorgehen in der Vorlesung muss man nur die einzelnen Regeln auflösen und als Übergänge schreiben.
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state] (Z1) {$Z_1$};
+  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
+             edge [loop above,align=center] node {$\epsilon,S/A$ \\ $\epsilon,S/AS$ \\ $\epsilon,S/\revrpt D$ \\ 
+                                                  $\epsilon,A/BB$ \\$\epsilon,A/CBC$ \\ $\epsilon,B/CC$ \\
+                                                  $\epsilon,B/\halfnote$ \\ $\epsilon,C/\quarternote$ \\
+                                                  $\epsilon,C/\twonotes$ \\ $\epsilon,D/S\rpt$ \\ $\epsilon,D/S\rpt S$}  (Z1);
+\end{tikzpicture}
+\end{center}
+
 
 
 
 \section*{Aufgabe 5.6}
+Um zu zeigen, dass alle korrekt geklammerten Klammerfolgen sich als deterministisch kontextfreie Sprache darstellen lassen, malen wir doch einfach mal einen DeterministischenKellerAutomaten:
+
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state,accepting]   (Z1)               {$Z_1$};
+  \node[state]                     (Z2) [right of=Z1] {$Z_2$};
+  \path (Z1) edge [bend left] node {(,\#/(\#} (Z2)
+        (Z2) edge [bend left] node {$\epsilon,\#/\epsilon$}  (Z1)
+             edge [loop right,align=center] node {$(,(/(($ \\ $),(/\epsilon$}  (Z2);
+\end{tikzpicture}
+\end{center}
 
 
 
