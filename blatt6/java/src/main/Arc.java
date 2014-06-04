@@ -75,4 +75,20 @@ public class Arc {
     public void unhide() {
         hidden = false;
     }
+
+    /**
+     * Replaces the start vertex.
+     * @param to new vertex
+     */
+    public void setTo(Vertex to) {
+        this.to = to;
+    }
+    
+    /**
+     * Replaces the end vertex.
+     * @param from new vertex
+     */
+    public void setFrom(Vertex from) {
+        this.from = from;
+    }
 }

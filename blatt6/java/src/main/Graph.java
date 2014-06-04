@@ -90,20 +90,49 @@ public class Graph {
     }
    
     /**
-     * Contracts the cycle given as a parameter.
-     * @param cycle a list which describes a cycle
+     * Contracts the cycle given as a parameter. Therefor a new vertex gets 
+     * created and placed into the graph at the position of the cycle. <br />
+     * <br />
+     * The graph's <br />
+     * <tt>A -> B -> D<br />
+     * B -> C -> B</tt><br />
+     * cycle <tt>B -> C -> B</tt> would get reduced to a vertex <tt>BC</tt> 
+     * which get's inserted into the graph, resulting in:<br />
+     * <tt>A -> BC -> D</tt>
+     * 
+     * @param cycle a list which describes the cycle
      */
     public void contractCycle(List<Vertex> cycle) {
+        // generate vertex name
+        String name = "";
+        for(Vertex v : cycle) {
+            name += v.getName();
+        }
         
-        // TODO contract cycle
+        // generate new Vertex
+        Vertex replacement = new Vertex(name);
+
+        // unhide arcs to work with them
+        arcs.forEach(Arc::unhide);
+        cycle.stream().forEach(v -> getIngoingArcs(v).forEach(a -> a.setTo(replacement)));
+        cycle.stream().forEach(v -> getOutgoingArcs(v).forEach(a -> a.setFrom(replacement)));
         
+        arcs.removeIf(a -> a.from().equals(a.to()));
+        vertices.removeAll(cycle);
+        vertices.add(replacement);
     }
     
     @Override
     public String toString() {
+        // find single vertices
+        arcs.forEach(Arc::unhide);
+        List<Vertex> solo = vertices.stream().filter(v -> getIngoingArcs(v).size() == 0 && getOutgoingArcs(v).size() == 0).collect(Collectors.toList());
+
         StringBuilder sb = new StringBuilder();
         sb.append("Graph: \n");
+        solo.forEach(v -> sb.append(" " + v + "\n"));
         arcs.forEach(a -> sb.append(" " + a + "\n"));
+        
         return sb.toString();
     }
 
@@ -121,10 +150,47 @@ public class Graph {
      */
     public boolean findCycles() {
         cycle.clear();
-
-        // TODO Find Cycle(s)
         
-        return hasCycle();
+        // unhide and unvisit all vertices and arcs
+        vertices.forEach(Vertex::unvisit);
+        arcs.forEach(Arc::unhide);
+
+        // "remove" vertices without either incoming or outgoing arcs until there are none left
+        List<Vertex> edgeVertices;
+        do {
+            edgeVertices = vertices.stream()
+                                   .filter(v -> !v.visited() 
+                                             && (getIngoingArcs(v).size() == 0 
+                                                 || getOutgoingArcs(v).size() == 0))
+                                   .collect(Collectors.toList());
+            // hide arcs and visit vertices
+            for(Vertex v : edgeVertices) {
+                getIngoingArcs(v).forEach(Arc::hide);
+                getOutgoingArcs(v).forEach(Arc::hide);
+                v.visit();
+            }
+        } while(edgeVertices.size() > 0);
+        
+        // pick one node at random, follow the path until you find a circle
+        List<Vertex> remainingVertices = vertices.stream().filter(v -> !v.visited()).collect(Collectors.toList());
+        
+        // no cycles:
+        if(remainingVertices.size() == 0) {
+            return false;
+        }
+        
+        // start traversing until you find a cycle
+        ArrayList<Vertex> visited = new ArrayList<Vertex>();
+        
+        Vertex current = remainingVertices.get(0);
+        while(!visited.contains(current)) {
+            visited.add(current);
+            current = getOutgoingArcs(current).get(0).to();
+        }
+
+        cycle = visited.subList(visited.indexOf(current), visited.size());
+        
+        return true;
     }
 
     /**

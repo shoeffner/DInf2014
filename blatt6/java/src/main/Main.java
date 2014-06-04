@@ -9,7 +9,24 @@ package main;
  */
 public class Main {
     public static void main(String[] args) {
-        Graph g = new Graph("testgraph.txt");
-        System.out.println(g);
+        Graph[] graphs = new Graph[]{
+                new Graph("singleVertex.txt"),
+                new Graph("noCycle.txt"),
+                new Graph("simpleCycle.txt"),
+                new Graph("complexCycle.txt"),
+                new Graph("multiCycle.txt"),
+        };
+        
+        for(Graph g : graphs) {
+            System.out.println(g);
+            
+            do {
+                if(g.findCycles()) {
+                    g.contractCycle(g.getCycle());
+                }
+            } while(g.hasCycle());
+            
+            System.out.println("Reduced " + g);
+        }
     }
 }
