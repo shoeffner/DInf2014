@@ -104,20 +104,32 @@ public class Graph {
      */
     public void contractCycle(List<Vertex> cycle) {
         // generate vertex name
-        String name = "";
-        for(Vertex v : cycle) {
-            name += v.getName();
-        }
+        String name = String.join("", cycle.stream().map(Vertex::getName).collect(Collectors.toList()));
         
         // generate new Vertex
         Vertex replacement = new Vertex(name);
 
-        // unhide arcs to work with them
-        arcs.forEach(Arc::unhide);
-        cycle.stream().forEach(v -> getIngoingArcs(v).forEach(a -> a.setTo(replacement)));
-        cycle.stream().forEach(v -> getOutgoingArcs(v).forEach(a -> a.setFrom(replacement)));
+        // unhide incoming/outgoing arcs of the cycle to work with them
+        arcs.parallelStream().forEach(a -> {
+            if(cycle.stream().anyMatch(v -> v.equals(a.from()) || v.equals(a.to()))) {
+                a.unhide();
+            }
+        });
         
+        // update arcs, set vertices to be visitable again
+        cycle.stream().forEach(v -> {
+            getIngoingArcs(v).forEach(a -> {
+                a.setTo(replacement); 
+                a.from().unvisit();
+            }); 
+            getOutgoingArcs(v).forEach(a -> {
+                a.setFrom(replacement); 
+                a.to().unvisit();
+            });
+        });
         arcs.removeIf(a -> a.from().equals(a.to()));
+
+        // remove cycle from graph and add its replacement
         vertices.removeAll(cycle);
         vertices.add(replacement);
     }
@@ -137,68 +149,40 @@ public class Graph {
     }
 
     /**
-     * Returns a list containing the cycle, if one was found. Otherwise the list is empty.
-     * @return the current found cycle
+     * Reduces the graph.
      */
-    public List<Vertex> getCycle() {
-        return cycle;
-    }
-
-    /**
-     * Searches for a cycle in the graph. This can be retrieved with {@link Graph#getCycle()}.
-     * @return true if a cycle was found
-     */
-    public boolean findCycles() {
-        cycle.clear();
-        
-        // unhide and unvisit all vertices and arcs
-        vertices.forEach(Vertex::unvisit);
-        arcs.forEach(Arc::unhide);
-
-        // "remove" vertices without either incoming or outgoing arcs until there are none left
-        List<Vertex> edgeVertices;
-        do {
-            edgeVertices = vertices.stream()
-                                   .filter(v -> !v.visited() 
-                                             && (getIngoingArcs(v).size() == 0 
-                                                 || getOutgoingArcs(v).size() == 0))
-                                   .collect(Collectors.toList());
-            // hide arcs and visit vertices
-            for(Vertex v : edgeVertices) {
-                getIngoingArcs(v).forEach(Arc::hide);
-                getOutgoingArcs(v).forEach(Arc::hide);
-                v.visit();
-            }
-        } while(edgeVertices.size() > 0);
-        
-        // pick one node at random, follow the path until you find a circle
+    public void reduce() {
         List<Vertex> remainingVertices = vertices.stream().filter(v -> !v.visited()).collect(Collectors.toList());
         
-        // no cycles:
-        if(remainingVertices.size() == 0) {
-            return false;
-        }
-        
-        // start traversing until you find a cycle
-        ArrayList<Vertex> visited = new ArrayList<Vertex>();
-        
-        Vertex current = remainingVertices.get(0);
-        while(!visited.contains(current)) {
-            visited.add(current);
-            current = getOutgoingArcs(current).get(0).to();
-        }
+        while(remainingVertices.size() > 0) {
+            // remove vertices with only one arc
+            do {
+                remainingVertices.parallelStream()
+                                 .filter(v -> getIngoingArcs(v).size() == 0 || getOutgoingArcs(v).size() == 0)
+                                 .forEach(v -> {
+                                     getIngoingArcs(v).forEach(Arc::hide);
+                                     getOutgoingArcs(v).forEach(Arc::hide);
+                                     v.visit();
+                                 });
+                remainingVertices = vertices.stream().filter(v -> !v.visited() && (getIngoingArcs(v).size() == 0 || getOutgoingArcs(v).size() == 0)).collect(Collectors.toList());
+            } while(remainingVertices.size() > 0);
 
-        cycle = visited.subList(visited.indexOf(current), visited.size());
-        
-        return true;
+            remainingVertices = vertices.stream().filter(v -> !v.visited()).collect(Collectors.toList());
+            
+            // if cycles exist
+            if(remainingVertices.size() > 0) {
+                // start traversing until you find a cycle
+                ArrayList<Vertex> visited = new ArrayList<Vertex>();
+                Vertex current = remainingVertices.get(0);
+                while(!visited.contains(current)) {
+                    visited.add(current);
+                    current = getOutgoingArcs(current).get(0).to();
+                }
+                // extract cycle from path
+                cycle = visited.subList(visited.indexOf(current), visited.size());
+                // contract cycle
+                contractCycle(cycle);
+            }
+        }
     }
-
-    /**
-     * Returns true if there is a cycle stored.
-     * @return true if there is a cycle
-     */
-    public boolean hasCycle() {
-        return cycle.size() > 0;
-    }
-    
 }

@@ -19,13 +19,7 @@ public class Main {
         
         for(Graph g : graphs) {
             System.out.println(g);
-            
-            do {
-                if(g.findCycles()) {
-                    g.contractCycle(g.getCycle());
-                }
-            } while(g.hasCycle());
-            
+            g.reduce();
             System.out.println("Reduced " + g);
         }
     }
