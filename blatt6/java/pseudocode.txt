@@ -1,0 +1,29 @@
+// filled
+Graph g
+Vertexlist V
+// empty
+Path P, Cycle C
+
+while |V| > 0
+  // remove vertices with indegree or outdegree of 0
+  do
+    for each v in V with inDeg == 0 or outDeg == 0
+      remove v from V
+  while v in V has inDeg == 0 or outDeg == 0
+
+  // if there are vertices left, we have at least one
+  if |V| > 0
+    empty P
+    pick arbitrary v in V
+    while v not in P
+      add v to P
+      pick arbitrary followup v
+    C = P from v to end
+    new Vertex q
+    for each inc arc of v in C
+      end arc at q
+    for each out arc of v in C
+      start arc at q
+    remove C from G
+    add q to G
+    empty P, C
