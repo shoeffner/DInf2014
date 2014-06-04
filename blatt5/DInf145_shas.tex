@@ -150,43 +150,48 @@ Diese Gesetzmäßigkeit können wir im Induktionsschritt verwenden.
 \section*{Aufgabe 5.3}
 Hier benutzen wir den selben Trick mit den Grammatiken wie in 5.5.
 \subsection*{(a)}
-$w\in\{a,b\}^* \backslash \{\epsilon\} |$ w enthält gleich viele a und b. Grammatik dazu ist:\\ S $\rightarrow$ ba|ab|bSa|aSb|SS.
+$w\in\{a,b\}^* \backslash \{\epsilon\} |$ w enthält gleich viele a und b.
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=3cm]
   \node[initial,state] (Z1) {$Z_1$};
-  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
-             edge [loop above,align=center] node {$\epsilon,S/ab$ \\ $\epsilon,S/ba$ \\ $\epsilon,S/bSa$ \\ 
-                                                  $\epsilon,S/aSb$ \\$\epsilon,S/SS$} (Z1);
+  \node[state]         (Z2) [right of=Z1]{$Z_2$};
+  \path (Z1) edge                           node {$\cdot \in \Sigma,\#/\cdot \#$} (Z2)
+        (Z2) edge [loop right,align=center] node {$a,\cdot \in \Sigma/a\cdot$ \\ $b,\cdot \in \Sigma/b\cdot$ \\ 
+                                                  $a,b/\epsilon$ \\ $b,a/\epsilon$ \\$\epsilon,\#/\#$} (Z2);
 \end{tikzpicture}
 \end{center}
 
 \subsection*{(b)}
-$\{\eighthnote^i\halfnote^i|i\geq1\}$. Grammatik dazu ist: \\
-S $\rightarrow$ \eighthnote\halfnote\halfnote | \eighthnote S\halfnote\halfnote
+$\{\eighthnote^i\halfnote^i|i\geq1\}$.
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=3cm]
   \node[initial,state] (Z1) {$Z_1$};
-  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
-             edge [loop above,align=center] node {$\epsilon,S/\eighthnote\halfnote\halfnote$ \\ 
-                                                  $\epsilon,S/\eighthnote S\halfnote\halfnote$} (Z1);
+  \node[state]         (Z2) [right of=Z1]{$Z_2$};
+  \path (Z1) edge [loop above,align=center] node {$\eighthnote,\cdot \in \Gamma /\halfnote\halfnote\cdot$}(Z1)
+        (Z1) edge node {$\halfnote,\halfnote/\epsilon$} (Z2)
+        (Z2) edge [loop above,align=center] node {$\halfnote,\halfnote/\epsilon$ \\ $\epsilon,\#/\epsilon$} (Z2)
+        ;
 \end{tikzpicture}
 \end{center}
 
 \subsection*{(c)}
-$\{c^ja^ib^i | i,j \geq1\} \cup \{a^jb^i|i,j \geq1 \}$. Die Grammatik dazu ist ein wenig komplizierter: \\
-S $\rightarrow$ CD | AB\\
-C $\rightarrow$ cC | c\\
-D $\rightarrow$ aDb | ab\\
-A $\rightarrow$ aA | a\\
-B $\rightarrow$ bB | b
+$\{c^ja^ib^i | i,j \geq1\} \cup \{a^jb^i|i,j \geq1 \}$.
 
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=3cm]
   \node[initial,state] (Z1) {$Z_1$};
-  \path (Z1) edge [loop below] node {$\cdot \in \Sigma,\cdot / \epsilon$}  (Z1)
-             edge [loop above,align=center] node {$\epsilon,S/CD$ \\ $\epsilon,S/AB$ \\ $\epsilon,C/c$ \\ $\epsilon,C/cC$ \\
-                                                  $\epsilon,D/aDb$ \\ $\epsilon,D/ab$ \\ $\epsilon,A/aA$ \\ $\epsilon,A/a$ \\
-                                                  $\epsilon,B/bB$ \\ $\epsilon,B/b$} (Z1);
+  \node[state] [above right of=Z1](Z2){$Z_2$};
+  \node[state] [below right of=Z1](Z3){$Z_3$};
+  \node[state] [right of=Z2](Z4){$Z_4$};
+  \node[state] [right of=Z3](Z5){$Z_5$};
+  \path (Z1) edge  node {$c,\cdot \in \Gamma / \cdot$}  (Z2)
+             edge  node {$a,\cdot \in \Gamma / \cdot$}  (Z3)
+        (Z2) edge [loop above]   node {$c,\cdot \in \Gamma /\cdot$} (Z2)
+             edge  node {$a,\#/a\#$}(Z4)
+        (Z3) edge [loop below]   node {$a,\cdot \in \Gamma / \cdot$}(Z3)
+             edge node {$b,\cdot \in \Gamma / \cdot$} (Z5)
+        (Z4) edge [loop right, align=center] node {$a,a/aa$ \\ $b,a/\epsilon$ \\ $\epsilon,\#/\epsilon$}(Z4)
+        (Z5) edge [loop right, align=center] node {$b,\cdot \in \Gamma/\cdot$ \\ $\epsilon,\#/\epsilon$}(Z5);
 \end{tikzpicture}
 \end{center}
 
