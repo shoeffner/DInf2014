@@ -208,30 +208,15 @@ Das Pumping Lemma ist stärker als das alternative Pumping Lemma. Da beide Bewei
 \section*{Aufgabe 4.5}
 \textit{Hinweis: Da wir in der Vorlesung gezeigt haben, dass $L_1 \cap L_2$ und $\overline{L_1}$ für die regulären Sprachen $L_i$ und $L_j$ ebenfalls regulär sind, ist auch $L_i \backslash L_j$ regulär, da der Differenzmengenoperator $\backslash$ auch als $L_1 \backslash L_2 = L_1 \cap \overline{L_2}$ geschrieben werden kann. Reguläre Sprachen sind also auch unter der Differenz geschlossen.}
 
-\begin{samepage}
-Sei $L = L_1 \cup L_2 = \left\{c^ja^ib^i | i,j \geq 0 \right\} \cup \left\{ a^jb^i |i,j \geq 0 \right\}$ regulär.
+Sei $L = L_1 \cup L_2 = \{c^ja^ib^i | i,j \geq 0 \} \cup \{ a^jb^i |i,j \geq 0 \}$ regulär. Nach Abschlusseigenschaften müsste der Schnitt mit einer anderen regulären Sprache auch regulär sein. Wir schneiden $L$ mit $L*=\{c\}\{a\}^*\{b\}^*$.
 
-$L_2$ ist regulär, da für die Sprache mindestens der reguläre Ausdruck $a^*b^*$ existiert.
-\begin{align*}
-L_3 = L \backslash L_2 &= \left\{c^ja^ib^i | i,j \geq 0 \right\} \cup \left\{ a^jb^i |i,j \geq 0 \right\}\ \backslash\ \left\{ a^jb^i |i,j \geq 0 \right\}\ \\
-                       &= \left\{c^ja^ib^i | i \geq 0, j \geq 1 \right\}
-\end{align*}
-
-$L_3$ ist nach Annahme, dass $L$ regulär ist, weiterhin regulär. 
-
-\vspace{1em}
-
-Die Sprache $L_4$ über dem selben Alphabet können wir definieren als $L_4 = \left\{c^ia^jb^k | i \geq 1, j, k \geq 0 \right\}$. Sie ist ebenfalls regulär, da für sie mindestens der reguläre Ausdruck $c^+a^*b^*$ existiert.
-
-Die Differenz $L_5 = L_1 \backslash L_4$ ist
-\begin{align*}
-L_5 = L_3 \backslash L_4 &= \left\{c^ja^ib^i | i \geq 0, j \geq 1 \right\} \backslash \left\{c^ia^jb^k | i \geq 1, j, k \geq 0 \right\} \\
-                         &= \left\{a^ib^i | i \geq 0 \right\}
-\end{align*}
-
-$L_5$ ist jedoch nach Beweis in der Vorlesung nicht regulär. Dies ist ein Widerspruch, aus dem folgt: Die Sprache $L$ ist nicht regulär.
-\end{samepage}
-
+$L\cap L^*=L'=\left\{ca^ib^i|i\geq0\right\}$ Wenn $L'$ regulär ist, können wir dafür einen NDEA erstellen. Wir definieren nun einen Homomorphismus h mit:
+\begin{align}
+h(c)=\epsilon\\
+h(a)=a\\
+h(b)=b
+\end{align}
+Wenn wir diesen auf unseren Automaten anwenden werden alle $c$-Kanten durch $\epsilon$-Kanten ersetzt. Somit ergibt sich für $h(L')=\left\{a^ib^i|i\geq0\right\}$. Wir wissen, dass dies nicht regulär ist, also ist auch $L$ nicht regulär gewesen.
 
 \section*{Aufgabe 4.6}
 Wenn die Sprache regulär ist, dann können wir z.B. einen endlichen Automaten oder regulären Ausdruck finden, der die Sprache $L = \left\{a^ib^j | i \geq j \geq 0, j \leq 2000 \right\}$ beschreibt.
