@@ -4,26 +4,45 @@ Vertexlist V
 // empty
 Path P, Cycle C
 
-while |V| > 0
+while |V| > 0                                          | O(1)...O(n)
   // remove vertices with indegree or outdegree of 0
-  do
-    for each v in V with inDeg == 0 or outDeg == 0
-      remove v from V
-  while v in V has inDeg == 0 or outDeg == 0
+  do                                                       | O(1)...O(ceil(n/2)) (run loop once ... single chain graph) Avg?
+    for each v in V with inDeg == 0 or outDeg == 0             | O(1)
+      remove v from V                                          | O(1)
+  while any v in V has inDeg == 0 or outDeg == 0                  
 
   // if there are vertices left, we have at least one
   if |V| > 0
     empty P
     pick arbitrary v in V
-    while v not in P
+    while v not in P                                       | O(2)...O(n)  (cycle of two nodes ... cycle of full graph) Avg?
       add v to P
       pick arbitrary followup v
-    C = P from v to end
+    C = P from v to end                                    | O(1)
     new Vertex q
-    for each inc arc of v in C
+    for each inc arc of v in C                             | O(v) = O(2)...O(n)
       end arc at q
-    for each out arc of v in C
+    for each out arc of v in C                             | O(v) = O(2)...O(n)
       start arc at q
     remove C from G
     add q to G
     empty P, C
+
+Time complexity:
+
+  O(1)...O(n) * [O(1)...O(ceil(n/2)) + O(2)...O(n) + 2 * O(2)...O(n)]
+= O(1)...O(n) * [O(1)...O(ceil(n/2)) + 3 * O(2)...O(n)]
+~ O(1)...O(n) * [4 * O(2)...O(n)]
+~ 4 * O(1)...O(n) * O(2)...O(n)
+= 4 * O(2)...O(n^2)
+~ O(1)...O(n^2)
+
+But!
+
+The time complexities are dependent on each other. O(n^2) is just an upper bound, and O(1) just a theoretically lower bound.
+
+In the best case (only one single chain) we have:
+O(1) * [O(ceil(n/2))] = O(ceil(n/2)) ~ O(n/2)
+
+In the worst case (fully connected graph (i.e. connections from each node to each other)):
+O(n) * [O(1) + 3 * O(2)...O(n)] = (worst case) O(n) * [O(1) + 3 * O(n)] ~ O(n^2)
