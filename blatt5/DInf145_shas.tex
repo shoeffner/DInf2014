@@ -303,8 +303,18 @@ Um zu zeigen, dass alle korrekt geklammerten Klammerfolgen sich als deterministi
   \node[initial,state,accepting]   (Z1)               {$Z_1$};
   \node[state]                     (Z2) [right of=Z1] {$Z_2$};
   \path (Z1) edge [bend left] node {(,\#/(\#} (Z2)
-        (Z2) edge [bend left] node {$\epsilon,\#/\epsilon$}  (Z1)
+        (Z2) edge [bend left] node {$\epsilon,\#/\#$}  (Z1)
              edge [loop right,align=center] node {$(,(/(($ \\ $),(/\epsilon$}  (Z2);
+\end{tikzpicture}
+\end{center}
+Alternative:
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+  \node[initial,state,accepting]   (Z1)               {$Z_1$};
+  \node[state]                     (Z2) [right of=Z1] {$Z_2$};
+  \path (Z1) edge [bend left] node {(,\#/)\#} (Z2)
+        (Z2) edge [bend left] node {$\epsilon,\#/\#$}  (Z1)
+             edge [loop right,align=center] node {$(,\circ \in \Gamma/)\circ$ \\ $),)/\epsilon$}  (Z2);
 \end{tikzpicture}
 \end{center}
 
