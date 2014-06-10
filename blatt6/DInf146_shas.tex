@@ -30,20 +30,43 @@
 
 
 \section*{Aufgabe 6.1}
-%\begin{center}
-%\begin{tikzpicture}[->, auto, node distance=3cm]
-  %\node[initial,state] (Z0)               {$Z_0$};
-  %\node[state]         (Z1) [right of=Z1] {$Z_1$};
-  %\node[state]         (Z2) [above right of=Z2] {$Z_2$};
-  %\node[state]         (Z3) [below right of=Z2] {$Z_3$};
-  %\node[state]         (Z4) [right of=Z3] {$Z_3$};
-%
-  %\path (Z1) edge              node {$a$} (Z2)
-        %(Z2) edge [loop below] node {$b$}        (Z2)
-             %edge              node {$c$} (Z3)
-        %;
-%\end{tikzpicture}
-%\end{center}
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[initial,state] (Z0)               {$Z_0$};
+  \node[state]         (Z1) [right of=Z0] {$Z_1$};
+  \node[coordinate]                (C1) [above right of=Z1]{};
+  
+  \node[state]         (Z2) [above left of=C1] {$Z_2$};
+  \node[state]         (Z3) [below right of=C1] {$Z_3$};
+  \node[coordinate] (C2) [above right of=Z3]{};
+  \node[state]         (Z4) [above of=C2] {$Z_4$};
+  \node[state]         (Z5) [right of=Z4] {$Z_5$};
+  \node[state]         (Z6) [below of=Z5] {$Z_6$};
+  \node[state]         (Z7) [below of=Z4] {$Z_7$};
+  \node[state]         (Z8) [below of=Z3] {$Z_8$};
+  \node[state]         (Z9) [below of=Z1] {$Z_9$};
+  \node[state]         (Z10) [above of=Z2] {$Z_{10}$};
+  
+
+  \path (Z0) edge              node {$\epsilon,\$/\#\$$} (Z1)
+        (Z1) edge              node {$a,\star\in\Gamma/b\star$} (Z2)
+             edge [bend left,pos=0.45] node {$c,a/ba$} (Z3)
+        (Z2) edge [bend left,sloped]             node {$a,b/\epsilon$} (Z3)
+         edge  [pos=0.3, sloped]            node {$c,b/cc$} (Z3)
+         edge node{$\epsilon,\star\in\Gamma/\epsilon$}(Z10)
+        (Z3) edge  [bend left]            node {$a,\star\in\Gamma/\epsilon$} (Z1)
+        edge      [sloped,pos=0.8]        node {$c,a/cc$} (Z4)
+        edge              node {$\circ\in\Sigma,\circ/\circ\circ$} (Z8)
+        (Z4) edge              node {$\epsilon,c/cc$} (Z5)
+        (Z5) edge              node {$\epsilon,c/ac$} (Z6)
+        (Z6) edge              node {$\epsilon,a/ba$} (Z7)
+        (Z7) edge              node {$\epsilon,b/ab$} (Z3)
+        (Z8) edge              node {$\circ\in\Sigma,\circ/\circ\circ$} (Z9)
+        (Z9) edge              node {$\circ\in\Sigma,\circ/\circ\circ$} (Z1)
+        (Z10) edge [loop right] node{$\epsilon,\star\in\Gamma/\epsilon$}(Z10)
+        ;
+\end{tikzpicture}
+\end{center}
 
 
 
@@ -61,6 +84,13 @@
 
 
 \section*{Aufgabe 6.5}
+Sei $L = \left\{\alpha 2 \alpha 2 \alpha | \alpha \in \left\{0,1\right\}^* \right\} \subset \left\{0,1,2\right\}^*$ kontextfrei. Dann existiert gibt es für jedes Wort $z, |z|\geq n$ mit einer Zerlegung $z=uvwxy$ mit $|vx|\geq 1, |uvw|\leq n, \forall i \geq 0: uv^iwx^iy \in L$.
+
+Betrachten wir das Wort $z = \alpha 2 \alpha 2 \alpha$ mit $|\alpha|=n$.
+
+Dann ist $uvw \subseteq \alpha$. 
+
+Egal wie wir das Wort aufpumpen: entweder wir verändern nur einen Teil der $\alpha$s, wodurch diese nicht mehr gleich sind, oder wir pumpen gar etwas mit 2en auf.
 
 
 
@@ -69,6 +99,7 @@ Beim Algorithmus zur Umwandlung NDKA-AdLK in die KF-Grammatik können nur Regeln
 \begin{enumerate}
 	\item $V \rightarrow \epsilon$
   \item $V \rightarrow V$
+  \item $V \rightarrow \Sigma$
   \item $V \rightarrow \Sigma \times V$
   \item $V \rightarrow \Sigma \times V \times V$
 \end{enumerate}
@@ -79,20 +110,20 @@ Für Regeln der Form 2 muss eine Umformung durchgeführt werden, damit sie der D
 
 Diese Umformung ist eine Substitution nach folgendem Algorithmus:
 
-Für eine Regel $V \rightarrow U$ mit den Regeln $U_i \rightarrow \left\{W\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ erstelle Regeln $V \rightarrow \left\{W\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ durch ersetzen der \textit{ersten} Variable mit der Folgeregel $U_i$. Wird die Folgeregel $U_i$ nicht weiter benötigt, entferne sie.
-Wiederhole den Vorgang bis nur noch Regeln der Form $V \rightarrow \left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ vorhanden sind.
+Für eine Regel $V \rightarrow U$ mit den Regeln $U_i \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ erstelle Regeln $V \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ durch ersetzen der \textit{ersten} Variable mit der Folgeregel $U_i$. Wird die Folgeregel $U_i$ nicht weiter benötigt, entferne sie.
+Wiederhole den Vorgang bis nur noch Regeln der Form $V \rightarrow \cup\left\{\Sigma\right\}\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ vorhanden sind.
 
 Beispiel:
 \begin{align*}
 \begin{array}{llll}
 Schritt 1 & Schritt 2 & Schritt 3 & Schritt 4 \\
 \hline
-S \rightarrow sA     & S \rightarrow sA      & S \rightarrow sA & S \rightarrow sA\\
-A \rightarrow aA | B & A \rightarrow aA | CD & A \rightarrow aA | DD | cD &A \rightarrow aA | dD | cD\\
-B \rightarrow CD     & C \rightarrow D & C \rightarrow c &C \rightarrow c\\
-C \rightarrow D      & C \rightarrow c & D \rightarrow d &D \rightarrow d\\
-C \rightarrow c      & D \rightarrow d &&\\
-D \rightarrow d      & & &\\
+S \rightarrow sA     & S \rightarrow sA       & S \rightarrow sA            & S \rightarrow sA \\
+A \rightarrow aA | B & A \rightarrow aA | bCD & A \rightarrow aA | bDD | cD & A \rightarrow aA | dD | cD \\
+B \rightarrow bCD    & C \rightarrow D        & C \rightarrow c             & C \rightarrow c \\
+C \rightarrow D      & C \rightarrow c        & D \rightarrow d             & D \rightarrow d \\
+C \rightarrow c      & D \rightarrow d        &                             & \\
+D \rightarrow d      &                        &                             & \\
 \end{array}
 \end{align*}
 
