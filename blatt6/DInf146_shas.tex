@@ -69,12 +69,72 @@
 \end{center}
 
 
-
-
 \section*{Aufgabe 6.2}
+\scriptsize
+\textbf{Regeln $\forall Z_i \in Z: S \rightarrow R_{(Z_S,\#,Z_i)}$\\}
+\begin{tabular}{l}
+$S \rightarrow R_{(Z_1,\#,Z_1)}$ \\
+$S \rightarrow R_{(Z_1,\#,Z_2)}$ \\
+\end{tabular}
 
+\textbf{Regeln für Kanten $a,b/\epsilon$\\}
+\begin{tabular}{l}
+$R_{(Z_1,b,Z_1)} \rightarrow b$ \\
+$R_{(Z_1,\#,Z_1)} \rightarrow b$ \\
+$R_{(Z_1,c,Z_1)} \rightarrow c$ \\
+\end{tabular}
 
+\textbf{Regeln für Kanten $a,b/c$\\}
+\begin{tabular}{l}
+$R_{(Z_1,b,Z_1)} \rightarrow bR_{(Z_1,b,Z_1)}$ \\
+$R_{(Z_1,b,Z_2)} \rightarrow bR_{(Z_1,b,Z_2)}$ \\
+$R_{(Z_2,b,Z_1)} \rightarrow cR_{(Z_2,b,Z_1)}$ \\
+$R_{(Z_2,b,Z_2)} \rightarrow cR_{(Z_2,b,Z_2)}$ \\
+$R_{(Z_2,b,Z_1)} \rightarrow bR_{(Z_1,c,Z_1)}$ \\
+$R_{(Z_2,b,Z_2)} \rightarrow bR_{(Z_1,c,Z_2)}$ \\
+\end{tabular}
 
+\textbf{Regeln für Kanten $a,b/cd$\\}
+\begin{tabular}{l}
+$R_{(Z_1,\#,Z_1)} \rightarrow aR_{(Z_2,b,Z_1)}R_{(Z_1,\#,Z_1)}$ \\
+$R_{(Z_1,\#,Z_1)} \rightarrow aR_{(Z_2,b,Z_2)}R_{(Z_2,\#,Z_1)}$ \\
+$R_{(Z_1,\#,Z_2)} \rightarrow aR_{(Z_2,b,Z_1)}R_{(Z_1,\#,Z_2)}$ \\
+$R_{(Z_1,\#,Z_2)} \rightarrow aR_{(Z_2,b,Z_2)}R_{(Z_2,\#,Z_2)}$ \\
+\end{tabular}
+
+\clearpage
+\textbf{Regelset mit markierten möglichen Regeln}\\
+\begin{tabular}{lll}
+\colorbox{green!30}{$S \rightarrow R_{(Z_1,\#,Z_1)}$} & \colorbox{green!30}{$R_{(Z_1,b,Z_1)} \rightarrow bR_{(Z_1,b,Z_1)}$} & \colorbox{green!30}{$R_{(Z_1,\#,Z_1)} \rightarrow aR_{(Z_2,b,Z_1)}R_{(Z_1,\#,Z_1)}$}\\
+\colorbox{white!30}{$S \rightarrow R_{(Z_1,\#,Z_2)}$} & \colorbox{white!30}{$R_{(Z_1,b,Z_2)} \rightarrow bR_{(Z_1,b,Z_2)}$} & \colorbox{white!30}{$R_{(Z_1,\#,Z_1)} \rightarrow aR_{(Z_2,b,Z_2)}R_{(Z_2,\#,Z_1)}$}\\
+\colorbox{green!30}{$R_{(Z_1,b,Z_1)} \rightarrow b$}  & \colorbox{green!30}{$R_{(Z_2,b,Z_1)} \rightarrow cR_{(Z_2,b,Z_1)}$} & \colorbox{white!30}{$R_{(Z_1,\#,Z_2)} \rightarrow aR_{(Z_2,b,Z_1)}R_{(Z_1,\#,Z_2)}$}\\
+\colorbox{green!30}{$R_{(Z_1,\#,Z_1)} \rightarrow b$} & \colorbox{white!30}{$R_{(Z_2,b,Z_2)} \rightarrow cR_{(Z_2,b,Z_2)}$} & \colorbox{white!30}{$R_{(Z_1,\#,Z_2)} \rightarrow aR_{(Z_2,b,Z_2)}R_{(Z_2,\#,Z_2)}$}\\
+\colorbox{green!30}{$R_{(Z_1,c,Z_1)} \rightarrow c$}  & \colorbox{green!30}{$R_{(Z_2,b,Z_1)} \rightarrow bR_{(Z_1,c,Z_1)}$} & \\
+& \colorbox{white!30}{$R_{(Z_2,b,Z_2)} \rightarrow bR_{(Z_1,c,Z_2)}$} & 
+\end{tabular}
+
+Die entstehende Grammatik ist:
+\begin{align*}
+S &\rightarrow R_{(Z_1,\#,Z_1)} \\
+R_{(Z_1,b,Z_1)} &\rightarrow b \\
+R_{(Z_1,\#,Z_1)} &\rightarrow b \\
+R_{(Z_1,c,Z_1)} &\rightarrow c \\
+R_{(Z_1,b,Z_1)} &\rightarrow bR_{(Z_1,b,Z_1)} \\
+R_{(Z_2,b,Z_1)} &\rightarrow cR_{(Z_2,b,Z_1)} \\
+R_{(Z_2,b,Z_1)} &\rightarrow bR_{(Z_1,c,Z_1)} \\
+R_{(Z_1,\#,Z_1)} &\rightarrow aR_{(Z_2,b,Z_1)}R_{(Z_1,\#,Z_1)}
+\end{align*}
+Gekürzt mit $R_1 = R_{(Z_1,\#,Z_1)}, R_2 = R_{(Z_1,b,Z_1)}, R_3 = R_{(Z_1,c,Z_1)}, R_4 = R_{(Z_2,b,Z_1)}$:
+\begin{align*}
+S   &\rightarrow R_1               \\
+R_1 &\rightarrow aR_4R_1 \ |\ b    \\
+R_2 &\rightarrow bR_2    \ |\ b    \\
+R_3 &\rightarrow c                 \\
+R_4 &\rightarrow cR_4    \ |\ bR_3
+\end{align*}
+\textit{Anm.: $R_2$ ist nicht erreichbar.}
+
+\normalsize
 \section*{Aufgabe 6.3}
 
 
@@ -110,7 +170,7 @@ Für Regeln der Form 2 muss eine Umformung durchgeführt werden, damit sie der D
 
 Diese Umformung ist eine Substitution nach folgendem Algorithmus:
 
-Für eine Regel $V \rightarrow U$ mit den Regeln $U_i \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ erstelle Regeln $V \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ durch ersetzen der \textit{ersten} Variable mit der Folgeregel $U_i$. Wird die Folgeregel $U_i$ nicht weiter benötigt, entferne sie.
+Für eine Regel $V \rightarrow U$ mit den Regeln $U_i \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\\\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ erstelle Regeln $V \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ durch ersetzen der \textit{ersten} Variable mit der Folgeregel $U_i$. Wird die Folgeregel $U_i$ nicht weiter benötigt, entferne sie.
 Wiederhole den Vorgang bis nur noch Regeln der Form $V \rightarrow \cup\left\{\Sigma\right\}\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ vorhanden sind.
 
 Beispiel:
