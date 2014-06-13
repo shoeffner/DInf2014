@@ -1,5 +1,5 @@
 // filled
-Graph g
+Graph G
 Vertexlist V
 // empty
 Path P, Cycle C
@@ -11,7 +11,7 @@ while |V| > 0                                          | O(1)...O(n)
       remove v from V                                      
   while any v in V has inDeg == 0 or outDeg == 0                  
 
-  // if there are vertices left, we have at least one
+  // if there are vertices left, we have at least one cycle
   if |V| > 0
     empty P
     pick arbitrary v in V

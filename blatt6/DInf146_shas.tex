@@ -8,7 +8,9 @@
 \usepackage{phonetic} % for reversed D
 \usepackage{wasysym}  % for the notes
 \usepackage{tikz, tikzsymbols}
-\usepackage{xcolor}
+\usepackage{xcolor}   % e.g. colored boxes
+\usepackage{listings} % source code
+\usepackage{algorithm2e} % pseudo code
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
 
@@ -46,7 +48,6 @@
   \node[state]         (Z8) [below of=Z3] {$Z_8$};
   \node[state]         (Z9) [below of=Z1] {$Z_9$};
   \node[state]         (Z10) [above of=Z2] {$Z_{10}$};
-  
 
   \path (Z0) edge              node {$\epsilon,\$/\#\$$} (Z1)
         (Z1) edge              node {$a,\star\in\Gamma/b\star$} (Z2)
@@ -67,6 +68,7 @@
         ;
 \end{tikzpicture}
 \end{center}
+
 
 
 \section*{Aufgabe 6.2}
@@ -133,9 +135,58 @@ R_3 &\rightarrow c                 \\
 R_4 &\rightarrow cR_4    \ |\ bR_3
 \end{align*}
 \textit{Anm.: $R_2$ ist nicht erreichbar.}
-
 \normalsize
+
+
+
 \section*{Aufgabe 6.3}
+\begin{algorithm}[H]
+  \KwIn{graph $G$, vertexlist $V$, empty path $P$, empty cycle $C$}
+  \KwOut{contracted graph $G$}
+  initialize $V$ with all vertices of $G$\;
+  \While{$V \neq \emptyset$}{
+    \Repeat{$\nexists v \in V$ with inDeg == 0 or outDeg == 0}{
+      \ForEach{$v \in V$ with inDeg == 0 or outDeg == 0}{
+        remove $v$ from $V$\;
+      }
+    }
+    \tcc{If there are vertices left, there must be a cycle}
+    \If{$V \neq \emptyset$}{
+      pick $v$ from $V$\;
+      \While{$v \notin P$}{
+        add $v$ to $P$\;
+        $v$ = follower of $v$\;
+      }
+      $C = P$ from $v$ to $end$\;
+      new vertex $q = contractCycle(C)$\;
+      remove $C$ from $G$\;
+      add $q$ to $G$\;
+      empty $P,C$\;
+    }
+  }
+  \caption{Contract Graph}
+\end{algorithm}
+
+\begin{algorithm}[H]
+  \KwIn{cycle $C$}
+  \KwOut{vertex $q$}
+  initialize vertex $q$\;
+  \ForEach{$v \in C$}{
+    \ForEach{incoming arc of $v$} {
+      end arc at $q$;
+    }
+    \ForEach{outgoing arc of $v$} {
+      start arc at $q$;
+    }
+  }
+  \Return{q}
+  \caption{Contract Cycle}
+\end{algorithm}
+
+\begin{itemize}
+	\item \textit{Algorithmus 1: Graph kontrahieren}: $\Omega(1 \cdot n) = \Omega(n)$ und $\mathcal{O}(n \cdot (n \cdot 1)) = \mathcal{O}(n^2)$
+  \item \textit{Algorithmus 2: Kreis kontrahieren}: $\mathcal{O}(n)$
+\end{itemize}
 
 
 
