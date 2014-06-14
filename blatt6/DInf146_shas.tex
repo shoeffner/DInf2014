@@ -191,6 +191,64 @@ R_4 &\rightarrow cR_4    \ |\ bR_3
 
 
 \section*{Aufgabe 6.4}
+Wir befolgen die einzelnen Schritte der Vorlesung, um die Grammatik in CNF umzuwandeln.
+\subsection*{Schritt 1 - Symbole ausgliedern}
+Hier ersetzt man einfach die Terminale mit Variablen.
+\begin{align*}
+S&\rightarrow D | D_dA\\
+A&\rightarrow A_aS | S | E\\
+B&\rightarrow D_dB_b | C\\
+C&\rightarrow E_eED_d | B\\
+D&\rightarrow A | CD_dDE_eB | D_d\\
+E&\rightarrow B | BB | C\\
+A_a&\rightarrow a\\
+B_b&\rightarrow b\\
+D_d&\rightarrow d\\
+E_e&\rightarrow e
+\end{align*}
+\subsection*{Schritt 2 - Kreise und Senken entfernen}
+\subsubsection*{a) Kreise loswerden}
+Hier kann man den Graphen malen, aber eigentlich sieht man auch an der Grammatik, dass es eine Menge Kreise gibt. Und zwar:
+\begin{align*}
+S&\rightarrow A\rightarrow S\\
+S&\rightarrow D\rightarrow A\rightarrow S\\
+C&\rightarrow E\rightarrow C\\
+B&\rightarrow C\rightarrow B
+\end{align*}
+Also ersetzen wir D,A durch S und E,C durch B. Das macht:
+\begin{align*}
+S&\rightarrow S | D_dS | A_aS | B | BD_dSE_eB | D_d\\
+B&\rightarrow D_dB_b | B | E_eBDd | BB\\
+A_a&\rightarrow a\\
+B_b&\rightarrow b\\
+D_d&\rightarrow d\\
+E_e&\rightarrow e
+\end{align*}
+
+\subsubsection*{b) Senken loswerden}
+Erst mal können die Selbstreferenzen alle entfernt werden. Dann muss nur noch das einzelne B und $D_d$ in S angepasst werden.
+\begin{align*}
+S&\rightarrow D_dS | A_aS | D_dB_b | E_eBDd | BB | BD_dSE_eB | d\\
+B&\rightarrow D_dB_b | E_eBDd | BB\\
+A_a&\rightarrow a\\
+B_b&\rightarrow b\\
+D_d&\rightarrow d\\
+E_e&\rightarrow e
+\end{align*}
+
+\subsection*{Schritt 3 - Variablen erfinden bis es passt}
+Hier muss man nur noch die Regeln die auf mehr als zwei Variablen abbilden anpassen, sodass diese auch nur noch auf zwei Abbilden. Dazu werden nach belieben neue Variablen eingefügt.
+\begin{align*}
+S&\rightarrow D_dS | A_aS | D_dB_b | XD_d | BB | YX | d\\
+B&\rightarrow D_dB_b | XD_d | BB\\
+X&\rightarrow E_eB\\
+Y&\rightarrow BZ\\
+Z&\rightarrow D_dS\\
+A_a&\rightarrow a\\
+B_b&\rightarrow b\\
+D_d&\rightarrow d\\
+E_e&\rightarrow e
+\end{align*}
 
 
 
