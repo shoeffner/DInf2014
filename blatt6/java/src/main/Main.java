@@ -15,6 +15,7 @@ public class Main {
                 new Graph("simpleCycle.txt"),
                 new Graph("complexCycle.txt"),
                 new Graph("multiCycle.txt"),
+                new Graph("aufg6_4.txt")
         };
         
         for(Graph g : graphs) {
