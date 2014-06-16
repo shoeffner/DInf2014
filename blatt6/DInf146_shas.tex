@@ -24,7 +24,7 @@
 \begin{document}
 
 \begin{center}
-  \Large{Informatik \revD: Übungsblatt 5}
+  \Large{Informatik \revD: Übungsblatt 6}
 
   \large{Sebastian Höffner, Andrea Suckro}
 \end{center}
@@ -267,37 +267,55 @@ Egal wie wir das Wort aufpumpen: entweder wir verändern nur einen Teil der $\al
 
 
 \section*{Aufgabe 6.6}
-Beim Algorithmus zur Umwandlung NDKA-AdLK in die KF-Grammatik können nur Regeln der folgenden Arten generiert werden:
+Unser Algorithmus geht nach folgenden Schritten vor:
+\subsection*{Schritt 1 - Epsilons entfernen}
+Zunächst entfernen wir alle Regeln der Form $V\rightarrow \epsilon$. Dazu entfernen wir einfach diese Regeln und wenn V sogar nur auf $\epsilon$ abbildet können wir die ganze Variable entfernen. Eine Ausnahme bildet hier die Startvariable, da wir diese nicht entfernen dürfen.
+
+\subsection*{Schritt 2 - Selfloops entfernen}
+Wir entfernen als nächstes alle Selfloops.
+
+\subsection*{Schritt 3 - Unpassendes ersetzen}
+Nach diesem Schritt bleiben nur noch Regeln der Form:
 \begin{enumerate}
-	\item $V \rightarrow \epsilon$
   \item $V \rightarrow V$
+  \item $V \rightarrow V\times V$
   \item $V \rightarrow \Sigma$
   \item $V \rightarrow \Sigma \times V$
   \item $V \rightarrow \Sigma \times V \times V$
 \end{enumerate}
+Wobei nur die ersten beiden nicht der GNF entsprechen. Um diese umzuformen ersetzen wir iterativ die erste Variable bei den kritischen Regeln durch die ausgeschriebene Form der Variablen. Dann überprüfen wir, ob es nach dem Ersetzungsschritt immer noch kritische Regeln gibt und ersetzen noch einmal. usw.
 
-Die Regeln 1, 3, 4 und 5 sind automatisch in der GNF (1 nach Übungsblatt, 3-5 nach Definition).
+Dieses Vorgehen funktioniert, da wir am Anfang nicht nur Selfloops sondern insbesondere auch $\epsilon$-Terminale entfernt haben. Wir landen also bei den Ersetzungen in jedem Fall am Ende immer auf einem $t \in \Sigma$.
 
-Für Regeln der Form 2 muss eine Umformung durchgeführt werden, damit sie der Definition der GNF entspricht.
-
-Diese Umformung ist eine Substitution nach folgendem Algorithmus:
-
-Für eine Regel $V \rightarrow U$ mit den Regeln $U_i \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\\\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ erstelle Regeln $V \rightarrow \left\{W\right\}\cup\left\{\Sigma\right\}\cup\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ durch ersetzen der \textit{ersten} Variable mit der Folgeregel $U_i$. Wird die Folgeregel $U_i$ nicht weiter benötigt, entferne sie.
-Wiederhole den Vorgang bis nur noch Regeln der Form $V \rightarrow \cup\left\{\Sigma\right\}\left\{\Sigma\times W\right\}\cup\left\{\Sigma \times W \times W\right\}\cup\left\{\epsilon\right\}$ vorhanden sind.
-
-Beispiel:
+\newpage
+\subsection*{Beispiel}
 \begin{align*}
-\begin{array}{llll}
-Schritt 1 & Schritt 2 & Schritt 3 & Schritt 4 \\
-\hline
-S \rightarrow sA     & S \rightarrow sA       & S \rightarrow sA            & S \rightarrow sA \\
-A \rightarrow aA | B & A \rightarrow aA | bCD & A \rightarrow aA | bDD | cD & A \rightarrow aA | dD | cD \\
-B \rightarrow bCD    & C \rightarrow D        & C \rightarrow c             & C \rightarrow c \\
-C \rightarrow D      & C \rightarrow c        & D \rightarrow d             & D \rightarrow d \\
-C \rightarrow c      & D \rightarrow d        &                             & \\
-D \rightarrow d      &                        &                             & \\
-\end{array}
+S   &\rightarrow \epsilon \ |\ AB \ |\ cA\\
+A &\rightarrow AC \ |\ cBB\\
+B &\rightarrow BB\ |\ cAD\\
+C &\rightarrow \epsilon\\
+D &\rightarrow f \ |\ \epsilon
 \end{align*}
-
-
+Jetzt wenden wir den ersten Schritt an und entfernen die $\epsilon$-Kanten.
+\begin{align*}
+S &\rightarrow \epsilon \ |\ AB \ |\ cA\\
+A &\rightarrow A \ |\ cBB\\
+B &\rightarrow BB\ |\ cAD\ |\ cA\\
+D &\rightarrow f
+\end{align*}
+Und jetzt Schritt zwei, um die Selfloops loszuwerden:
+\begin{align*}
+S &\rightarrow \epsilon \ |\ AB \ |\ cA\\
+A &\rightarrow cBB\\
+B &\rightarrow BB\ |\ cAD\ |\ cA\\
+D &\rightarrow f
+\end{align*}
+Und zuletzt die Ersetzungen:
+\begin{align*}
+S &\rightarrow \epsilon \ |\ cBBB \ |\ cA\\
+A &\rightarrow cBB\\
+B &\rightarrow cADB\ |\ cAB\ |\ cAD\ |\ cA\\
+D &\rightarrow f
+\end{align*}
+Damit sind alle Regeln nun in GNF.
 \end{document}
