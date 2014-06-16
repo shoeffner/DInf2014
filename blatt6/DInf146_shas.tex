@@ -6,7 +6,6 @@
 \usepackage{amsmath, amssymb}
 \usepackage{array}
 \usepackage{phonetic} % for reversed D
-\usepackage{wasysym}  % for the notes
 \usepackage{tikz, tikzsymbols}
 \usepackage{xcolor}   % e.g. colored boxes
 \usepackage{listings} % source code
@@ -14,12 +13,8 @@
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
 
-\newcommand{\rpt}{%
-        \raisebox{.2ex}{:}%
-        \raisebox{-.4ex}{\rule{.1ex}{2.5ex}\,\rule{.2ex}{2.5ex}}}
-\newcommand{\revrpt}{%
-        \raisebox{-.2ex}{\rule{.2ex}{2.5ex}\,\rule{.1ex}{2.5ex}}%
-        \raisebox{.2ex}{:}}
+\usepackage[normalem]{ulem}
+\usepackage{cancel}
     
 \begin{document}
 
@@ -290,7 +285,7 @@ Dieses Vorgehen funktioniert, da wir am Anfang nicht nur Selfloops sondern insbe
 \newpage
 \subsection*{Beispiel}
 \begin{align*}
-S   &\rightarrow \epsilon \ |\ AB \ |\ cA\\
+S &\rightarrow \epsilon \ |\ AB \ |\ cA\\
 A &\rightarrow AC \ |\ cBB\\
 B &\rightarrow BB\ |\ cAD\\
 C &\rightarrow \epsilon\\
@@ -298,24 +293,45 @@ D &\rightarrow f \ |\ \epsilon
 \end{align*}
 Jetzt wenden wir den ersten Schritt an und entfernen die $\epsilon$-Kanten.
 \begin{align*}
-S &\rightarrow \epsilon \ |\ AB \ |\ cA\\
-A &\rightarrow A \ |\ cBB\\
-B &\rightarrow BB\ |\ cAD\ |\ cA\\
-D &\rightarrow f
+\begin{array}{l|l}
+S \rightarrow \epsilon \ |\ AB \ |\ cA                                 & S \rightarrow \epsilon \ |\ AB \ |\ cA \\ 
+A \rightarrow {\color{red}A}\text{\cancel{\color{red}$C$}} \ |\ cBB    & A \rightarrow A\ |\ cBB                \\
+B \rightarrow BB\ |\ {\color{red}cAD\ \underline{|\ cA}}               & B \rightarrow BB\ |\ cAD\ |\ cA        \\
+\text{\cancel{${\color{red}C \rightarrow \epsilon}$}}                  & D \rightarrow f                        \\
+{\color{red}D \rightarrow f}\ \text{\cancel{\color{red}$|\ \epsilon$}} & 
+\end{array}
 \end{align*}
 Und jetzt Schritt zwei, um die Selfloops loszuwerden:
 \begin{align*}
-S &\rightarrow \epsilon \ |\ AB \ |\ cA\\
-A &\rightarrow cBB\\
-B &\rightarrow BB\ |\ cAD\ |\ cA\\
-D &\rightarrow f
+\begin{array}{l|l}
+S \rightarrow \epsilon \ |\ AB \ |\ cA               & S \rightarrow \epsilon \ |\ AB \ |\ cA \\
+A \rightarrow \text{\cancel{\color{red}$A\ |\ $}}cBB & A \rightarrow cBB                      \\
+B \rightarrow BB\ |\ cAD\ |\ cA                      & B \rightarrow BB\ |\ cAD\ |\ cA        \\
+D \rightarrow f                                      & D \rightarrow f
+\end{array}
 \end{align*}
 Und zuletzt die Ersetzungen:
 \begin{align*}
-S &\rightarrow \epsilon \ |\ cBBB \ |\ cA\\
-A &\rightarrow cBB\\
-B &\rightarrow cADB\ |\ cAB\ |\ cAD\ |\ cA\\
-D &\rightarrow f
+\begin{array}{l|l}
+S \rightarrow \epsilon \ |\ \frac{\text{\cancel{\color{red}$A$}}}{\color{red}cBB}B \ |\ cA & S \rightarrow \epsilon \ |\ cBBB \ |\ cA  \\
+A \rightarrow cBB                                                                          & A \rightarrow cBB                         \\
+B \rightarrow \frac{\text{\cancel{\color{red}$B$}}}{\color{red}cAD|cA}B\ |\ cAD\ |\ cA     & B \rightarrow cADB\ |\ cAB\ |\ cAD\ |\ cA \\
+D \rightarrow f                                                                            & D \rightarrow f
+\end{array}
 \end{align*}
 Damit sind alle Regeln nun in GNF.
+
+\subsection*{Anmerkung}
+Schritte 1 und 2 sind notwendig, da nur das Ersetzen nicht ausreichend ist. Man nehme z.B. die einfache Grammatik:
+\begin{align*}
+S &\rightarrow a\ |\ CS\ |\ SS \\
+C &\rightarrow \epsilon
+\end{align*}
+Nur die Ersetzungen führen zu:
+\begin{align*}
+S &\rightarrow a\ |\ \epsilon S\ |\ aS\ |\ SS \\
+C &\rightarrow \epsilon
+\end{align*}
+Das ist problematisch in den Regeln $S \rightarrow \epsilon S$ und $S \rightarrow SS$.
+
 \end{document}
