@@ -27,29 +27,29 @@
 
 
 \section*{Aufgabe 6.1}
+$\Gamma' = \Gamma \cup \left\{\$\right\}$
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2cm]
-  \node[initial,state] (Z0)               {$Z_0$};
-  \node[state]         (Z1) [right of=Z0] {$Z_1$};
-  \node[coordinate]                (C1) [above right of=Z1]{};
-  
-  \node[state]         (Z2) [above left of=C1] {$Z_2$};
-  \node[state]         (Z3) [below right of=C1] {$Z_3$};
-  \node[coordinate] (C2) [above right of=Z3]{};
-  \node[state]         (Z4) [above of=C2] {$Z_4$};
-  \node[state]         (Z5) [right of=Z4] {$Z_5$};
-  \node[state]         (Z6) [below of=Z5] {$Z_6$};
-  \node[state]         (Z7) [below of=Z4] {$Z_7$};
-  \node[state]         (Z8) [below of=Z3] {$Z_8$};
-  \node[state]         (Z9) [below of=Z1] {$Z_9$};
-  \node[state]         (Z10) [above of=Z2] {$Z_{10}$};
+  \node[initial,state] (Z0)                      {$Z_0$};
+  \node[state]         (Z1)  [right of=Z0]       {$Z_1$};
+  \node[coordinate]    (C1)  [above right of=Z1] {};
+  \node[state]         (Z2)  [above left of=C1]  {$Z_2$};
+  \node[state]         (Z3)  [below right of=C1] {$Z_3$};
+  \node[coordinate]    (C2)  [above right of=Z3] {};
+  \node[state]         (Z4)  [above of=C2]       {$Z_4$};
+  \node[state]         (Z5)  [right of=Z4]       {$Z_5$};
+  \node[state]         (Z6)  [below of=Z5]       {$Z_6$};
+  \node[state]         (Z7)  [below of=Z4]       {$Z_7$};
+  \node[state]         (Z8)  [below of=Z3]       {$Z_8$};
+  \node[state]         (Z9)  [below of=Z1]       {$Z_9$};
+  \node[state]         (Z10) [above of=Z2]       {$Z_{10}$};
 
   \path (Z0) edge                      node {$\epsilon,\$/\#\$$}                   (Z1)
         (Z1) edge                      node {$a,\star\in\Gamma/b\star$}            (Z2)
              edge [bend left,pos=0.45] node {$c,a/ba$}                             (Z3)
         (Z2) edge [bend left,sloped]   node {$a,b/\epsilon$}                       (Z3)
              edge [pos=0.3, sloped]    node {$c,b/cc$}                             (Z3)
-             edge                      node{$\epsilon,\star\in\Gamma/\epsilon$}    (Z10)
+             edge                      node {$\epsilon,\star\in\Gamma'/\epsilon$}  (Z10)
         (Z3) edge [bend left]          node {$a,\star\in\Gamma/\epsilon$}          (Z1)
              edge [sloped,pos=0.8]     node {$c,a/cc$}                             (Z4)
              edge                      node {$\circ\in\Sigma,\circ/\circ\circ$}    (Z8)
@@ -59,7 +59,7 @@
         (Z7) edge                      node {$\epsilon,b/ab$}                      (Z3)
         (Z8) edge                      node {$\epsilon,\circ\in\Gamma/\circ\circ$} (Z9)
         (Z9) edge                      node {$\epsilon,\circ\in\Gamma/\circ\circ$} (Z1)
-        (Z10) edge [loop right]         node{$\epsilon,\star\in\Gamma/\epsilon$}   (Z10)
+        (Z10) edge [loop right]        node{$\epsilon,\star\in\Gamma'/\epsilon$}   (Z10)
         ;
 \end{tikzpicture}
 \end{center}
@@ -123,11 +123,14 @@ R_{(Z_1,\#,Z_1)} &\rightarrow aR_{(Z_2,b,Z_1)}R_{(Z_1,\#,Z_1)}
 \end{align*}
 Gekürzt mit $R_1 = R_{(Z_1,\#,Z_1)}, R_2 = R_{(Z_1,b,Z_1)}, R_3 = R_{(Z_1,c,Z_1)}, R_4 = R_{(Z_2,b,Z_1)}$:
 \begin{align*}
-S   &\rightarrow R_1               \\
-R_1 &\rightarrow aR_4R_1 \ |\ b    \\
-R_2 &\rightarrow bR_2    \ |\ b    \\
-R_3 &\rightarrow c                 \\
-R_4 &\rightarrow cR_4    \ |\ bR_3
+\begin{array}{l|l}
+\text{Erste Kürzung} & \text{Alternative} \\ \hline
+S   \rightarrow R_1               & S \rightarrow aRS\ |\ b\\
+R_1 \rightarrow aR_4R_1 \ |\ b    & R \rightarrow cR\ |\ bc\\
+R_2 \rightarrow bR_2    \ |\ b    & \\
+R_3 \rightarrow c                 & \\
+R_4 \rightarrow cR_4    \ |\ bR_3 & \\
+\end{array}
 \end{align*}
 \textit{Anm.: $R_2$ ist nicht erreichbar.}
 \normalsize
@@ -184,6 +187,8 @@ R_4 &\rightarrow cR_4    \ |\ bR_3
   \item \textit{Algorithmus 2: Kreis kontrahieren}: $\mathcal{O}(n)$
 \end{itemize}
 
+Alternativ sind ``Algorithmus von Tarjan zur Bestimmung starker Zusammenhangskomponenten'' oder topologisches Sortieren gute Möglichkeiten.
+
 
 
 \section*{Aufgabe 6.4}
@@ -191,20 +196,43 @@ Wir befolgen die einzelnen Schritte der Vorlesung, um die Grammatik in CNF umzuw
 \subsection*{Schritt 1 - Symbole ausgliedern}
 Hier ersetzt man einfach die Terminale mit Variablen.
 \begin{align*}
-S&\rightarrow D | D_dA\\
+S&\rightarrow D | A_dA\\
 A&\rightarrow A_aS | S | E\\
-B&\rightarrow D_dB_b | C\\
-C&\rightarrow E_eED_d | B\\
-D&\rightarrow A | CD_dDE_eB | D_d\\
+B&\rightarrow A_dA_b | C\\
+C&\rightarrow A_eEA_d | B\\
+D&\rightarrow A | CA_dDA_eB | A_d\\
 E&\rightarrow B | BB | C\\
 A_a&\rightarrow a\\
-B_b&\rightarrow b\\
-D_d&\rightarrow d\\
-E_e&\rightarrow e
+A_b&\rightarrow b\\
+A_d&\rightarrow d\\
+A_e&\rightarrow e
 \end{align*}
 \subsection*{Schritt 2 - Kreise und Senken entfernen}
 \subsubsection*{a) Kreise loswerden}
-Hier kann man den Graphen für die $V \rightarrow V$ malen. Dann kommt raus:
+Hier kann man den Graphen für die $V \rightarrow V$ malen. 
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[->, auto]
+	\node[state,initial] (S) [inner sep=1pt, minimum size=1pt]{$S$};
+  \node[state] (A) [below right of=S,inner sep=1pt, minimum size=1pt]{$A$};
+  \node[state] (D) [above right of=S,inner sep=1pt, minimum size=1pt]{$D$};
+  \node[state] (AD) [above right of=D,inner sep=1pt, minimum size=1pt]{$A_d$};
+  \node[state] (E) [right of=D,inner sep=1pt, minimum size=1pt] {$E$};
+  \node[state] (C) [below right of=E,inner sep=1pt, minimum size=1pt] {$C$};
+  \node[state] (B) [below left of=C,inner sep=1pt, minimum size=1pt] {$B$};
+  \path (S) edge node {} (D) 
+        (D) edge node {} (A) 
+        (A) edge node {} (S)
+        (D) edge node {} (AD)
+        (A) edge node {} (E)
+        (E) edge node {} (C) edge node {} (B)
+        (B) edge node {} (C)
+        (C) edge node {} (B)
+        ;
+\end{tikzpicture}
+\end{figure}
+Dann kommt raus:
 \begin{align*}
 S&\rightarrow D\rightarrow A\rightarrow S\\
 B&\rightarrow C\rightarrow B
