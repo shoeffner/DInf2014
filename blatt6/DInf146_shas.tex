@@ -279,13 +279,11 @@ E_e&\rightarrow e
 
 
 \section*{Aufgabe 6.5}
-Sei $L = \left\{\alpha 2 \alpha 2 \alpha | \alpha \in \left\{0,1\right\}^* \right\} \subset \left\{0,1,2\right\}^*$ kontextfrei. Dann existiert gibt es für jedes Wort $z, |z|\geq n$ mit einer Zerlegung $z=uvwxy$ mit $|vx|\geq 1, |uvw|\leq n, \forall i \geq 0: uv^iwx^iy \in L$.
+Sei $L = \left\{\alpha 2 \alpha 2 \alpha | \alpha \in \left\{0,1\right\}^* \right\} \subset \left\{0,1,2\right\}^*$ kontextfrei. Dann existiert für jedes Wort $z, |z|\geq n$ mit einer Zerlegung $z=uvwxy$ mit $|vx|\geq 1, |uvw|\leq n, \forall i \geq 0: uv^iwx^iy \in L$.
 
 Betrachten wir das Wort $z = \alpha 2 \alpha 2 \alpha$ mit $|\alpha|=n$.
 
-Dann ist $uvw \subseteq \alpha$. 
-
-Egal wie wir das Wort aufpumpen: entweder wir verändern nur einen Teil der $\alpha$s, wodurch diese nicht mehr gleich sind, oder wir pumpen gar etwas mit 2en auf.
+Weder $v$ noch $x$ dürfen eine 2 enthalten, da wir ja sonst 2en aufpumpen würden, was uns direkt das Wort zerstört. Bleibt nur noch, dass $vwx \leq \alpha$ oder $2 \in w$. Bei beiden Fällen haben wir beim aufpumpen jeweils das Problem, dass mindestens ein $\alpha$ erhalten bleibt. Somit ist also $uv^iwx^iy \notin L$ für alle möglichen Zerlegungen.
 
 
 
