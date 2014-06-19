@@ -13,15 +13,6 @@
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
 
-\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
-  \hbox{}\nobreak\hfil(#1)%
-  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
-
-\newsavebox\mybox
-\newenvironment{aquote}[1]
-  {\savebox\mybox{#1}\begin{quote}}
-  {\signed{\usebox\mybox}\end{quote}}
-
     
 \begin{document}
 
@@ -151,7 +142,7 @@ Es gibt gerichtete Kreise $B \leftrightarrow A \leftrightarrow C$, sowie $A$ und
 \section*{Aufgabe 7.4}
 Zur besseren Lesbarkeit wird folgende Bennenung der Elemente der Definition vorgenommen:
 \begin{align*}
-uUw \rightarrow uyw & U \in V, u,w,y \in \left( V \cup \Sigma \right)^* & |y| \geq 1
+uUw \rightarrow uyw && U \in V, u,w,y \in \left( V \cup \Sigma \right)^* && |y| \geq 1
 \end{align*}
 
 Die Regel $AB\rightarrow BA$ ist nach der neuen Definition nicht erlaubt, da $U \in V$ gegeben ist, somit entweder $A$ oder $B$ der linken Seite das $U \in V$ repräsentiert. Dadurch ergeben sich zwei Fälle:
@@ -168,7 +159,7 @@ Um die Regel $AB \rightarrow BA$ von der alten in die neue Definition zu überf�
   \item Füge Regel $X \rightarrow Y$ in die Grammatik ein und entferne problematische Regel.
 \end{enumerate}
 
-\subsection*{Konrekter Fall}
+\subsection*{Konkrekter Fall}
 \begin{align*}
 \begin{array}{l|l|l}
 \text{Initial}    & \text{Schritt 1}  & \text{Schritt 2} \\ \hline
@@ -185,7 +176,7 @@ Die Regel $X \rightarrow Y$ funktioniert ebenfalls nach dem selben Prinzip.
 
 
 \section*{Aufgabe 7.5}
-\begin{figure}[h]
+\begin{figure}[ht]
   \includegraphics[scale=0.4]{crossword.png}
 \end{figure}
 
