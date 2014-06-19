@@ -89,3 +89,4 @@ sympy-plots-for-*.tex/
 *.xdy
 blatt6/java/.*
 blatt6/java/bin/*
+*.tmp

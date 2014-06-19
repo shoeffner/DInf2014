@@ -5,6 +5,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{amsmath, amssymb}
 \usepackage{array}
+%\usepackage{memoir}
 \usepackage{phonetic} % for reversed D
 \usepackage{wasysym}  % for the notes
 \usepackage{tikz, tikzsymbols}
@@ -12,12 +13,15 @@
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
 
-\newcommand{\rpt}{%
-        \raisebox{.2ex}{:}%
-        \raisebox{-.4ex}{\rule{.1ex}{2.5ex}\,\rule{.2ex}{2.5ex}}}
-\newcommand{\revrpt}{%
-        \raisebox{-.2ex}{\rule{.2ex}{2.5ex}\,\rule{.1ex}{2.5ex}}%
-        \raisebox{.2ex}{:}}
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil(#1)%
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quote}}
+  {\signed{\usebox\mybox}\end{quote}}
+
     
 \begin{document}
 
@@ -30,7 +34,12 @@
 
 
 \section*{Aufgabe 7.1}
+
+
 \section*{Aufgabe 7.2}
+
+
+
 \section*{Aufgabe 7.3}
 \subsection*{Leerheitsproblem}
 \begin{center}
@@ -137,9 +146,43 @@ Wir erstellen einen Hilfsgraph auf Grundlage der reduzierten und vereinfachten G
 
 Es gibt gerichtete Kreise $B \leftrightarrow A \leftrightarrow C$, sowie $A$ und $I$ auf sich selbst. Somit ist $|L(G)| = \infty$.
 
-\section*{Aufgabe 7.4}
 
-\newpage
+
+\section*{Aufgabe 7.4}
+Zur besseren Lesbarkeit wird folgende Bennenung der Elemente der Definition vorgenommen:
+\begin{align*}
+uUw \rightarrow uyw & U \in V, u,w,y \in \left( V \cup \Sigma \right)^* & |y| \geq 1
+\end{align*}
+
+Die Regel $AB\rightarrow BA$ ist nach der neuen Definition nicht erlaubt, da $U \in V$ gegeben ist, somit entweder $A$ oder $B$ der linken Seite das $U \in V$ repräsentiert. Dadurch ergeben sich zwei Fälle:
+\begin{itemize}
+	\item $U = A$: In diesem Fall wäre auf der linken Seite $w = B$, wodurch aber die Bedingung $uyw$ nicht erfüllt werden kann, da nach $w$ keine Symbole mehr kommen dürfen - in $BA$ wäre das jedoch der Fall.
+  \item $U = B$: In diesem Fall ist es umgekehrt: $u = A$, wodurch ebenfalls $uyw$ nicht erfüllt werden kann. Vor $u$ dürfen keine Symbole auftreten, was bei $BA$ jedoch der Fall wäre.
+\end{itemize}
+
+\subsection*{Algorithmus}
+Um die Regel $AB \rightarrow BA$ von der alten in die neue Definition zu überführen, geht man wie folgt vor:
+
+\begin{enumerate}
+	\item Erstelle Regeln mit neuen Variablen um beide Seiten darzustellen.\\ $AB \rightarrow BA \Rightarrow X \rightarrow AB, Y \rightarrow BA$
+  \item Füge Regel $X \rightarrow Y$ in die Grammatik ein und entferne problematische Regel.
+\end{enumerate}
+
+\subsection*{Konrekter Fall}
+\begin{align*}
+\begin{array}{l|l|l}
+\text{Initial}    & \text{Schritt 1}  & \text{Schritt 2} \\ \hline
+AB \rightarrow BA & AB \rightarrow BA & X \rightarrow Y  \\
+                  & X  \rightarrow AB & X \rightarrow AB \\
+                  & Y  \rightarrow BA & Y \rightarrow BA \\
+\end{array}
+\end{align*}
+
+\subsection*{Erläuterung}
+Im Algorithmus sind die Regeln $X \rightarrow AB$ bzw. $Y \rightarrow BA$ in der gegebenen Form, da $X$ bzw. $Y$ Elemente in $V$ sind, $u$ und $w$ leer sind (nach Definition erlaubt) und $y=AB$ bzw. $y=BA$ und damit auch $|y|\geq$ sowie alle weiteren Bedingungen erfüllt sind.
+
+Die Regel $X \rightarrow Y$ funktioniert ebenfalls nach dem selben Prinzip.
+
 
 \section*{Aufgabe 7.5}
 \begin{figure}[h]
@@ -147,12 +190,34 @@ Es gibt gerichtete Kreise $B \leftrightarrow A \leftrightarrow C$, sowie $A$ und
 \end{figure}
 
 
+
 \section*{Aufgabe 7.6}
-Es war einmal ein armes, frommes Mädchen, das lebte mit seiner Mutter allein, und sie hatten nichts mehr zu essen. Da ging das Kind hinaus in den Wald, und begegnete ihm da eine alte Frau, die wusste seinen Jammer schon und schenkte ihm ein Töpfchen, zu dem sollt es sagen: "Töpfchen, koche," so kochte es guten, süssen Hirsebrei, und wenn es sagte: "Töpfchen, steh," so hörte es wieder auf zu kochen.
+\begin{center}
+\textbf{Vom süßen Brei (1815)}
 
-Das Mädchen brachte den Topf seiner Mutter heim, und nun waren sie ihrer Armut und ihres Hungers ledig und assen süssen Brei, sooft sie wollten.
+\textit{\footnotesize{aus: Brüder Grimm. Kinder- und Haus-Märchen Band 2, Große Ausgabe.}}
+\end{center}
+\begin{flushleft}\small
+Es war einmal ein armes, frommes Mädchen, das lebte mit seiner Mutter allein und sie hatten nichts mehr zu essen. Da ging das Kind hinaus in den Wald und begegnete ihm darin eine alte Frau, die wußte seinen Jammer schon und schenkte ihm ein Töpfchen, zu dem sollt' es sagen: "`Töpfchen koch!"' so kochte es guten, süßen Hirschenbrei, und wenn es sagte: "`Töpfchen steh,"' so hörte es wieder auf zu kochen. Das Mädchen brachte den Topf seiner Mutter heim und nun waren sie ihrer Armuth und ihres Hungers ledig und aßen süßen Brei, so oft sie wollten. Auf eine Zeit war das Mädchen ausgegangen, da sprach die Mutter: "`Töpfchen koch!"' da kocht es und sie ißt sich satt; nun will sie, daß das Töpfchen wieder aufhören soll, aber sie weiß das Wort nicht. Also kocht es fort und der Brei steigt über den Rand heraus, und kocht immer zu, die Küche und das ganze Haus voll, und das zweite Haus und dann die Straße, als wollt’s die ganze Welt satt machen, und ist die größte Noth und kein Mensch weiß sich da zu helfen. Endlich, wie nur noch ein einziges Haus übrig ist, da kommt das Kind heim und spricht nur: "`Töpfchen steh!"' da steht es und hört auf zu kochen, und wenn sie wieder in die Stadt wollten, haben sie sich durchessen müssen.
+\end{flushleft}
 
-Auf eine Zeit war das Mädchen ausgegangen, da sprach die Mutter: "Töpfchen, koche," da kocht es, und sie isst sich satt; nun will sie, dass das Töpfchen wieder aufhören soll, aber sie weiss das Wort nicht. Also kocht es fort, und der Brei steigt über den Rand hinaus und kocht immerzu, die Küche und das ganze Haus voll und das zweite Haus und dann die Strasse, als wollt's die ganze Welt satt machen, und ist die grösste Not, und kein Mensch weiss sich da zu helfen. Endlich, wie nur noch ein einziges Haus übrig ist, da kommt das Kind heim und spricht nur: "Töpfchen, steh," da steht es und hört auf zu kochen, und wer wieder in die Stadt wollte, der musste sich durchessen.
+\subsection*{Inhalt}
+Der Inhalt ist somit geklärt: Ein Mädchen bekommt einen kleinen Topf, dieser kocht für sie unendlich viel Brei bis sie ihn stoppt. Das führt natürlich zur Katastrophe, der mit Brei gefüllten Stadt. Die Katastrophe wird jedoch humorvoll gelöst: Das Töpfchen wird gestoppt und es passiert nichts weiter Schlimmes, als dass nun die Bewohner der Stadt sich durch den Brei essen müssen, um zurück zu ihren Häusern zu gelangen.
+
+\subsection*{Beziehung Märchen - Erfindung}
+Die Beziehung zwischen Märchen und der "`sehr vertrauten "`Erfindung"' von Stephen Cole Kleene"' ist ebenfalls simpel: 
+Der Kleene-Stern funktioniert ein wenig wie das Töpfchen. Das Töpfchen produziert immer weiter Brei, während der Stern immer weiter Zeichen akzeptiert bzw. generiert (je nach Anwendungs- bzw. Interpretationskontext). 
+
+\subsection*{Rolle von Kleene}
+Die Frage, welche Rolle Kleene in diesem Märchen einnehmen würde, ist etwas komplizierter zu klären. In dem Märchen gibt es prinzipiell vier Rollen: Das Mädchen, die Mutter, die alte Frau und das Töpfchen. 
+\begin{itemize}
+	\item Da wir bereits klärten, dass das Töpfchen dem Kleene-Stern entspricht, liegen zwei Personen für Kleene nahe: Das Mädchen oder die alte Frau. Die Mutter ist auszuschließen, da diese die Katastrophe herbeiführt - Kleenes Erfindung ist aber eher nütz- als hinderlich.
+  \item Die alte Frau hat das Töpfchen zuerst und gibt es dem Mädchen. Sie stellt viele Fragen: Woher ist das Töpfchen, warum ist sie im Wald, ...? Die Antwort ist: Die alte Frau steht für etwas, das vor dem Mädchen (und vielleicht dem Töpfchen?) existierte. Im übertragenen Sinne können wir sie als Symbol für die Mathematik, die Informatik oder auch ganz konkret die Automatentheorie oder Rekursionstheorie sehen. 
+  \item Das Mädchen bekommt das Töpfchen von der alten Frau. Es also ein Werkzeug, um ein Problem zu lösen (in der Geschichte der Hunger und die Armut). Dieses Werkzeug macht sie sich zu nutzen und stellt es auch anderen zu Verfügung, die jedoch erst lernen müssen, es zu verwenden. 
+\end{itemize}
+
+Kleene handelt wie das Mädchen: Er erhält bzw. erfindet ein Werkzeug um ein Problem zu lösen. Das Werkzeug ist der Kleene-Stern, bzw. die mathematische Idee, die er repräsentiert. Kleene bekommt die Idee aus der Mathematik, indem er versucht das Problem zu lösen, Schleifen in Automaten sinnvoll beschreiben zu können. Wie das Mädchen, das in den Wald ging, um den Hunger zu stillen, sucht Kleene in der Mathematik nach dieser Lösung und bekommt sie. Wie das Mädchen bringt er das Werkzeug zu anderen, die es ebenfalls gern nutzen möchten - den Umgang aber erst lernen müssen. Kleenes Rolle wäre somit klar die des Mädchens.
+
 
 
 \end{document}
