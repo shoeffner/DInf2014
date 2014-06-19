@@ -25,6 +25,21 @@
 
 
 \section*{Aufgabe 7.1}
+Gegeben sei: $L=\{d^ja^kb^lc^m | (j=0) oder (k=l=m) \}$
+\subsection*{a)}
+Intuitiv scheint die Sprache L nicht kontextfrei zu sein, da sie als Teilsprache $L_1=\{d^ja^ib^ic^i | j > 0 \}$ enthält und wir mit Hilfe eines Homomorphismus ($d=\epsilon$) auf $L'=\{a^ib^ic^i\}$ kommen können und aus der Vorlesung wissen, dass diese nicht kontextfrei ist.
+\subsection*{b)}
+Wir können nun quasi zwei Fälle betrachten. Erinnerung Regeln für das Pumping Lemma:
+\begin{align*}
+z &= uvwxy \\
+|vx| &\geq 1\\
+|vwx| &\leq n \\
+\forall i &\geq 0: uv^iwx^iy\in L 
+\end{align*}
+\subsubsection*{1.Fall $j=0$}
+In diesem Fall bekommen wir die Sprache $L'=\{a^kb^lc^m\}$.Nun versuchen wir darauf das Pumping Lemma anzuwenden. Dazu wählen wir für ein beliebiges Wort $z\in L',|z|\geq n$ (n ist die Mindestwortlänge) folgende Zerlegung: $v\in \{a,b,c\}$, abhängig davon dass der Buchstabe in dem Wort das wir gerade betrachten vorkommt. $x$ lassen wir komplett leer. Damit ist $|vx| \geq 1$ erfüllt. $w$ können wir ebenfalls leer lassen. Damit ist auch $|vwx| \leq n$ erfüllt. In $u$ und $y$ packen wir den Rest des Wortes. Wenn wir nun $v$ aufpumpen vergrößern wir $k | l | m$ und landen damit wieder $\in L'$. Das Pumping Lemma ist also für diesen Fall erfüllt.
+\subsubsection*{2.Fall $k=l=m$}
+In diesem Fall haben wir wieder zwei Fälle. Einmal ist $j=0$, damit landen wir aber im ersten Fall (genauer gesagt ist dann $\{a^kb^kc^k\} \subset \{a^kb^lc^m\}$). Im zweiten Fall ist $j>0$. Wir betrachten also $L'=\{d^ja^ib^ic^i|j>0\}$. Als Zerlegung können wir nun $u$,$x$ und $w$ wieder leer wählen und $v=d^j, |j|\leq n$ (das bedeutet, dass nicht alle d's in $v$ enthalten sein müssen). $|vx| \geq 1$ und $|vwx| \leq n$ sind somit erfüllt. Wenn wir nun $v$ aufpumpen bekommen wir nur d's hinzu und erhalten so wieder ein Wort $\in L$.
 
 
 \section*{Aufgabe 7.2}
