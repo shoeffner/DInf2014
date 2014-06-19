@@ -5,7 +5,6 @@
 \usepackage[ngerman]{babel}
 \usepackage{amsmath, amssymb}
 \usepackage{array}
-%\usepackage{memoir}
 \usepackage{phonetic} % for reversed D
 \usepackage{wasysym}  % for the notes
 \usepackage{tikz, tikzsymbols}
@@ -25,21 +24,29 @@
 
 
 \section*{Aufgabe 7.1}
-Gegeben sei: $L=\{d^ja^kb^lc^m | (j=0) oder (k=l=m) \}$
+Gegeben sei: $L=\left\{d^ja^kb^lc^m | (j=0)\text{ oder }(k=l=m) \right\}$
+
 \subsection*{a)}
-Intuitiv scheint die Sprache L nicht kontextfrei zu sein, da sie als Teilsprache $L_1=\{d^ja^ib^ic^i | j > 0 \}$ enthält und wir mit Hilfe eines Homomorphismus ($d=\epsilon$) auf $L'=\{a^ib^ic^i\}$ kommen können und aus der Vorlesung wissen, dass diese nicht kontextfrei ist.
+%Intuitiv scheint die Sprache L nicht kontextfrei zu sein, da sie als Teilsprache $L_1=\left\{d^ja^ib^ic^i | j > 0 \right\}$ enthält und wir mit Hilfe eines Homomorphismus ($d=\epsilon$) auf $L'=\left\{a^ib^ic^i\right\}$ kommen können und aus der Vorlesung wissen, dass diese nicht kontextfrei ist.
+
+Die Sprache beinhaltet die Teilsprache $L_1=\left\{d^ja^kb^lc^m | j>1 \vee k=l=m \right\}$. Als gute Heuristik zum Abschätzen welcher Sprachklasse eine Sprache angehört, bietet sich an zu untersuchen, wie viele "`Zählvariablen"' abhängig voneinander sind und ob diese beschränkt sind. In der gegebenen Sprache $L_1$ sind drei voneinander abhängige Variablen vorhanden. Ihre Abhängigkeit ist durch $k=l=m$ gegeben. 
+
+Mit regulären Sprachen können wir \emph{keine} Zählvariable "`speichern"' (d.h. \emph{einmal} wiederverwenden), mit kontextfreien \emph{eine} (also zwei Abhängigkeiten zählen). Da wir für diese Sprache drei Zählvariaben haben, können wir zwar gleich viele $b$'s wie $a$'s erzeugen, aber dann keine korrekte Anzahl $c$'s mehr. Die Sprache scheint also intuitiv komplexer als kontextfrei zu sein.
+
 \subsection*{b)}
-Wir können nun quasi zwei Fälle betrachten. Erinnerung Regeln für das Pumping Lemma:
+Wir können nun zwei Fälle betrachten. Erinnerung Regeln für das Pumping Lemma:
 \begin{align*}
 z &= uvwxy \\
 |vx| &\geq 1\\
 |vwx| &\leq n \\
 \forall i &\geq 0: uv^iwx^iy\in L 
 \end{align*}
-\subsubsection*{1.Fall $j=0$}
-In diesem Fall bekommen wir die Sprache $L'=\{a^kb^lc^m\}$.Nun versuchen wir darauf das Pumping Lemma anzuwenden. Dazu wählen wir für ein beliebiges Wort $z\in L',|z|\geq n$ (n ist die Mindestwortlänge) folgende Zerlegung: $v\in \{a,b,c\}$, abhängig davon dass der Buchstabe in dem Wort das wir gerade betrachten vorkommt. $x$ lassen wir komplett leer. Damit ist $|vx| \geq 1$ erfüllt. $w$ können wir ebenfalls leer lassen. Damit ist auch $|vwx| \leq n$ erfüllt. In $u$ und $y$ packen wir den Rest des Wortes. Wenn wir nun $v$ aufpumpen vergrößern wir $k | l | m$ und landen damit wieder $\in L'$. Das Pumping Lemma ist also für diesen Fall erfüllt.
-\subsubsection*{2.Fall $k=l=m$}
-In diesem Fall haben wir wieder zwei Fälle. Einmal ist $j=0$, damit landen wir aber im ersten Fall (genauer gesagt ist dann $\{a^kb^kc^k\} \subset \{a^kb^lc^m\}$). Im zweiten Fall ist $j>0$. Wir betrachten also $L'=\{d^ja^ib^ic^i|j>0\}$. Als Zerlegung können wir nun $u$,$x$ und $w$ wieder leer wählen und $v=d^j, |j|\leq n$ (das bedeutet, dass nicht alle d's in $v$ enthalten sein müssen). $|vx| \geq 1$ und $|vwx| \leq n$ sind somit erfüllt. Wenn wir nun $v$ aufpumpen bekommen wir nur d's hinzu und erhalten so wieder ein Wort $\in L$.
+
+\subsubsection*{1. Fall $j=0$}
+In diesem Fall betrachten wir die Sprache $L'=\left\{a^kb^lc^m\right\} \subseteq L$. Nun versuchen wir darauf das Pumping Lemma anzuwenden. Dazu wählen wir für ein beliebiges Wort $z\in L',|z|\geq n$ (n ist die Mindestwortlänge) folgende Zerlegung: $v\in \left\{a,b,c\right\}$, abhängig davon dass der Buchstabe in dem Wort das wir gerade betrachten vorkommt. $x$ lassen wir komplett leer. Damit ist $|vx| \geq 1$ erfüllt. $w$ können wir ebenfalls leer lassen. Damit ist auch $|vwx| \leq n$ erfüllt. In $u$ und $y$ packen wir die Reste des Wortes. Wenn wir nun $v$ aufpumpen vergrößern wir $k \vee l \vee m$. Für das entstehende Wort gilt weiterhin $uv^iwx^iy \in L'$ und somit auch $uv^iwx^iy \in L$. Das Pumping Lemma ist also für diesen Fall erfüllt.
+
+\subsubsection*{2. Fall $k=l=m$}
+In diesem Fall haben wir wieder zwei Fälle. Einmal ist $j=0$, damit landen wir aber im ersten Fall (genauer gesagt ist dann $\left\{a^kb^lc^m|k=l=m\right\} \subset \left\{a^kb^lc^m\right\}$). Im zweiten Fall ist $j>0$. Wir betrachten also $L'=\left\{d^ja^ib^ic^i|j>0\right\}$. Als Zerlegung können wir nun $u$,$x$ und $w$ wieder leer wählen und $v=d^j, j\leq n$ (das bedeutet, dass nicht alle $d$'s in $v$ enthalten sein müssen). $|vx| \geq 1$ und $|vwx| \leq n$ sind somit erfüllt. Wenn wir nun $v$ aufpumpen bekommen wir nur $d$'s hinzu und erhalten so wieder ein Wort $z' = uv^iwx^iy \in L'$ und somit auch $z' \in L$.
 
 
 \section*{Aufgabe 7.2}
