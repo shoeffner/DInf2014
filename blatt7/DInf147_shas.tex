@@ -27,11 +27,20 @@
 Gegeben sei: $L=\left\{d^ja^kb^lc^m | (j=0)\text{ oder }(k=l=m) \right\}$
 
 \subsection*{a)}
-%Intuitiv scheint die Sprache L nicht kontextfrei zu sein, da sie als Teilsprache $L_1=\left\{d^ja^ib^ic^i | j > 0 \right\}$ enthält und wir mit Hilfe eines Homomorphismus ($d=\epsilon$) auf $L'=\left\{a^ib^ic^i\right\}$ kommen können und aus der Vorlesung wissen, dass diese nicht kontextfrei ist.
-
+\subsubsection*{Erste Intuition: Zählvariablen}
 Die Sprache beinhaltet die Teilsprache $L_1=\left\{d^ja^kb^lc^m | j>1 \vee k=l=m \right\}$. Als gute Heuristik zum Abschätzen welcher Sprachklasse eine Sprache angehört, bietet sich an zu untersuchen, wie viele "`Zählvariablen"' abhängig voneinander sind und ob diese beschränkt sind. In der gegebenen Sprache $L_1$ sind drei voneinander abhängige Variablen vorhanden. Ihre Abhängigkeit ist durch $k=l=m$ gegeben. 
 
 Mit regulären Sprachen können wir \emph{keine} Zählvariable "`speichern"' (d.h. \emph{einmal} wiederverwenden), mit kontextfreien \emph{eine} (also zwei Abhängigkeiten zählen). Da wir für diese Sprache drei Zählvariaben haben, können wir zwar gleich viele $b$'s wie $a$'s erzeugen, aber dann keine korrekte Anzahl $c$'s mehr. Die Sprache scheint also intuitiv komplexer als kontextfrei zu sein.
+
+\subsubsection*{Genaueres Hinsehen: Mengeneigenschaften}
+Die Sprache $L=\left\{d^ja^kb^lc^m | (j=0)\text{ oder }(k=l=m) \right\}$ besteht aus den Teilmengen $L_l=\left\{d^ja^kb^lc^m | j=0\right\}$ und $L_r=\left\{d^ja^kb^lc^m | k=l=m\right\}$. $L_r$ ist nicht kontextfrei, da sie über eine Verkettung $\left\{a^ib^ic^i\right\}$ enthält (in der VL wurde dies gezeigt). $L_l$ ist regulär.
+
+Die Einschränkung von $L_l$ auf $j=0$ verhindert, dass $L_r \subseteq L_l$ ist, sie sorgt sogar dafür, dass $L_l$ und $L_r$ adjunkt sind. Das bedeutet, dass wenigstens ein Teil der Wörter aus $L_r$ (genauer: Alle Wörter $d^ja^ib^ic^i, j>0$) nicht durch $L_l$ generiert werden kann. Da $L_r$ nicht kontextfrei ist, kann somit auch $L$ nicht kontextfrei sein.
+
+
+\subsubsection*{Weitere Überlegung: Homomorphismus}
+Intuitiv scheint die Sprache L nicht kontextfrei zu sein, da sie als Teilsprache $L_1=\left\{d^ja^ib^ic^i | j > 0 \right\}$ enthält und wir mit Hilfe eines Homomorphismus ($d=\epsilon$) auf $L'=\left\{a^ib^ic^i\right\}$ kommen können und aus der Vorlesung wissen, dass diese nicht kontextfrei ist.
+
 
 \subsection*{b)}
 Wir können nun zwei Fälle betrachten. Erinnerung Regeln für das Pumping Lemma:
@@ -183,31 +192,39 @@ Die Regel $AB\rightarrow BA$ ist nach der neuen Definition nicht erlaubt, da $U 
 \end{itemize}
 
 \subsection*{Algorithmus}
-Um die Regel $AB \rightarrow BA$ von der alten in die neue Definition zu überführen, geht man wie folgt vor:
+Um Regeln der Form $VW \rightarrow WV$ ($V, W$ sind Variablen) von der alten in die neue Definition kontext-sensitiver Sprachen zu überführen, geht man wie folgt vor:
 
 \begin{enumerate}
-	\item Erstelle Regeln mit neuen Variablen um beide Seiten darzustellen.\\ $AB \rightarrow BA \Rightarrow X \rightarrow AB, Y \rightarrow BA$
-  \item Füge Regel $X \rightarrow Y$ in die Grammatik ein und entferne problematische Regel.
+	\item Beginne mit der initial-Definition $VW$, wobei $u=V, U=W, w=\epsilon$. Führe eine neue Variable $X$ ein. Setze $y=X$. Es entsteht die Regel $VW \rightarrow VX$.
+  \item Erstelle eine neue Regel $VX \rightarrow YX$ ($u=\epsilon, U=V, w=X, y=Y$) mit der neuen Variable $Y$. 
+  \item Erstelle eine weitere Regel $YX \rightarrow YV$ ($u=Y, U=X, w=\epsilon, y=V$).
+  \item Als letztes erstelle eine Regel $YV \rightarrow WV$ ($u=\epsilon, U=Y, w=V, y=W$).
 \end{enumerate}
+
+Insgesamt entsteht so ein Regelwerk, dass genau die Regel $AB \rightarrow BA$ in der neuen Definition abbildet.
 
 \subsection*{Konkrekter Fall}
 \begin{align*}
-\begin{array}{l|l|l}
-\text{Initial}    & \text{Schritt 1}  & \text{Schritt 2} \\ \hline
-AB \rightarrow BA & AB \rightarrow BA & X \rightarrow Y  \\
-                  & X  \rightarrow AB & X \rightarrow AB \\
-                  & Y  \rightarrow BA & Y \rightarrow BA \\
+\begin{array}{l}
+AB \rightarrow AX \\
+AX \rightarrow YX \\
+YX \rightarrow YA \\
+YA \rightarrow BA
 \end{array}
 \end{align*}
 
-\subsection*{Erläuterung}
-Im Algorithmus sind die Regeln $X \rightarrow AB$ bzw. $Y \rightarrow BA$ in der gegebenen Form, da $X$ bzw. $Y$ Elemente in $V$ sind, $u$ und $w$ leer sind (nach Definition erlaubt) und $y=AB$ bzw. $y=BA$ und damit auch $|y|\geq$ sowie alle weiteren Bedingungen erfüllt sind.
+% etwas kürzere Alternative ohne Umweg über YX:
+%\begin{align*}
+%\begin{array}{l}
+%AB \rightarrow AX \\
+%AX \rightarrow BX \\
+%BX \rightarrow BA
+%\end{array}
+%\end{align*}
 
-Die Regel $X \rightarrow Y$ funktioniert ebenfalls nach dem selben Prinzip.
-
-
+\clearpage
 \section*{Aufgabe 7.5}
-\begin{figure}[ht]
+\begin{figure}[!h]
   \includegraphics[scale=0.4]{crossword.png}
 \end{figure}
 
