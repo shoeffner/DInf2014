@@ -139,7 +139,7 @@ $B \rightarrow C$                  & $C \rightarrow ab | IdA$ \\
 $E \rightarrow abba | aBBa | AbbA$ & $I \rightarrow c | cIc$ \\
 \end{tabular}
 \end{center}
-Die Regeln $S \rightarrow E$, $A \rightarrow E$, $A \rightarrow S$ und $B \rightarrow C$ müssen transformiert werden. Die transformierte Grammatik sieht z.B. so aus:
+Die Regeln $S \rightarrow E$, $A \rightarrow E$, $A \rightarrow S$ und $B \rightarrow C$ müssen transformiert werden. Die transformierte Grammatik sieht so aus:
 \begin{center}
 \begin{tabular}{ll}
 $S \rightarrow abba | aBBa | AbbA | ABC$ & $A \rightarrow abba | aBBa | AbbA | ABC$ \\
@@ -151,25 +151,25 @@ $E \rightarrow abba | AbbA | aBBa$       & $I \rightarrow c | cIc$ \\
 Wir erstellen einen Hilfsgraph auf Grundlage der reduzierten und vereinfachten Grammatik.
 \begin{center}
 \begin{tikzpicture}[->, auto, node distance=2cm]
-  \node[state] (S)                   {$S$};
-  \node[state] (A) [right of=S]      {$A$};
-  \node[state] (B) [below of=S]      {$B$};
+  \node[state] (S)              {$S$};
+  \node[state] (A) [right of=S] {$A$};
+  \node[state] (B) [below of=S] {$B$};
   \node[state] (C) [above of=S] {$C$};
-  \node[state] (E) [right of=B]      {$E$}; 
-  \node[state] (I) [left of=S] {$I$};
+  \node[state] (E) [right of=B] {$E$}; 
+  \node[state] (I) [left of=S]  {$I$};
 
-  \path (S) edge node {} (A)
-            edge node {} (B)
-            edge node {} (C)
-        (A) edge [bend left] node {} (B)
-            edge [bend left] node {} (C)
+  \path (S) edge              node {} (A)
+            edge              node {} (B)
+            edge              node {} (C)
+        (A) edge [bend left]  node {} (B)
+            edge [bend left]  node {} (C)
             edge [loop right] node {} (A)
-        (B) edge [bend left] node {} (A)
-            edge node {} (I)
-        (C) edge [bend left] node {} (A)
-            edge node {} (I)
-        (E) edge node {} (A)
-            edge node {} (B)
+        (B) edge [bend left]  node {} (A)
+            edge              node {} (I)
+        (C) edge [bend left]  node {} (A)
+            edge              node {} (I)
+        (E) edge              node {} (A)
+            edge              node {} (B)
         (I) edge [loop below] node {} (I)    
         ;
 \end{tikzpicture}
