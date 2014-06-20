@@ -29,7 +29,7 @@ Gegeben sei: $L=\left\{d^ja^kb^lc^m | (j=0)\text{ oder }(k=l=m) \right\}$
 \subsection*{a)}
 %Intuitiv scheint die Sprache L nicht kontextfrei zu sein, da sie als Teilsprache $L_1=\left\{d^ja^ib^ic^i | j > 0 \right\}$ enthält und wir mit Hilfe eines Homomorphismus ($d=\epsilon$) auf $L'=\left\{a^ib^ic^i\right\}$ kommen können und aus der Vorlesung wissen, dass diese nicht kontextfrei ist.
 
-Die Sprache beinhaltet die Teilsprache $L_1=\left\{d^ja^kb^lc^m | j>1 \vee k=l=m \right\}$. Als gute Heuristik zum Abschätzen welcher Sprachklasse eine Sprache angehört, bietet sich an zu untersuchen, wie viele "`Zählvariablen"' abhängig voneinander sind und ob diese beschränkt sind. In der gegebenen Sprache $L_1$ sind drei voneinander abhängige Variablen vorhanden. Ihre Abhängigkeit ist durch $k=l=m$ gegeben. 
+Die Sprache beinhaltet die Teilsprache $L_1=\left\{d^ja^kb^lc^m | j>1 \wedge k=l=m \right\}$. Als gute Heuristik zum Abschätzen welcher Sprachklasse eine Sprache angehört, bietet sich an zu untersuchen, wie viele "`Zählvariablen"' abhängig voneinander sind und ob diese beschränkt sind. In der gegebenen Sprache $L_1$ sind drei voneinander abhängige Variablen vorhanden. Ihre Abhängigkeit ist durch $k=l=m$ gegeben. 
 
 Mit regulären Sprachen können wir \emph{keine} Zählvariable "`speichern"' (d.h. \emph{einmal} wiederverwenden), mit kontextfreien \emph{eine} (also zwei Abhängigkeiten zählen). Da wir für diese Sprache drei Zählvariaben haben, können wir zwar gleich viele $b$'s wie $a$'s erzeugen, aber dann keine korrekte Anzahl $c$'s mehr. Die Sprache scheint also intuitiv komplexer als kontextfrei zu sein.
 
@@ -46,24 +46,27 @@ z &= uvwxy \\
 In diesem Fall betrachten wir die Sprache $L'=\left\{a^kb^lc^m\right\} \subseteq L$. Nun versuchen wir darauf das Pumping Lemma anzuwenden. Dazu wählen wir für ein beliebiges Wort $z\in L',|z|\geq n$ (n ist die Mindestwortlänge) folgende Zerlegung: $v\in \left\{a,b,c\right\}$, abhängig davon dass der Buchstabe in dem Wort das wir gerade betrachten vorkommt. $x$ lassen wir komplett leer. Damit ist $|vx| \geq 1$ erfüllt. $w$ können wir ebenfalls leer lassen. Damit ist auch $|vwx| \leq n$ erfüllt. In $u$ und $y$ packen wir die Reste des Wortes. Wenn wir nun $v$ aufpumpen vergrößern wir $k \vee l \vee m$. Für das entstehende Wort gilt weiterhin $uv^iwx^iy \in L'$ und somit auch $uv^iwx^iy \in L$. Das Pumping Lemma ist also für diesen Fall erfüllt.
 
 \subsubsection*{2. Fall $k=l=m$}
-In diesem Fall haben wir wieder zwei Fälle. Einmal ist $j=0$, damit landen wir aber im ersten Fall (genauer gesagt ist dann $\left\{a^kb^lc^m|k=l=m\right\} \subset \left\{a^kb^lc^m\right\}$). Im zweiten Fall ist $j>0$. Wir betrachten also $L'=\left\{d^ja^ib^ic^i|j>0\right\}$. Als Zerlegung können wir nun $u$,$x$ und $w$ wieder leer wählen und $v=d^j, j\leq n$ (das bedeutet, dass nicht alle $d$'s in $v$ enthalten sein müssen). $|vx| \geq 1$ und $|vwx| \leq n$ sind somit erfüllt. Wenn wir nun $v$ aufpumpen bekommen wir nur $d$'s hinzu und erhalten so wieder ein Wort $z' = uv^iwx^iy \in L'$ und somit auch $z' \in L$.
+In diesem Fall haben wir wieder zwei Fälle. Einmal ist $j=0$, damit landen wir aber im ersten Fall (genauer gesagt ist dann $\left\{a^kb^lc^m|k=l=m\right\} \subset \left\{a^kb^lc^m\right\}$). Im zweiten Fall ist $j>0$. Wir betrachten also $L'=\left\{d^ja^ib^ic^i|j>0\right\}$. Als Zerlegung können wir nun $u$,$x$ und $w$ wieder leer wählen und $v=d^t, t\leq n$ (das bedeutet, dass nicht alle $d$'s in $v$ enthalten sein müssen, da $t\leq j$ sein kann). $|vx| \geq 1$ und $|vwx| \leq n$ sind somit erfüllt. Wenn wir nun $v$ aufpumpen bekommen wir nur $d$'s hinzu und erhalten so wieder ein Wort $z' = uv^iwx^iy \in L'$ und somit auch $z' \in L$.
 
 
 \section*{Aufgabe 7.2}
-Gegeben sei die Sprache $L = \left\{ a^lb^{2l} \right\}$. Wir nehmen an die Sprache sei kontextfrei. Dann gilt für sie ab einer bestimmten Wortmindestlänge $n$ das Pumping Lemma für Kontextfreie Sprachen. Betrachten wir nun das Wort $a^nb^{2n}$ Wir überlegen nun welche Buchstaben in $v$ und $x$ sein dürfen, damit das Pumping Lemma überhaupt gelten kann:
+Gegeben sei die Sprache $L = \left\{ a^lb^{2^l} \right\}$. Wir nehmen an die Sprache sei kontextfrei. Dann gilt für sie ab einer bestimmten Wortmindestlänge $n$ das Pumping Lemma für Kontextfreie Sprachen. Betrachten wir nun das Wort $a^nb^{2^n}$ Wir überlegen nun welche Buchstaben in $v$ und $x$ sein dürfen, damit das Pumping Lemma überhaupt gelten kann:
 
-\subsection*{v enthält a und b XOR x enthält a und b}
-Sobald $x$ oder $v$ a's und b's enthalten, kann das Aufpumpen nicht mehr funktionieren, da wir dann in das Wort eine $..ab..a$ Stelle einbauen, die nicht mehr $\in L$ ist.
+\subsection{$v$ enthält a und b XOR $x$ enthält a und b}
+Beide Variablen können nicht zugleich a's und b's enthalten, da es nur einen Übergang von a nach b in dem Wort gibt. Sobald $x$ oder $v$ a's und b's enthalten, kann das Aufpumpen nicht mehr funktionieren, da wir dann in das Wort weitere Wechsel von a nach b einbauen, wodurch es nicht mehr $\in L$ ist.
 
-\subsection*{v XOR x sind leer}
-Beide Variablen dürfen nicht zugleich leer sein, da sonst die Bedingung $|vx|\geq 1$ verletzt ist. Wenn x oder v leer sind, muss die jeweils nicht leere Variable entweder nur a's oder nur b's enthalten (siehe Punkt davor). Wenn wir nun aufpumpen zerstören wir damit jedoch aufjedenfall das Verhältnis zwischen a's und b's. Dieser Fall kann also auch keine Worte $\in L$ generieren.
+\subsection{$v$ und $x$ enthalten zusammen nur a's oder nur b's}
+$v$ und $x$ können beide komplett in dem a- oder b-Teil des Wortes liegen. Hier funktioniert jedoch das Aufpumpen ebenfalls nicht, da ich nur eine der beiden Symbole vervielfache und somit wieder das Verhältnis zwischen a und b zerstört wird.
 
-\subsection*{v und x enthalten jeweils a und die andere Variable b}
+\subsection{$v$ XOR $x$ sind leer}
+Beide Variablen dürfen nicht zugleich leer sein, da sonst die Bedingung $|vx|\geq 1$ verletzt ist. Wenn x oder v leer sind, muss die jeweils nicht leere Variable entweder nur a's oder nur b's enthalten (siehe Punkt 0.1). Wenn wir nun aufpumpen zerstören wir damit jedoch aufjedenfall das Verhältnis zwischen a's und b's. Dieser Fall kann also auch keine Worte $\in L$ generieren.
+
+\subsection{$v$ und $x$ enthalten jeweils a und die andere Variable b}
 Dies ist der einzige Fall der uns vielleicht helfen könnte. $v$ enthält in diesem Fall eine bestimmte Anzahl a's und x enthält entsprechend viele b's. Natürlich so, dass $|vx| \leq n$ ist. Bei einem beliebigen Aufpumpen bekommen wir nun das Problem, dass die Anzahl der a's linear wächst, während die b's dafür exponential wachsen müsste. Für $i>1$ ist $uv^iwx^iy\in L$ damit nicht mehr erfüllt.
 
 \bigskip
 
-Wir haben somit keine Zerlegung gefunden. Die Sprache $L$ ist somit nicht kontextfrei.
+Wir haben für beliebige Worte $\in L$ mit  keine Zerlegung gefunden. Die Sprache $L$ ist folglich nicht kontextfrei.
 
 
 \section*{Aufgabe 7.3}
