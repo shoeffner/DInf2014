@@ -32,14 +32,12 @@ Die Sprache beinhaltet die Teilsprache $L_1=\left\{d^ja^kb^lc^m | j>1 \vee k=l=m
 
 Mit regulären Sprachen können wir \emph{keine} Zählvariable "`speichern"' (d.h. \emph{einmal} wiederverwenden), mit kontextfreien \emph{eine} (also zwei Abhängigkeiten zählen). Da wir für diese Sprache drei Zählvariaben haben, können wir zwar gleich viele $b$'s wie $a$'s erzeugen, aber dann keine korrekte Anzahl $c$'s mehr. Die Sprache scheint also intuitiv komplexer als kontextfrei zu sein.
 
-\subsubsection*{Genaueres Hinsehen: Mengeneigenschaften}
-Die Sprache $L=\left\{d^ja^kb^lc^m | (j=0)\text{ oder }(k=l=m) \right\}$ besteht aus den Teilmengen $L_l=\left\{d^ja^kb^lc^m | j=0\right\}$ und $L_r=\left\{d^ja^kb^lc^m | k=l=m\right\}$. $L_r$ ist nicht kontextfrei, da sie über eine Verkettung $\left\{a^ib^ic^i\right\}$ enthält (in der VL wurde dies gezeigt). $L_l$ ist regulär.
+\subsubsection*{Genaueres Hinsehen: Mengeneigenschaften \& Homomorphismus}
+Die Sprache $L=\left\{d^ja^kb^lc^m | (j=0)\text{ oder }(k=l=m) \right\}$ besteht aus den Teilmengen $L_l=\left\{d^ja^kb^lc^m | j=0\right\}$ und $L_r=\left\{d^ja^kb^lc^m | k=l=m\right\}$. $L_l$ ist regulär (RegEx: $a^*b^*c^*$). 
 
-Die Einschränkung von $L_l$ auf $j=0$ verhindert, dass $L_r \subseteq L_l$ ist, sie sorgt sogar dafür, dass $L_l$ und $L_r$ adjunkt sind. Das bedeutet, dass wenigstens ein Teil der Wörter aus $L_r$ (genauer: Alle Wörter $d^ja^ib^ic^i, j>0$) nicht durch $L_l$ generiert werden kann. Da $L_r$ nicht kontextfrei ist, kann somit auch $L$ nicht kontextfrei sein.
+$L_r$ ist nicht kontextfrei. Mit Hilfe eines Homomorphismus $h$ ($h(d)=\epsilon, h(a)=a, h(b)=b, h(c)=c$) kann $L_r$ auf $L_r'=\left\{a^ib^ic^i\right\}$ abgebildet werden. Wir wissen, dass diese Sprache nicht kontextfrei ist (siehe Vorlesung Folie 170). Da der Homomorphismus strukturerhaltend ist, ist auch $L_r$ nicht kontextfrei.
 
-
-\subsubsection*{Weitere Überlegung: Homomorphismus}
-Intuitiv scheint die Sprache L nicht kontextfrei zu sein, da sie als Teilsprache $L_1=\left\{d^ja^ib^ic^i | j > 0 \right\}$ enthält und wir mit Hilfe eines Homomorphismus ($d=\epsilon$) auf $L'=\left\{a^ib^ic^i\right\}$ kommen können und aus der Vorlesung wissen, dass diese nicht kontextfrei ist.
+Da $L_r \not\subset L_l \wedge L_l \not\subset L_r$ und $L_{l_1} = L_l \setminus \left( L_r \cap L_l \right)$ adjunkt ist zu $L_{r_1} = L_r \setminus \left( L_r \cap L_l \right)$, gibt es Wörter in L, die jeweils nur exklusiv mit $L_l$ oder $L_r$ generiert werden können (für $L_l$ sind das die Wörter $a^kb^lc^m, k\neq l \vee l \neq m \vee m \neq k$, für $L_r$ die Wörter $d^ja^kb^lc^m, j>0 \wedge k=l=m$). Da diese Wörter Teil der Sprache $L$ sind, und die Wörter der Teilmenge $L_{r_1}$ kontextfrei sind, muss intuitiv $L$ ebenfalls kontextfrei sein.
 
 
 \subsection*{b)}
@@ -195,39 +193,54 @@ Die Regel $AB\rightarrow BA$ ist nach der neuen Definition nicht erlaubt, da $U 
 Um Regeln der Form $VW \rightarrow WV$ ($V, W$ sind Variablen) von der alten in die neue Definition kontext-sensitiver Sprachen zu überführen, geht man wie folgt vor:
 
 \begin{enumerate}
-	\item Beginne mit der initial-Definition $VW$, wobei $u=V, U=W, w=\epsilon$. Führe eine neue Variable $X$ ein. Setze $y=X$. Es entsteht die Regel $VW \rightarrow VX$.
-  \item Erstelle eine neue Regel $VX \rightarrow YX$ ($u=\epsilon, U=V, w=X, y=Y$) mit der neuen Variable $Y$. 
-  \item Erstelle eine weitere Regel $YX \rightarrow YV$ ($u=Y, U=X, w=\epsilon, y=V$).
-  \item Als letztes erstelle eine Regel $YV \rightarrow WV$ ($u=\epsilon, U=Y, w=V, y=W$).
+	\item Beginne mit der initialen Definition $VW$, wobei $u=V, U=W, w=\epsilon$. Führe eine neue Variable $X$ ein. Setze $y=X$. Es entsteht die Regel $VW \rightarrow VX$.
+  \item Erstelle eine neue Regel $VX \rightarrow WX$ ($u=\epsilon, U=V, w=X, y=W$). 
+  \item Erstelle eine weitere Regel $WX \rightarrow WV$ ($u=W, U=X, w=\epsilon, y=V$).
 \end{enumerate}
-
 Insgesamt entsteht so ein Regelwerk, dass genau die Regel $AB \rightarrow BA$ in der neuen Definition abbildet.
 
 \subsection*{Konkrekter Fall}
 \begin{align*}
 \begin{array}{l}
 AB \rightarrow AX \\
-AX \rightarrow YX \\
-YX \rightarrow YA \\
-YA \rightarrow BA
+AX \rightarrow BX \\
+BX \rightarrow BA
 \end{array}
 \end{align*}
-
-% etwas kürzere Alternative ohne Umweg über YX:
-%\begin{align*}
-%\begin{array}{l}
-%AB \rightarrow AX \\
-%AX \rightarrow BX \\
-%BX \rightarrow BA
-%\end{array}
-%\end{align*}
 
 \clearpage
 \section*{Aufgabe 7.5}
 \begin{figure}[!h]
   \includegraphics[scale=0.4]{crossword.png}
 \end{figure}
-
+\subsection*{Erklärungen}
+Die Automaten können etwa in dieser Reihenfolge gut bearbeitet werden:
+\begin{enumerate}
+	\item[6] Diese Turingmaschine (TM) kann nur $a$ erzeugen, da sie, nimmt man die $b/b,R$ Kante, niemals terminiert.
+  
+	\item[4] Das zu akzeptierende Wort hat eine ungerade Wortlänge. Dadurch müssen wir die untere $\square/\square,L$ Kante irgendwann erreichen. Dort kann die TM nun deterministisch nur $(bc)^*a$ akzeptieren, das Wort muss also $bcbcbcbca$ sein.
+  
+	\item[5] Da das letzte Symbol durch 4 mit $c$ gegeben ist, muss vom Start aus die $c/a,R$ Kante genutzt werden, damit durch die $c/a,R$-Schleife dieses $c$ verarbeitet werden kann. Während der ersten Kanten werden so alle Zeichen durch $a$ ersetzt, sogar das erste rechte blank ($\square/a,L$). 
+  
+  Der nun erreichte Endzustand terminiert aber noch nicht, da durch die Schleife und die Regel $\square/\square,R$ Übergänge möglich sind. Da nun nur $a$'s auf dem Band stehen muss nun der obere Rundgang genutzt werden, der in gleicher Manier alle $a$'s durch $b$'s ersetzt. 
+  
+  Kommt die TM dann wieder im Startzustand an, ist die Kante $b/\square,R$ nutzbar, die gemeinsam mit der gleich definierten Schleife dafür sorgt, dass die TM mit leerem Band im unteren Endzustand terminiert. Die erste Kante und die darauf folgende Schleife (je $c/a,R$) definieren das akzeptierte Wort: $ccccc$.
+  
+	\item[7] Diese TM geht ans Ende des Wortes und landet im Endzustand. Dort muss ein $c$ gelesen werden (oder ein $\square$ zum Terminieren gegeben sein), da sonst die TM in den unteren, nicht akzeptierenden Fehlerzustand geht. Nach der gleichen Überlegung muss nun zwingend $a/a,L$, $b/b,L$, $c/c,L$, $a/a,L$, $\square/\square,S$ folgen, das Wort ist also $acbac$.
+  
+	\item[3] Nach 7 haben wir gegeben, dass das dritte Symbol $a$ sein muss. Die TM hat nur einen möglichen Pfad, der als drittes Zeichen $a$ beinhaltet, wodurch $acab$ als akzeptierendes Wort gefunden werden kann.
+  
+	\item[8] Die Kante $b/b,S$ führt zu einem Wort $ba(a|b|c)^*$, die Kante $a/b,L$ lässt die TM nicht terminieren und die Kante $c/c,S$ erlaubt Worte der Form $c(a|b|c)^*$. Da der zweite und letzte Buchstabe durch 3 und 4 mit $ba$ gegeben sind, kann das Wort nur $cba$ sein.
+  
+	\item[2] Diese TM akzeptiert Palindrome. Mit den gegebenen Informationen aus 5, 6, 7 und 8 kann nun einfach der Rest zu $cbcaacbc$ ergänzt werden.
+  
+	\item[1] Diese TM akzeptiert Wörter, die mit $b$ anfangen, eine gerade Anzahl Symbole haben und an der $n/2+1$-ten Stelle ein $c$ enthält. Die Symbolkette von Stelle 2 bis $n/2$ wir ab Stelle $n/2+2$ wiederholt.
+  
+  Die erste Hälfte des Wortes wird nach und nach (beginnend rechts) durch $\$$ ersetzt, die zweite (ebenfalls von rechts) einfach gelöscht ($\square$). Am Ende werden die $\$$ ebenfalls durch $\square$ ersetzt und das Wort akzeptiert.
+  
+  
+  Da bereits an zweiter Stelle $c$ und an letzter Stelle $a$ gegeben sind, das Wort mit b beginnen muss und an der $n/2+1$-ten Stelle das $c$ durch das b gegeben ist, bleibt nur noch die Möglichkeit $bcacca$.
+\end{enumerate}
 
 
 \section*{Aufgabe 7.6}
