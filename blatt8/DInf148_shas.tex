@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{array}
+\usepackage{phonetic} % for reversed D
+\usepackage{wasysym}  % for the notes
+\usepackage{tikz, tikzsymbols}
+\usepackage{xcolor}
+
+
+\usetikzlibrary{arrows,automata,fit}
+\setlength\parindent{0pt}
+
+    
+\begin{document}
+
+\begin{center}
+  \Large{Informatik \revD: Übungsblatt 8}
+
+  \large{Sebastian Höffner, Andrea Suckro}
+\end{center}
+
+
+
+\section*{Aufgabe 8.1}
+\section*{Aufgabe 8.2}
+\section*{Aufgabe 8.3}
+\section*{Aufgabe 8.4}
+\subsection*{a) GOTO-Programm für $min(x_1,x_2)$}
+Die Idee ist hier so lange von beiden Zahlen 1 abzuziehen bis die erste 0 erreicht. Die Zahl die als erstes 0 erreicht ist das Minimum und wird ausgegeben.
+\begin{verbatim}
+    x4 = x1
+    x5 = x2
+L1: x4 = x4-1
+    x5 = x5-1
+    if x4 != 0
+      goto L2
+    x3 = x1
+    halt
+L2: if x5 != 0
+      goto L1
+    x3 = x2
+    halt
+\end{verbatim}
+\section*{Aufgabe 8.5}
+Juhu-FreiPunkte $:)$
+\section*{Aufgabe 8.6}
+Das Kreuzworträtsel ist behindat!
+
+
+\end{document}
