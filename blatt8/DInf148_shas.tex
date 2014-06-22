@@ -26,6 +26,25 @@
 
 
 \section*{Aufgabe 8.1}
+Idee: Da wir beim Start der Maschine schon ganz links also am MSB des Eingabewortes stehen, müssen wir danach nur noch alle danach kommenden Zeichen durch a ersetzen, um auf den Log zu kommen (wir löschen also die erste 1 da $\log_2(10_2) = 1$). Unser Automat behandelt auch noch den Fall, dass das Eingabewort mit beliebig vielen Nullen beginnt. Wenn das Wort nur Nullen enthält soll die Maschine in eine Endlosschleife verfallen, da $\log(0)$ nicht definiert ist.
+%Automat für die TM
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[state,initial] (S)      {};
+  \node[state]         (A) [right of=S] {};
+  \node[state]         (B) [right of=A] {};
+  \node[state]         (C) [right of=B] {};
+ 
+  \path (S) edge                            node {$1/\square,R$}       (A)
+            edge [loop below, align=center] node {$0/\square,R$ \\ $\square/\square,R$} (S) %wir ersetzen die erste 1 
+        (A) edge [loop below, align=center] node {$0/a,R$ \\ $1/a,R$}  (A) %wir ersetzen alle Zeichen mit a
+            edge                            node {$\square/\square,L$} (B) %am Ende gehen wir nach links
+        (B) edge [loop below]               node {$a/a,L$}             (B) %hier gehen wir alle as zurück
+            edge                            node {$\square/\square,L$} (C) %damit kommen wir an den Anfang des Wortes
+        ;
+\end{tikzpicture}
+\end{center}
+
 \section*{Aufgabe 8.2}
 \section*{Aufgabe 8.3}
 \section*{Aufgabe 8.4}
