@@ -182,12 +182,18 @@ R_4 \rightarrow cR_4    \ |\ bR_3 & \\
   \caption{Contract Cycle}
 \end{algorithm}
 
+\subsection*{Laufzeiten und Anmerkungen}
+
 \begin{itemize}
-	\item \textit{Algorithmus 1: Graph kontrahieren}: $\Omega(1 \cdot n) = \Omega(n)$ und $\mathcal{O}(n \cdot (n \cdot 1)) = \mathcal{O}(n^2)$
+	\item \textit{Algorithmus 1: Graph kontrahieren}: $\mathcal{O}(n^2)$
   \item \textit{Algorithmus 2: Kreis kontrahieren}: $\mathcal{O}(n)$
 \end{itemize}
 
-Alternativ sind ``Algorithmus von Tarjan zur Bestimmung starker Zusammenhangskomponenten'' oder topologisches Sortieren gute Möglichkeiten.
+Neben dem hier veranschaulichten Algorithmus gibt es noch andere Herangehensweisen. Dieser Algorithmus entfernt iterativ Senken und Quellen aus dem Graphen. Sind dann noch Knoten im Graphen, muss ein Kreis vorhanden sein. Dieser (bzw. einer) wird gesucht, kontrahiert und der Algorithmus wird wieder von vorn auf dem nun stark reduzierten Graphen ausgeführt. 
+
+Eine weitere sinnvolle Möglichkeit um Kreise zu finden ist das topologische Sortieren. Dieses wird z.B. häufig zum Detektieren von Deadlocks genutzt, da hier die Kreise nicht genau identifiziert werden müssen, sondern lediglich die Frage zählt, ob ein Deadlock vorhanden ist oder nicht.
+
+Nach Übung ist natürlich der ``Algorithmus von Tarjan zur Bestimmung starker Zusammenhangskomponenten'' eine ideale Lösung für das kontrahieren von Kreisen in Graphen.
 
 
 
