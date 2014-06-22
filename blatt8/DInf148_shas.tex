@@ -29,8 +29,9 @@
 \section*{Aufgabe 8.2}
 \section*{Aufgabe 8.3}
 \section*{Aufgabe 8.4}
+Die Idee ist hier bei beiden Programmen so lange von beiden Zahlen 1 abzuziehen bis die erste 0 erreicht. Die Zahl die als erstes 0 erreicht ist das Minimum und wird ausgegeben.
 \subsection*{a) GOTO-Programm für $min(x_1,x_2)$}
-Die Idee ist hier so lange von beiden Zahlen 1 abzuziehen bis die erste 0 erreicht. Die Zahl die als erstes 0 erreicht ist das Minimum und wird ausgegeben.
+%Basti- wenn dir eine bessere Sache für den Code einfällt, dann gerne los :)
 \begin{verbatim}
     x4 = x1
     x5 = x2
@@ -44,6 +45,26 @@ L2: if x5 != 0
       goto L1
     x3 = x2
     halt
+\end{verbatim}
+\subsection*{b) WHILE-Programm für $min(x_1,x_2)$}
+\begin{verbatim}
+x4 = 1
+x5 = x1
+x6 = x2
+while(x4 != 0){
+  x5 = x5-1
+  x6 = x6-1
+  if(x5 != 0){}
+  else{
+    x3 = x1
+    x4 = 0
+  }
+  if(x6 != 0){}
+  else{
+    x3 = x2
+    x4 = 0
+  }
+}
 \end{verbatim}
 \section*{Aufgabe 8.5}
 Juhu-FreiPunkte $:)$
