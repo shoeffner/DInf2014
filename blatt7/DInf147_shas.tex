@@ -6,7 +6,6 @@
 \usepackage{amsmath, amssymb}
 \usepackage{array}
 \usepackage{phonetic} % for reversed D
-\usepackage{wasysym}  % for the notes
 \usepackage{tikz, tikzsymbols}
 \usepackage{xcolor}
 \usetikzlibrary{arrows,automata,fit}
@@ -57,7 +56,7 @@ In diesem Fall haben wir wieder zwei Fälle. Einmal ist $j=0$, damit landen wir 
 
 
 \section*{Aufgabe 7.2}
-Gegeben sei die Sprache $L = \left\{ a^lb^{2^l} \right\}$. Wir nehmen an die Sprache sei kontextfrei. Dann gilt für sie ab einer bestimmten Wortmindestlänge $n$ das Pumping Lemma für Kontextfreie Sprachen. Betrachten wir nun das Wort $a^nb^{2^n}$ Wir überlegen nun welche Buchstaben in $v$ und $x$ sein dürfen, damit das Pumping Lemma überhaupt gelten kann:
+Gegeben sei die Sprache $L = \left\{ a^lb^{\left(2^l\right)} \right\}$. Wir nehmen an die Sprache sei kontextfrei. Dann gilt für sie ab einer bestimmten Wortmindestlänge $n$ das Pumping Lemma für Kontextfreie Sprachen. Betrachten wir nun das Wort $a^nb^{\left(2^n\right)}$ Wir überlegen nun welche Buchstaben in $v$ und $x$ sein dürfen, damit das Pumping Lemma überhaupt gelten kann:
 
 \subsection*{Fall 1: $v$ enthält a und b XOR $x$ enthält $a$ und $b$}
 Beide Variablen können nicht zugleich $a$'s und $b$'s enthalten, da es nur einen Übergang von $a$ nach $b$ in dem Wort gibt. Sobald $x$ oder $v$ $a$'s und $b$'s enthalten, kann das Aufpumpen nicht mehr funktionieren, da wir dann in das Wort weitere Wechsel von $a$ nach $b$ einbauen, wodurch es nicht mehr $\in L$ ist.
@@ -203,7 +202,7 @@ uUw \rightarrow uyw && U \in V, u,w,y \in \left( V \cup \Sigma \right)^* && |y| 
 
 Die Regel $AB\rightarrow BA$ ist nach der neuen Definition nicht erlaubt, da $U \in V$ gegeben ist, somit entweder $A$ oder $B$ der linken Seite das $U \in V$ repräsentiert. Dadurch ergeben sich zwei Fälle:
 \begin{itemize}
-	\item $U = A$: In diesem Fall wäre auf der linken Seite $w = B$, wodurch aber die Bedingung $uyw$ nicht erfüllt werden kann, da nach $w$ keine Symbole mehr kommen dürfen - in $BA$ wäre das jedoch der Fall.
+	\item $U = A$: In diesem Fall wäre auf der linken Seite $w = B$, wodurch aber die Bedingung $uyw$ nicht erfüllt werden kann, da nach $w$ keine Symbole mehr kommen dürfen -- in $BA$ wäre das jedoch der Fall.
   \item $U = B$: In diesem Fall ist es umgekehrt: $u = A$, wodurch ebenfalls $uyw$ nicht erfüllt werden kann. Vor $u$ dürfen keine Symbole auftreten, was bei $BA$ jedoch der Fall wäre.
 \end{itemize}
 
@@ -273,7 +272,7 @@ Es war einmal ein armes, frommes Mädchen, das lebte mit seiner Mutter allein un
 \subsection*{Inhalt}
 Der Inhalt ist somit geklärt: Ein Mädchen bekommt einen kleinen Topf, dieser kocht für sie unendlich viel Brei bis sie ihn stoppt. Das führt natürlich zur Katastrophe, der mit Brei gefüllten Stadt. Die Katastrophe wird jedoch humorvoll gelöst: Das Töpfchen wird gestoppt und es passiert nichts weiter Schlimmes, als dass nun die Bewohner der Stadt sich durch den Brei essen müssen, um zurück zu ihren Häusern zu gelangen.
 
-\subsection*{Beziehung Märchen - Erfindung}
+\subsection*{Beziehung Märchen -- Erfindung}
 Die Beziehung zwischen Märchen und der "`sehr vertrauten "`Erfindung"' von Stephen Cole Kleene"' ist ebenfalls simpel: 
 Der Kleene-Stern funktioniert ein wenig wie das Töpfchen. Das Töpfchen produziert immer weiter Brei, während der Stern immer weiter Zeichen akzeptiert bzw. generiert (je nach Anwendungs- bzw. Interpretationskontext). 
 
@@ -282,10 +281,10 @@ Die Frage, welche Rolle Kleene in diesem Märchen einnehmen würde, ist etwas ko
 \begin{itemize}
 	\item Da wir bereits klärten, dass das Töpfchen dem Kleene-Stern entspricht, liegen zwei Personen für Kleene nahe: Das Mädchen oder die alte Frau. Die Mutter ist auszuschließen, da diese die Katastrophe herbeiführt - Kleenes Erfindung ist aber eher nütz- als hinderlich.
   \item Die alte Frau hat das Töpfchen zuerst und gibt es dem Mädchen. Sie stellt viele Fragen: Woher ist das Töpfchen, warum ist sie im Wald, ...? Die Antwort ist: Die alte Frau steht für etwas, das vor dem Mädchen (und vielleicht dem Töpfchen?) existierte. Im übertragenen Sinne können wir sie als Symbol für die Mathematik, die Informatik oder auch ganz konkret die Automatentheorie oder Rekursionstheorie sehen. 
-  \item Das Mädchen bekommt das Töpfchen von der alten Frau. Es also ein Werkzeug, um ein Problem zu lösen (in der Geschichte der Hunger und die Armut). Dieses Werkzeug macht sie sich zu nutzen und stellt es auch anderen zu Verfügung, die jedoch erst lernen müssen, es zu verwenden. 
+  \item Das Mädchen bekommt das Töpfchen von der alten Frau. Es erhält also ein Werkzeug, um ein Problem zu lösen (in der Geschichte der Hunger und die Armut). Dieses Werkzeug macht sie sich zu nutzen und stellt es auch anderen zu Verfügung, die jedoch erst lernen müssen, es zu verwenden. 
 \end{itemize}
 
-Kleene handelt wie das Mädchen: Er erhält bzw. erfindet ein Werkzeug um ein Problem zu lösen. Das Werkzeug ist der Kleene-Stern, bzw. die mathematische Idee, die er repräsentiert. Kleene bekommt die Idee aus der Mathematik, indem er versucht das Problem zu lösen, Schleifen in Automaten sinnvoll beschreiben zu können. Wie das Mädchen, das in den Wald ging, um den Hunger zu stillen, sucht Kleene in der Mathematik nach dieser Lösung und bekommt sie. Wie das Mädchen bringt er das Werkzeug zu anderen, die es ebenfalls gern nutzen möchten - den Umgang aber erst lernen müssen. Kleenes Rolle wäre somit klar die des Mädchens.
+Kleene handelt wie das Mädchen: Er erhält bzw. erfindet ein Werkzeug um ein Problem zu lösen. Das Werkzeug ist der Kleene-Stern, bzw. die mathematische Idee, die er repräsentiert. Kleene bekommt die Idee aus der Mathematik, indem er versucht das Problem zu lösen, Schleifen in Automaten sinnvoll beschreiben zu können. Wie das Mädchen, das in den Wald ging, um den Hunger zu stillen, sucht Kleene in der Mathematik nach dieser Lösung und bekommt sie. Wie das Mädchen bringt er das Werkzeug zu anderen, die es ebenfalls gern nutzen möchten -- den Umgang aber erst lernen müssen. Kleenes Rolle wäre somit klar die des Mädchens.
 
 
 
