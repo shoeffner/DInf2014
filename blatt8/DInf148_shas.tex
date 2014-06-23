@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{array}
+\usepackage{phonetic} % for reversed D
+\usepackage{wasysym}  % for the notes
+\usepackage{tikz, tikzsymbols}
+\usepackage{xcolor}
+
+
+\usetikzlibrary{arrows,automata,fit}
+\setlength\parindent{0pt}
+
+    
+\begin{document}
+
+\begin{center}
+  \Large{Informatik \revD: Übungsblatt 8}
+
+  \large{Sebastian Höffner, Andrea Suckro}
+\end{center}
+
+
+
+\section*{Aufgabe 8.1}
+Idee: Da wir beim Start der Maschine schon ganz links also am MSB des Eingabewortes stehen, müssen wir danach nur noch alle danach kommenden Zeichen durch a ersetzen, um auf den Log zu kommen (wir löschen also die erste 1 da $\log_2(10_2) = 1$). Unser Automat behandelt auch noch den Fall, dass das Eingabewort mit beliebig vielen Nullen beginnt. Wenn das Wort nur Nullen enthält soll die Maschine in eine Endlosschleife verfallen, da $\log(0)$ nicht definiert ist.
+%Automat für die TM
+\begin{center}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+  \node[state,initial] (S)      {};
+  \node[state]         (A) [right of=S] {};
+  \node[state]         (B) [right of=A] {};
+  \node[state]         (C) [right of=B] {};
+ 
+  \path (S) edge                            node {$1/\square,R$}       (A)
+            edge [loop below, align=center] node {$0/\square,R$ \\ $\square/\square,R$} (S) %wir ersetzen die erste 1 
+        (A) edge [loop below, align=center] node {$0/a,R$ \\ $1/a,R$}  (A) %wir ersetzen alle Zeichen mit a
+            edge                            node {$\square/\square,L$} (B) %am Ende gehen wir nach links
+        (B) edge [loop below]               node {$a/a,L$}             (B) %hier gehen wir alle as zurück
+            edge                            node {$\square/\square,L$} (C) %damit kommen wir an den Anfang des Wortes
+        ;
+\end{tikzpicture}
+\end{center}
+
+\section*{Aufgabe 8.2}
+\section*{Aufgabe 8.3}
+\section*{Aufgabe 8.4}
+Die Idee ist hier bei beiden Programmen so lange von beiden Zahlen 1 abzuziehen bis die erste 0 erreicht. Die Zahl die als erstes 0 erreicht ist das Minimum und wird ausgegeben.
+\subsection*{a) GOTO-Programm für $min(x_1,x_2)$}
+%Basti- wenn dir eine bessere Sache für den Code einfällt, dann gerne los :)
+\begin{verbatim}
+    x4 = x1
+    x5 = x2
+L1: x4 = x4-1
+    x5 = x5-1
+    if x4 != 0
+      goto L2
+    x3 = x1
+    halt
+L2: if x5 != 0
+      goto L1
+    x3 = x2
+    halt
+\end{verbatim}
+\subsection*{b) WHILE-Programm für $min(x_1,x_2)$}
+\begin{verbatim}
+x4 = 1
+x5 = x1
+x6 = x2
+while(x4 != 0){
+  x5 = x5-1
+  x6 = x6-1
+  if(x5 != 0){}
+  else{
+    x3 = x1
+    x4 = 0
+  }
+  if(x6 != 0){}
+  else{
+    x3 = x2
+    x4 = 0
+  }
+}
+\end{verbatim}
+\section*{Aufgabe 8.5}
+Juhu-FreiPunkte $:)$
+\section*{Aufgabe 8.6}
+Das Kreuzworträtsel ist behindat!
+
+
+\end{document}
