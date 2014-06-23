@@ -151,12 +151,12 @@ R_4 \rightarrow cR_4    \ |\ bR_3 & \\
     }
     \tcc{If there are vertices left, there must be a cycle}
     \If{$V \neq \emptyset$}{
-      pick $v$ from $V$\;
+      pick first $v$ from $V$\;
       \While{$v \notin P$}{
-        add $v$ to $P$\;
-        $v$ = follower of $v$\;
+        add $v$ to $P$'s end\;
+        $v$ = first follower of $v$\;
       }
-      $C = P$ from $v$ to $end$\;
+      $C = P$ from first occurence of $v \in P$ to $end$\;
       new vertex $q = contractCycle(C)$\;
       remove $C$ from $G$\;
       add $q$ to $G$\;
@@ -185,7 +185,7 @@ R_4 \rightarrow cR_4    \ |\ bR_3 & \\
 \subsection*{Laufzeiten und Anmerkungen}
 
 \begin{itemize}
-	\item \textit{Algorithmus 1: Graph kontrahieren}: $\mathcal{O}(n^2)$
+	\item \textit{Algorithmus 1: Graph kontrahieren}: $\mathcal{O}(n^3)$
   \item \textit{Algorithmus 2: Kreis kontrahieren}: $\mathcal{O}(n)$
 \end{itemize}
 
