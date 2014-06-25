@@ -117,15 +117,15 @@ D.h. wenn mein Band n Eingabesymbole hat, kann ich an n beliebige Stellen schrei
 Die Idee ist hier bei beiden Programmen so lange von beiden Zahlen 1 abzuziehen bis die erste 0 erreicht. Die Zahl die als erstes 0 erreicht ist das Minimum und wird ausgegeben.
 \subsection*{a) GOTO-Programm für $min(x_1,x_2)$}
 \begin{verbatim}
-    x3 = 0
     x4 = x1
     x5 = x2
 L1: x4 = x4 - 1
     x5 = x5 - 1
-    x3 = x3 + 1
     if x4 != 0 goto L2
+    x3 = x1
     halt
 L2: if x5 != 0 goto L1
+    x3 = x2
     halt
 \end{verbatim}
 \newpage
