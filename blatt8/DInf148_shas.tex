@@ -40,7 +40,7 @@ Idee: Da wir beim Start der Maschine schon ganz links also am MSB des Eingabewor
         (A) edge [loop below, align=center] node {$0/a,R$ \\ $1/a,R$}  (A) %wir ersetzen alle Zeichen mit a
             edge                            node {$\square/\square,L$} (B) %am Ende gehen wir nach links
         (B) edge [loop below]               node {$a/a,L$}             (B) %hier gehen wir alle as zurück
-            edge                            node {$\square/\square,L$} (C) %damit kommen wir an den Anfang des Wortes
+            edge                            node {$\square/\square,R$} (C) %damit kommen wir an den Anfang des Wortes
         ;
 \end{tikzpicture}
 \end{center}
