@@ -102,7 +102,7 @@ Wir müssen zunächst rausfinden ob die Zahl gerade oder ungerade ist. Das geht 
         ;
 \end{tikzpicture}
 \end{center}
-Von dessen Enden können wir in den passenden Automaten verzweigen. Für ungerade (rechts) haben wir in a) schon den Automaten generiert. Der Automat zur Halbierung der Zahl kann ähnlich konstruiert werden. Dafür ersetzen wir die beiden ersten $\alpha$ durch ein S, gehen nach rechts durch all die anderen $\alpha$ bis zum Kästchen und schreiben hinter das Kästchen ein $\alpha$. Dann gehen wir zu dem Kästchen zurück. Überprüfen ob neben dem Kästchen noch ein $\alpha$ steht und gehen bis zu dem letzten S. Dann ersetzen wir wieder 2 $\alpha$ mit S, gehen bis zu dem Kästchen, gehen von da durch alle $\alpha$ und schreiben ein neues hinten dran. Irgendwann wird der Punkt kommen wo wir nach dem Kästchen direkt ein S stehen haben. Dann können wir nach links gehen und alle S durch Kästchen ersetzen. Dann (wenn wir an Kästchen links angekommen sind) gehen wir wieder nach rechts bis wir das erste $\alpha$ finden und sind fertig.
+Von dessen Enden können wir mit $\square/\square,R$ in den passenden Automaten verzweigen. Für ungerade (rechts) haben wir in a) schon den Automaten generiert. Der Automat zur Halbierung der Zahl kann ähnlich konstruiert werden. Dafür ersetzen wir die beiden ersten $\alpha$ durch ein S, gehen nach rechts durch all die anderen $\alpha$ bis zum Kästchen und schreiben hinter das Kästchen ein $\alpha$. Dann gehen wir zu dem Kästchen zurück. Überprüfen ob neben dem Kästchen noch ein $\alpha$ steht und gehen bis zu dem letzten S. Dann ersetzen wir wieder 2 $\alpha$ mit S, gehen bis zu dem Kästchen, gehen von da durch alle $\alpha$ und schreiben ein neues hinten dran. Irgendwann wird der Punkt kommen wo wir nach dem Kästchen direkt ein S stehen haben. Dann können wir nach links gehen und alle S durch Kästchen ersetzen. Dann (wenn wir an Kästchen links angekommen sind) gehen wir wieder nach rechts bis wir das erste $\alpha$ finden und sind fertig.
 
 \section*{Aufgabe 8.3}
 \emph{Noch nicht sinnvoll formuliert, nur vage Ideen}
@@ -116,22 +116,6 @@ D.h. wenn mein Band n Eingabesymbole hat, kann ich an n beliebige Stellen schrei
 \section*{Aufgabe 8.4}
 Die Idee ist hier bei beiden Programmen so lange von beiden Zahlen 1 abzuziehen bis die erste 0 erreicht. Die Zahl die als erstes 0 erreicht ist das Minimum und wird ausgegeben.
 \subsection*{a) GOTO-Programm für $min(x_1,x_2)$}
-%Basti- wenn dir eine bessere Sache für den Code einfällt, dann gerne los :)
-\begin{verbatim}
-    x4 = x1
-    x5 = x2
-L1: x4 = x4-1
-    x5 = x5-1
-    if x4 != 0
-      goto L2
-    x3 = x1
-    halt
-L2: if x5 != 0
-      goto L1
-    x3 = x2
-    halt
-\end{verbatim}
-Alternative:
 \begin{verbatim}
     x3 = 0
     x4 = x1
@@ -144,27 +128,8 @@ L1: x4 = x4 - 1
 L2: if x5 != 0 goto L1
     halt
 \end{verbatim}
+\newpage
 \subsection*{b) WHILE-Programm für $min(x_1,x_2)$}
-\begin{verbatim}
-x4 = 1;
-x5 = x1;
-x6 = x2;
-while(x4 != 0){
-  x5 = x5 - 1;
-  x6 = x6 - 1;
-  if(x5 != 0){}
-  else{
-    x3 = x1;
-    x4 = 0;
-  }
-  if(x6 != 0){}
-  else{
-    x3 = x2;
-    x4 = 0;
-  }
-}
-\end{verbatim}
-Alternative:
 \begin{verbatim}
 x4 = x1;
 x5 = x2;
