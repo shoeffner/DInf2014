@@ -60,6 +60,7 @@ Meine Idee dazu lautet wie folgt: ich ersetze das erste $\alpha$ mit S. Dann geh
   \node[state]         (F) [below of=A] {};
   \node[state]         (G) [below left of=E] {};
   \node[state]         (H) [below of=G] {};
+  \node[state]         (I) [left of=H]  {};
    
   \path (S) edge                            node {$\alpha/S,R$}        (A) %das erste alpha durch S ersetzen
         (A) edge [loop above, align=center] node {$\alpha/\alpha,R$}   (A)
@@ -74,7 +75,8 @@ Meine Idee dazu lautet wie folgt: ich ersetze das erste $\alpha$ mit S. Dann geh
         (F) edge [loop below]               node {$\alpha/\alpha,L$}   (F)
             edge                            node {$S/S,R$}             (S)
         (G) edge                            node {$\square/\alpha,L$}  (H)
-        (H) edge [loop left]                node {$S/\alpha,L$}        (H)
+        (H) edge [loop right]               node {$S/\alpha,L$}        (H)
+        (H) edge                            node {$\square/\square,R$} (I)
         ;
 \end{tikzpicture}
 \end{center}
@@ -99,6 +101,9 @@ Wir müssen zunächst rausfinden ob die Zahl gerade oder ungerade ist. Das geht 
 Von dessen Enden können wir in den passenden Automaten verzweigen. Für ungerade (rechts) haben wir in a) schon den Automaten generiert. Der Automat zur Halbierung der Zahl kann ähnlich konstruiert werden. Dafür ersetzen wir die beiden ersten $\alpha$ durch ein S, gehen nach rechts durch all die anderen $\alpha$ bis zum Kästchen und schreiben hinter das Kästchen ein $\alpha$. Dann gehen wir zu dem Kästchen zurück. Überprüfen ob neben dem Kästchen noch ein $\alpha$ steht und gehen bis zu dem letzten S. Dann ersetzen wir wieder 2 $\alpha$ mit S, gehen bis zu dem Kästchen, gehen von da durch alle $\alpha$ und schreiben ein neues hinten dran. Irgendwann wird der Punkt kommen wo wir nach dem Kästchen direkt ein S stehen haben. Dann können wir nach links gehen und alle S durch Kästchen ersetzen. Dann (wenn wir an Kästchen links angekommen sind) gehen wir wieder nach rechts bis wir das erste $\alpha$ finden und sind fertig.
 
 \section*{Aufgabe 8.3}
+
+
+
 \section*{Aufgabe 8.4}
 Die Idee ist hier bei beiden Programmen so lange von beiden Zahlen 1 abzuziehen bis die erste 0 erreicht. Die Zahl die als erstes 0 erreicht ist das Minimum und wird ausgegeben.
 \subsection*{a) GOTO-Programm für $min(x_1,x_2)$}
@@ -117,31 +122,76 @@ L2: if x5 != 0
     x3 = x2
     halt
 \end{verbatim}
+Alternative:
+\begin{verbatim}
+    x3 = 0
+L1: x1 = x1 - 1
+    x2 = x2 - 1
+    x3 = x3 + 1
+    if x1 != 0 goto L2
+    halt
+L2: if x2 != 0 goto L1
+    halt
+\end{verbatim}
 \subsection*{b) WHILE-Programm für $min(x_1,x_2)$}
 \begin{verbatim}
-x4 = 1
-x5 = x1
-x6 = x2
+x4 = 1;
+x5 = x1;
+x6 = x2;
 while(x4 != 0){
-  x5 = x5-1
-  x6 = x6-1
+  x5 = x5 - 1;
+  x6 = x6 - 1;
   if(x5 != 0){}
   else{
-    x3 = x1
-    x4 = 0
+    x3 = x1;
+    x4 = 0;
   }
   if(x6 != 0){}
   else{
-    x3 = x2
-    x4 = 0
+    x3 = x2;
+    x4 = 0;
+  }
+}
+\end{verbatim}
+Alternative Idee ohne $x_4$:
+\begin{verbatim}
+x5 = x1;
+x6 = x2;
+x3 = x1;
+while(x5 != 0){
+  x5 = x5 - 1;
+  if(x5 != 0){
+    x6 = x6 - 1;
+    if(x6 != 0) {}
+    else {
+      x3 = x2;
+      x5 = 0;
+    }
+  }
+  else{}
+}
+\end{verbatim}
+Weitere Alternative ohne andere Variablen:
+\begin{verbatim}
+x3 = 0;
+while(x1 != 0) {
+  x1 = x1 - 1;
+  x2 = x2 - 1;
+  x3 = x3 + 1;
+  if(x2 != 0) {}
+  else {
+    x1 = 0;
   }
 }
 \end{verbatim}
 \section*{Aufgabe 8.5}
-Juhu-FreiPunkte $:)$
+
+Juhu -- Frei-Punkte $:)$
+
+
 \section*{Aufgabe 8.6}
 \begin{figure}[!h]
-  \includegraphics[scale=0.5]{crossword.png}
+  \includegraphics[scale=0.4]{crossword.png}
 \end{figure}
 
 \end{document}
