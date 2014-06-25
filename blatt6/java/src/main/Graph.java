@@ -134,6 +134,9 @@ public class Graph {
         vertices.add(replacement);
     }
     
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         // find single vertices
