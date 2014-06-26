@@ -105,12 +105,9 @@ Wir müssen zunächst rausfinden ob die Zahl gerade oder ungerade ist. Das geht 
 Von dessen Enden können wir mit $\square/\square,R$ in den passenden Automaten verzweigen. Für ungerade (rechts) haben wir in a) schon den Automaten generiert. Der Automat zur Halbierung der Zahl kann ähnlich konstruiert werden. Dafür ersetzen wir die beiden ersten $\alpha$ durch ein S, gehen nach rechts durch all die anderen $\alpha$ bis zum Kästchen und schreiben hinter das Kästchen ein $\alpha$. Dann gehen wir zu dem Kästchen zurück. Überprüfen ob neben dem Kästchen noch ein $\alpha$ steht und gehen bis zu dem letzten S. Dann ersetzen wir wieder 2 $\alpha$ mit S, gehen bis zu dem Kästchen, gehen von da durch alle $\alpha$ und schreiben ein neues hinten dran. Irgendwann wird der Punkt kommen wo wir nach dem Kästchen direkt ein S stehen haben. Dann können wir nach links gehen und alle S durch Kästchen ersetzen. Dann (wenn wir an Kästchen links angekommen sind) gehen wir wieder nach rechts bis wir das erste $\alpha$ finden und sind fertig.
 
 \section*{Aufgabe 8.3}
-\emph{Noch nicht sinnvoll formuliert, nur vage Ideen}
+Eine linear beschränkte Turingmaschine der Definition der Vorlesung kann eine der Definition des Übungsblattes simulieren. 
 
-Die beiden Definitionen sehen auf den ersten Blick identisch aus. Insbesondere wirkt eigentlich gerade die zweite nicht mächtiger (keine Erwähnung der Randsymbole). 
-
-Auf den zweiten Blick kann ich höchstens sagen, dass die zweite Definition erlaubt, auch woanders hin zu schreiben.
-D.h. wenn mein Band n Eingabesymbole hat, kann ich an n beliebige Stellen schreiben, nicht nur dort, wo auch die Eingabe ist. Man könnte dann argumentieren, dass sie mächtiger erscheint, weil ich das Eingabewort unangetastet lassen kann und immer wieder lesen kann -- Aber da wir ja in der VL gelernt haben, dass man beliebig viele States von beliebig vielen Bändern zusammen fassen kann als einen State, können wir eine Umformung finden von der ersten Definition in die zweite und umgekehrt, wodurch sie äquivalent sind.
+Dazu nutzen wir den selben Trick wie für die Turingmaschine mit mehreren Bändern, d.h. wir stellen die verschiedenen Zustandskombinationen als einzelne zusammengefasste Zustände dar. Dadurch haben wir zwar viel mehr Zustände und eine weitaus komplexere Beschreibung des Problems, aber insgesamt kann so gezeigt werden, dass die beiden Definitionen gleich mächtig sind.
 
 
 \section*{Aufgabe 8.4}
