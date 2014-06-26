@@ -116,14 +116,15 @@ Die Idee ist hier bei beiden Programmen so lange von beiden Zahlen 1 abzuziehen 
 \begin{verbatim}
     x4 = x1
     x5 = x2
-L1: x4 = x4 - 1
-    x5 = x5 - 1
-    if x4 != 0 goto L2
+L1: if x4 != 0 goto L2
     x3 = x1
     halt
-L2: if x5 != 0 goto L1
+L2: if x5 != 0 goto L3
     x3 = x2
     halt
+L3: x4 = x4 - 1
+    x5 = x5 - 1
+    goto L1
 \end{verbatim}
 \newpage
 \subsection*{b) WHILE-Programm für $min(x_1,x_2)$}
@@ -134,11 +135,10 @@ x3 = x1;
 while(x4 != 0) {
   x4 = x4 - 1;
   x5 = x5 - 1;
-  if(x5 != 0) {
-    x3 = x2;
-  }
+  if(x5 != 0) {}
   else {
     x4 = 0;
+    x3 = x2;
   }
 }
 \end{verbatim}
