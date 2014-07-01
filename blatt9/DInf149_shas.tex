@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{array}
+\usepackage{phonetic} % for reversed D
+\usepackage{wasysym}  % for the notes
+\usepackage{tikz, tikzsymbols}
+\usepackage{xcolor}
+
+
+\usetikzlibrary{arrows,automata,fit}
+\setlength\parindent{0pt}
+
+    
+\begin{document}
+
+\begin{center}
+  \Large{Informatik \revD: Übungsblatt 9}
+
+  \large{Sebastian Höffner, Andrea Suckro}
+\end{center}
+
+\section*{Aufgabe 9.1}
+Ein Beispiel für ein Wort, das weder selbstidentifizierend(si) noch es nicht ist ist das Wort nichtselbstidentifizierend(nsi) selbst. Dazu folgende Überlegung: Das Wort nsi beschreibt alle Worte die sich selbst nicht beschreiben. Wie sieht es mit dem Wort selbst aus?
+\subsection*{Fall 1: nsi ist nsi}
+Wenn nsi sich selbst nicht beschreibt dann muss es damit in der Menge liegen an Worten die es beschreibt (weil es ja nsi ist). Damit beschreibt es aber sich selbst auf einmal und wird si! Wir landen also bei einem Widerspruch.
+\subsection*{Fall 2: nsi ist si}
+Wenn nsi sich selbst beschreibt, dann liegt es in der Menge von Worten die nsi beschreibt. Die Eigenschaft dieser Menge war allerdings gerade, dass sie nicht von sich selbst identifiziert werden! Darum landet man in diesem Fall wieder bei einem Widerspruch.
+
+\bigskip
+\textit{nichtselbstidentifizierend} ist also irgendwie gleichzeitig nsi und si, was aber nicht sein kann, da es sich bei den beiden Kategorien um Dichotomie handelt. Somit sollte man dem Wort keins der beiden Attribute zuschreiben.
+
+\section*{Aufgabe 9.2}
+Wir stellen uns vor wir hätten eine Funktion, die uns sagt ob der Zustand $Z_i$ bei einer Eingabe erreicht wurde. Das Problem ist nun semi-entscheidbar, da wir falls der Zustand in dem Automaten bei einer Eingabe erreicht wird eine 1 bekommen. Wenn wir nun für unsere bisherigen Eingaben nicht den Zustand erreicht haben (Ergebnis der Funktion 0), können wir keine Aussage treffen, da es prinzipiell in den unendlich großem Set an Eingaben noch eine Eingabe gibt, die wir noch nicht ausprobiert haben und die uns zu diesem Zustand bringen kann. Wir wissen also für egal wie viele Eingaben nicht, ob der Zustand prinzipiell nicht erreicht werden kann oder wir nur nicht die richtige Eingabe bisher hatten.
+
+
+\section*{Aufgabe 9.3}
+
+\section*{Aufgabe 9.4}
+
+\section*{Aufgabe 9.5}
+\subsection*{a)}
+Diese Instanz hat eine Lösung und zwar: wein hier und bier dort
+\subsection*{b)}
+Für diese Instanz lässt sich keine Lösung finden, da sich eins von diesen beiden Mustern (abhängig vom Startstein) für immer wiederholt: $p(am)^*$ oder $p(aamm)^*$
+\end{document}
+
