@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{type1ec}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -6,9 +7,9 @@
 \usepackage{amsmath, amssymb}
 \usepackage{array}
 \usepackage{phonetic} % for reversed D
-\usepackage{wasysym}  % for the notes
 \usepackage{tikz, tikzsymbols}
 \usepackage{xcolor}
+\usepackage{algorithm2e}
 
 
 \usetikzlibrary{arrows,automata,fit}
@@ -24,20 +25,42 @@
 \end{center}
 
 \section*{Aufgabe 9.1}
-Ein Beispiel für ein Wort, das weder selbstidentifizierend(si) noch es nicht ist ist das Wort nichtselbstidentifizierend(nsi) selbst. Dazu folgende Überlegung: Das Wort nsi beschreibt alle Worte die sich selbst nicht beschreiben. Wie sieht es mit dem Wort selbst aus?
-\subsection*{Fall 1: nsi ist nsi}
-Wenn nsi sich selbst nicht beschreibt dann muss es damit in der Menge liegen an Worten die es beschreibt (weil es ja nsi ist). Damit beschreibt es aber sich selbst auf einmal und wird si! Wir landen also bei einem Widerspruch.
-\subsection*{Fall 2: nsi ist si}
-Wenn nsi sich selbst beschreibt, dann liegt es in der Menge von Worten die nsi beschreibt. Die Eigenschaft dieser Menge war allerdings gerade, dass sie nicht von sich selbst identifiziert werden! Darum landet man in diesem Fall wieder bei einem Widerspruch.
+Ein Beispiel für ein Wort, das weder selbstidentifizierend noch nicht selbstidentifizierend ist, ist das Wort nichtselbstidentifizierend selbst.
+\begin{itemize}
+  \item[1:] \textbf{nichtselbstidentifizierend ist nichtselbstidentifizierend} \\
+    Wenn nichtselbstidentifizierend sich selbst nicht beschreibt, dann ist es Teil der Menge der nicht selbstidentifizierenden Wörter. Da die Wörter dieser Menge sich selbst nicht identifizieren, sind sie nichtselbstidentifizierend. Dies ist ein Widerspruch.
+  \item[2:] \textbf{nichtselbstidentifizierend ist selbstidentifizierend} \\
+    Wenn nichtselbstidentifizierend sich selbst beschreibt, dann ist es Teil der Menge der selbstidentifizierenden Wörter. Die Bedeutung von nichtselbstidentifizierend ist jedoch, dass ein Wort sich nicht selbst beschreibt, wodurch wir erneut einen Widerspruch haben.
+\end{itemize}
 
 \bigskip
-\textit{nichtselbstidentifizierend} ist also irgendwie gleichzeitig nsi und si, was aber nicht sein kann, da es sich bei den beiden Kategorien um Dichotomie handelt. Somit sollte man dem Wort keins der beiden Attribute zuschreiben.
+\textit{nichtselbstidentifizierend} führt in beiden Betrachtungsweisen zum Widerspruch. Wir haben also ein Wort, dass weder zur einen, noch zur anderen Kategorie passt.
 
 \section*{Aufgabe 9.2}
-Wir stellen uns vor wir hätten eine Funktion, die uns sagt ob der Zustand $Z_i$ bei einer Eingabe erreicht wurde. Das Problem ist nun semi-entscheidbar, da wir falls der Zustand in dem Automaten bei einer Eingabe erreicht wird eine 1 bekommen. Wenn wir nun für unsere bisherigen Eingaben nicht den Zustand erreicht haben (Ergebnis der Funktion 0), können wir keine Aussage treffen, da es prinzipiell in den unendlich großem Set an Eingaben noch eine Eingabe gibt, die wir noch nicht ausprobiert haben und die uns zu diesem Zustand bringen kann. Wir wissen also für egal wie viele Eingaben nicht, ob der Zustand prinzipiell nicht erreicht werden kann oder wir nur nicht die richtige Eingabe bisher hatten.
+Wir prüfen für alle möglichen Eingaben, ob der Zustand $Z_i$ erreicht wird. Sobald $Z_i$ erreicht wird, gibt der Algorithmus 1 zurück. So lange wir keine gültige Eingabe finden, terminiert der Algorithmus nicht, d.h. wir können keine Aussage dazu treffen.
 
+\begin{algorithm}[ht]
+  \KwIn{Input X}
+  \KwOut{1 bei Erfolg}
+  \For{n = 0, 1, 2, \dots}{
+    \For{$\forall w \in \Sigma^n$} {
+      \If{TM reaches $Z_i$ for input w}{\Return{1}}
+    }
+  }
+  \caption{Pseudocode zu 9.2}
+\end{algorithm}
 
 \section*{Aufgabe 9.3}
+Wir können ein Programm $\mathcal{P}$ nutzen, welches terminiert, sobald 4 erreicht wird. Dieses Programm können wir mit $\mathcal{A}(\mathcal{P})$ prüfen: wenn $\mathcal{A}(\mathcal{P}) = 1$, dann ist die Collatzvermutung wahr, sonst nicht.
+\begin{algorithm}[ht]
+  \KwIn{Input n}
+  \KwOut{1 bei Erreichen von 4}
+  \While{$n \neq 4$}{
+    n := C(n)\;
+  }
+  \Return{1}
+  \caption{Pseudocode zu Programm $\mathcal{P}$ von 9.3}
+\end{algorithm}
 
 \section*{Aufgabe 9.4}
 
