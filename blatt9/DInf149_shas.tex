@@ -66,8 +66,31 @@ Wir können ein Programm $\mathcal{P}$ nutzen, welches terminiert, sobald 4 erre
 
 \section*{Aufgabe 9.5}
 \subsection*{a)}
-Diese Instanz hat eine Lösung und zwar: wein hier und bier dort
+Diese Instanz hat eine Lösung und zwar: \textsc{wein hier und bier dort}.
 \subsection*{b)}
 Für diese Instanz lässt sich keine Lösung finden, da sich eins von diesen beiden Mustern (abhängig vom Startstein) für immer wiederholt: $p(am)^*$ oder $p(aamm)^*$
-\end{document}
+\bigskip
+\emph{Alternative:} Betrachten wir die Steine ebenfalls als Tupel $(x_i,y_i)$. Dann kann es verschiedene Fälle geben, wie $|x_i|$ und $|y_i|$ zusammenhängen.
 
+In den einfachsten entscheidbaren Fällen gilt entweder $\forall i: |x_i| < |y_i|$ oder $\forall i: |x_i| > |y_i|$. Dann ist es \emph{nicht} möglich, Lösungen zu finden, da immer eine "`Seite"' länger wird, als die andere.
+
+Der zweite Fall ist, dass es entweder gilt $\forall i: |x_i| \leq |y_i|$ oder $\forall i: |x_i| \geq |y_i|$. Diese Fälle können wir vereinfachen, da für die Lösung nur die Fälle $\forall i: |x_i| = |y_i|$ interessant sind, ansonsten haben wir das selbe Problem wie in den ersten Fällen: Eine "`Seite"' würde länger, als die andere. Das heißt, wir können alle Tupel $\forall i: |x_i| \neq |y_i|$ entfernen und auf den verbliebenen Tupeln nach der Lösung suchen. Diese Tupel fallen in den nächsten Fall:
+
+Damit wir eine Folge als Lösung finden können, muss in mindestens einer beliebigen Kombination $\sum_j^n |x_{i_j}| = \sum_j^n |y_{i_j}|$ gegeben sein. Dazu können $|x_i|$ und $|y_i|$ beliebig zueinander stehen, da wir sie beliebig kombinieren können. Auf dem nach diesen Fallunterscheidungen noch sinnvollen Tupeln kann nun nach einer Lösung gesucht werden.
+
+In unserem konkreten Beispiel können wir nach der Argumentation oben drei Tupel ($(p,aam),(p,paa),(pa,pam)$) eliminieren, es bleiben übrig $(a,m)$ und $(m,a)$. 
+
+Startet man mit einem Tupel, kann man nun das selbe oder das andere der beiden Tupel davor oder dahinter hängen, in beiden Fällen ist es nicht möglich, in beiden Wörtern das selbe Wort zu erzeugen. 
+
+Verwenden wir einen Homomorphismus (zur Veranschaulichung) und ersetzen $h(a)=1$ und $h(m)=0$ und betrachten die generierten Wörter $x$, $y$ mit $(x_i,y_i)^*=x,y)$ als Bitdarstellungen auf denen der Operator $\neg b$ alle Bits invertiert, also 1 in 0 konvertiert und umgekehrt, so sind in jeder Möglichkeit $x$ und $y$ in folgender Beziehung zueinander: $x=\neg y$.
+
+
+
+
+\section*{Aufgabe 9.6}
+
+
+
+
+
+\end{document}
