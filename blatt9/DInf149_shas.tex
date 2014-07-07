@@ -1,5 +1,4 @@
 \documentclass{article}
-\usepackage{type1ec}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -62,7 +61,28 @@ Wir können ein Programm $\mathcal{P}$ nutzen, welches terminiert, sobald 4 erre
   \caption{Pseudocode zu Programm $\mathcal{P}$ von 9.3}
 \end{algorithm}
 
+
 \section*{Aufgabe 9.4}
+Um zu zeigen, dass die Turingmaschine auf keiner möglichen Eingabe hält, muss ich für alle Eingaben zeigen, dass sie nicht hält.
+
+Die Prüfung für jede Eingabe, ob sie hält oder nicht, ist das klassische Halteproblem. Dieses Problem ist nicht entscheidbar, und damit ist auch die Frage, ob die Turingmaschine auf keiner möglichen Eingabe hält, unentscheidbar.
+
+\bigskip
+
+Problematisch wird z.B. folgendes Programm $\mathcal{P}$, bei dem nicht entscheidbar ist, ob es hält oder nicht. Hält es nicht, d.h. wird die \texttt{if}-Bedingung true, so hält es - hält es, d.h. die \texttt{if}-Bedingung ist false, hält es dank der Endlosschleife nicht.
+\begin{algorithm}[ht]
+  \If{hältNicht($\mathcal{P}$)}{
+    \Return{1}
+  }
+  \Else{\While{true}{
+    NOOP;
+  }}
+  \caption{Pseudocode zu Programm $\mathcal{P}$ von 9.4}
+\end{algorithm}
+Das Problem ist also \textbf{nicht entscheidbar} für jede Turingmaschine.
+
+
+
 
 \section*{Aufgabe 9.5}
 \subsection*{a)}
@@ -80,17 +100,30 @@ Damit wir eine Folge als Lösung finden können, muss in mindestens einer belieb
 
 In unserem konkreten Beispiel können wir nach der Argumentation oben drei Tupel ($(p,aam),(p,paa),(pa,pam)$) eliminieren, es bleiben übrig $(a,m)$ und $(m,a)$. 
 
-Startet man mit einem Tupel, kann man nun das selbe oder das andere der beiden Tupel davor oder dahinter hängen, in beiden Fällen ist es nicht möglich, in beiden Wörtern das selbe Wort zu erzeugen. 
-
-Verwenden wir einen Homomorphismus (zur Veranschaulichung) und ersetzen $h(a)=1$ und $h(m)=0$ und betrachten die generierten Wörter $x$, $y$ mit $(x_i,y_i)^*=x,y)$ als Bitdarstellungen auf denen der Operator $\neg b$ alle Bits invertiert, also 1 in 0 konvertiert und umgekehrt, so sind in jeder Möglichkeit $x$ und $y$ in folgender Beziehung zueinander: $x=\neg y$.
-
+Startet man mit einem Tupel, kann man nun das selbe oder das andere der beiden Tupel davor oder dahinter hängen, in beiden Fällen ist es nicht möglich, in beiden Wörtern das selbe Wort zu erzeugen. Das liegt daran, dass für jedes $a$ auf der oberen Hälfte ein $m$ auf der unteren erzeugt wird und umgekehrt, wir können aber niemals beide Wörter mit dem gleichen Buchstaben beginnen lassen.
 
 
 
 \section*{Aufgabe 9.6}
 
+\subsection*{a)}
+Der Rückgabewert ist immer korrekt, weil entweder eine Verkürzung gefunden wurde (z.B. wird \texttt{aaaa} zu \texttt{4:a} statt der trivialen Lösung \texttt{1:aaaa}), dessen Länge ausgegeben wird, oder aber die Länge des Trivialfalls ($|w|:w$) zurückgegeben wird. Diese berechnet sich aus $|w|+\lfloor \log_10 |w| \rfloor + 2$. Deshalb ist auch $\mathcal{K}(w)\leq |w|+l+1$ korrekt.
 
+\subsection*{b)}
+Ja, für jede endliche Eingabe $w$ terminiert $\mathcal{K}(w)$. Dies ist garantiert, weil PURL-Programme regulär und endlich sind.
 
+Die Umformung von PURL zu regulären Sprachen, auf denen $a^n$ durch "`wiederhole $a$ $n$ Mal"' definiert ist, ist:
+\begin{itemize}\itemsep0em
+	\item $\epsilon \rightarrow \epsilon$
+  \item $AB \rightarrow AB$
+  \item $\phi\!:\!\varrho; \varrho \in \Sigma^c, \phi=\mathbb{D}(c) \rightarrow \varrho^c$
+  \item $\phi(A); \phi=\mathbb{D}(c) \rightarrow (A)^c$
+\end{itemize}
+Die Programme sind endlich, weil sie niemals endlose Wiederholungen ermöglichen, es gibt keine Kleenesche Hülle.
 
+D.h. für jedes endliche Eingabe hat der Algorithmus endliche Laufzeit, die jedoch schnell sehr groß wird. $\mathcal{K}(w)$ kann also sehr lange brauchen, terminiert aber immer.
+
+\subsection*{c)}
+Wir berechnen lediglich das kürzeste PURL-Programm, nicht die Kolmogorov-Komplexität - letztere ist nämlich nur für Turing-vollständige Sprachen definiert.
 
 \end{document}
