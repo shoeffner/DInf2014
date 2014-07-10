@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tikz, tikzsymbols}
+\usepackage{xcolor}
+\usepackage{algorithm2e}
+
+\usepackage{hhline}
+
+\usetikzlibrary{arrows,automata,fit}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  \Large{Informatik \rotatebox[origin=c]{180}{D}\raisebox{0.05em}{:} Übungsblatt 10}
+
+  \large{Sebastian Höffner, Andrea Suckro}
+\end{center}
+
+
+
+\section*{Aufgabe 10.1}
+\subsection*{a)}
+Der Algorithmus $\mathcal{A}$ berechnet $3^{3^x}$.
+
+
+\subsection*{b)}
+Das uniforme Kostenmaß berücksichtigt nicht, dass die Werte für $y$ sehr schnell sehr groß werden und die Multiplikation rasch über 32 oder 64 bit Zahlen hinausreicht.
+Insbesondere ist dank $\log_3(\log_3(18.446.744.073.709.551.615)) \approx 3.366$ ab einer Eingabe von $x > 3.366$ ein Overflow gegeben.
+
+Im uniformen Kostenmaß wäre die Laufzeit immer $\mathcal{O}(n)$, da aber die Funktion $3^{3^x}$ exponentiell wächst, müssen die Multiplikationen später länger dauern.
+
+
+\subsection*{c)}
+
+
+
+
+\section*{Aufgabe 10.2}
+
+\subsection*{a)}
+\begin{align*}
+\left(\max\limits_{x\in\mathbb{R}^n}\left\{c^Tx\middle|Ax\leq b\right\}, k\right), z(\mathcal{L})\geq k
+\end{align*}
+Das heißt, das Entscheidungsproblem ist, ob $c^Tx \geq k$ mit $Ax \leq b$ erfüllt ist.
+
+\subsection*{b)}
+\begin{algorithm}
+\end{algorithm}
+
+
+
+\section*{Aufgabe 10.3}
+\subsection*{a)}
+Man kann die Erfüllbarkeit in linearer Zeit testen, indem man für alle einzelnen Konjunktionsterme prüft, ob sie vollständig \texttt{true} sind -- sobald das zutrifft, können wir abbrechen.
+
+\subsection*{b)}
+
+
+
+\end{document}
+
