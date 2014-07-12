@@ -58,7 +58,7 @@ Naiv könnten wir dazu einfach alle Zahlen testen (Siehe Algorithmus \ref{alg:2n
 
 Besser ist eine Binäre Suche. Diesen Algorithmus kennen wir noch aus Informatik A bzw. aus dem Alltag ("`Ich denke mir eine Zahl von 1 bis 100 und sage dir zu deinen Tipps, ob sie größer oder kleiner ist."'). Der Algorithmus \ref{alg:2logn} hat die gewünschte Laufzeit von $\mathcal{O}\left(t_\mathcal{A}\left(m,n\right)\log{n}\right)$. (Der geneigte Leser findet eine Implementation in Java mit Tests \href{http://uni.sebastian-hoeffner.de/DInf/DInf14102b.java}{hier}).
 
-\begin{algorithm}[!ht]
+\begin{algorithm}
 \DontPrintSemicolon
 max = -$\infty$\;
 \For{i = $0\dots n$}{
@@ -73,8 +73,7 @@ max = -$\infty$\;
 \caption{Naiver Algorithmus für das Optimierungsproblem}
 \end{algorithm}
 
-
-\begin{algorithm}[!ht]
+\begin{algorithm}
   \DontPrintSemicolon
   \KwIn{$n$}
   \KwOut{$\max\limits_{x\in\mathbb{R}^n}\left\{c^Tx\middle|Ax\leq b\right\}$}
@@ -107,12 +106,129 @@ max = -$\infty$\;
   \caption{Möglicher Algorithmus in $\mathcal{O}\left(t_\mathcal{A}\left(m,n\right)\log{n}\right)$}
 \end{algorithm}
 
+
+
 \section*{Aufgabe 10.3}
 \subsection*{a)}
-Man kann die Erfüllbarkeit in linearer Zeit testen, indem man für alle einzelnen Konjunktionsterme prüft, ob sie vollständig \texttt{true} sind -- sobald das zutrifft, können wir abbrechen.
-
+Man kann die Erfüllbarkeit in linearer Zeit (je nach Betrachtung linear in Relation zur Anzahl Konjunktionsterme oder zur Anzahl Literale) testen, indem man für alle einzelnen Konjunktionsterme prüft, ob sie vollständig \texttt{true} sind -- sobald das zutrifft, können wir abbrechen.
 
 \subsection*{b)}
+Der Beweis geht davon aus, dass die Umwandlung in polynomieller Zeit geschieht. Das ist eine gewagte Behauptung!
+
+
+
+\section*{Aufgabe 10.4}
+Es gibt 3 Stunden und 4 Verdächtige, also folgende Variablen:
+\begin{align*}
+\begin{array}{l|lll}
+\text{Tyrions Lebensstatus} & y_1 & y_2 & y_3 \\
+\hline
+\text{Verdächtiger $v$ in Tyrions} & x_{Sansa,1} & x_{Sansa,2} & x_{Sansa,3} \\ 
+\text{Gemächern zum Zeitpunkt $t$} & x_{Shae,1} & x_{Shae,2} & x_{Shae,3} \\
+x_{v,t}                            & x_{Stannis,1} & x_{Stannis,2} & x_{Stannis,3} \\
+                                   & x_{Sandor,1} & x_{Sandor,2} & x_{Sandor,3} \\
+\end{array}
+\end{align*}
+
+Die einzelnen Formeln für die Fakten (1)-(7) sind (aus Platzgründen etwas umgeordnet):
+
+\smallskip
+
+\textbf{(1): }Stannis und Sansa sprechen entweder gemeinsam in Tyrions Gemächern oder gemeinsam außerhalb.
+\begin{align*}
+\mathcal{F}_{1}=(x_{Sansa,1} \wedge x_{Stannis,1}) \vee (\neg x_{Sansa,1} \wedge \neg x_{Stannis,1})
+\end{align*}
+
+\textbf{(5): }Sansa und Shae sind in Stunde 2 am selben Ort.
+\begin{align*}
+\mathcal{F}_5 = \left( \neg x_{Sansa,2} \wedge \neg x_{Shae,2} \right) \vee \left( x_{Sansa,2} \wedge x_{Shae,2} \right)
+\end{align*}
+
+\textbf{(6): }Shae ist in der zweiten Stunde in Tyrions Gemächern.
+\begin{align*}
+\mathcal{F}_6 = x_{Shae,2}
+\end{align*}
+
+\textbf{(4): }Sansa war in Stunde 1 und 2 am selben Ort und in Stunde 3 nicht in Tyrions Gemächern.
+\begin{align*}
+\mathcal{F}_4 = \left( \left( \neg x_{Sansa,1} \wedge \neg x_{Sansa,2} \right) \vee \left( x_{Sansa,1} \wedge x_{Sansa,2} \right) \right) \wedge \neg x_{Sansa,3}
+\end{align*}
+
+\textbf{(2): }Alle Kombinationen aus einem oder zwei Verdächtigen zu jeweils den Zeitpunkten t sind gültig.
+\begin{align*}
+\mathcal{F}_{2}=
+\bigwedge\limits_{t=1}^{3} \left(\right. & \\
+\text{\small\textit{Ein Verdächtiger:}} \\
+                                         & \left(      x_{Sansa,t} \wedge \neg x_{Shae,t} \wedge \neg x_{Stannis,t} \wedge \neg x_{Sandor,t} \right)\\
+                                    \vee & \left( \neg x_{Sansa,t} \wedge      x_{Shae,t} \wedge \neg x_{Stannis,t} \wedge \neg x_{Sandor,t} \right)\\
+                                    \vee & \left( \neg x_{Sansa,t} \wedge \neg x_{Shae,t} \wedge      x_{Stannis,t} \wedge \neg x_{Sandor,t} \right)\\
+                                    \vee & \left( \neg x_{Sansa,t} \wedge \neg x_{Shae,t} \wedge \neg x_{Stannis,t} \wedge      x_{Sandor,t} \right)\\
+\text{\small\textit{Zwei Verdächtige:}} \\
+                                    \vee & \left(      x_{Sansa,t} \wedge      x_{Shae,t} \wedge \neg x_{Stannis,t} \wedge \neg x_{Sandor,t} \right)\\
+                                    \vee & \left(      x_{Sansa,t} \wedge \neg x_{Shae,t} \wedge      x_{Stannis,t} \wedge \neg x_{Sandor,t} \right)\\
+                                    \vee & \left(      x_{Sansa,t} \wedge \neg x_{Shae,t} \wedge \neg x_{Stannis,t} \wedge      x_{Sandor,t} \right)\\
+                                    \vee & \left( \neg x_{Sansa,t} \wedge      x_{Shae,t} \wedge      x_{Stannis,t} \wedge \neg x_{Sandor,t} \right)\\
+                                    \vee & \left( \neg x_{Sansa,t} \wedge      x_{Shae,t} \wedge \neg x_{Stannis,t} \wedge      x_{Sandor,t} \right)\\
+                                    \vee & \left( \neg x_{Sansa,t} \wedge \neg x_{Shae,t} \wedge      x_{Stannis,t} \wedge      x_{Sandor,t} \right)\\ 
+                                         & \left.\right)
+\end{align*}
+
+\textbf{(3): }Für Stannis und Shae darf je nur ein t erfüllt sein:
+\begin{align*}
+\mathcal{F}_3 = \left(\right. & \left(x_{Shae,1} \wedge \neg x_{Shae,2} \wedge \neg x_{Shae,3} \right) \\ 
+                         \vee & \left(\neg x_{Shae,1} \wedge x_{Shae,2} \wedge \neg x_{Shae,3} \right) \\ 
+                         \vee & \left(\neg x_{Shae,1} \wedge \neg x_{Shae,2} \wedge x_{Shae,3} \right) \left.\right)\\
+                       \wedge & \\
+                \left(\right. & \left(x_{Stannis,1} \wedge \neg x_{Stannis,2} \wedge \neg x_{Stannis,3} \right) \\ 
+                         \vee & \left(\neg x_{Stannis,1} \wedge x_{Stannis,2} \wedge \neg x_{Stannis,3} \right) \\ 
+                         \vee & \left(\neg x_{Stannis,1} \wedge \neg x_{Stannis,2} \wedge x_{Stannis,3} \right) \left.\right)
+\end{align*}
+
+\textbf{(7): }Wenn Shae nicht mehr in Tyrions Gemächern ist, ist er tot.
+\begin{align*}
+\mathcal{F}_7 = & \left(x_{Shae,1} \wedge y_1 \wedge x_{Shae,2} \wedge y_2 \wedge x_{Shae,3} \wedge y_3 \right) \\
+           \vee & \left(x_{Shae,1} \wedge y_1 \wedge x_{Shae,2} \wedge y_2 \wedge \neg x_{Shae,3} \wedge \neg y_3 \right) \\
+           \vee & \left(x_{Shae,1} \wedge y_1 \wedge \neg x_{Shae,2} \wedge \neg y_2 \wedge \neg x_{Shae,3} \wedge \neg y_3 \right) \\
+           \vee & \left(\neg x_{Shae,1} \wedge \neg y_1 \wedge \neg x_{Shae,2} \wedge \neg y_2 \wedge \neg x_{Shae,3} \wedge \neg y_3 \right)
+\end{align*}
+
+\textbf{Zusatz: }Tote Menschen bleiben tot.
+\begin{align*}
+\mathcal{F}_8 = \left(y_1 \wedge y_2 \wedge \neg y_3\right) \vee \left(y_1 \wedge \neg y_2 \wedge \neg y_3\right) \vee \left(\neg y_1 \wedge \neg y_2 \wedge \neg y_3\right)
+\end{align*}
+
+
+Alle Formeln müssen gleichzeitig gültig sein, also $\mathcal{F}_1 \wedge \mathcal{F}_2 \wedge \mathcal{F}_3 \wedge \mathcal{F}_4 \wedge \mathcal{F}_5 \wedge \mathcal{F}_6 \wedge \mathcal{F}_7 \wedge \mathcal{F}_8$.
+
+Zum Lösen können wir mit (6) beginnen und $x_{Shae,2} = $ \texttt{true} setzen.
+
+Nach (5) muss nun $x_{Sansa,2} = $ \texttt{true} sein, was nach (4) ebenfalls zu $x_{Sansa,1} = $ \texttt{true} führt. Ebenfalls nach (4) ist klar, dass $x_{Sansa,3} = $ \texttt{false} ist. Nach (1) folgt nun, dass Stannis mit Sansa in Tyrions Gemächern war ($x_{Stannis,1} = $ \texttt{true}). 
+
+Nach (2) kann geschlussfolgert werden, dass $x_{Shae,1} = $ \texttt{false}, $x_{Sandor,1} = $ \texttt{false},  $x_{Stannis,2} = $ \texttt{false} und $x_{Sandor,2} = $ \texttt{false}. Weiterhin führen die bisherigen Beobachtungen zu der Erkenntnis, dass Stannis und Shae nach (3) in Stunde 3 nicht in Tyrions Gemächern waren ($x_{Shae,3} = $ \texttt{false}, $x_{Stannis,3} = $ \texttt{false}).
+
+Automatisch folgt nach (7), dass Tyrion in Stunde 3 gestorben sein muss ($y_3= $\\\texttt{false}, $y_2= $ \texttt{true} und $y_1= $ \texttt{true}).
+
+Da Tyrion in Stunde 3 stirbt, für drei Verdächtige jedoch ausgeschlossen wurde, dass sie in dieser Stunde in seinen Gemächern waren, bleibt nur noch die Möglichkeit, dass Sandor in der dritten Stunde in Tyrions Gemächern war und Tyrion dort umbrachte ($x_{Sandor,3} = $ \texttt{true}).
+
+\begin{align*}
+\begin{array}{l|lll}
+\text{Tyrions Lebensstatus}        & y_1 = t & y_2 = t & y_3 = f \\
+\hline
+\text{Verdächtiger $v$ in}   & x_{Sansa,1}   = t & x_{Sansa,2}   = t & x_{Sansa,3}   = f \\ 
+\text{Tyrions Gemächern zum} & x_{Shae,1}    = f & x_{Shae,2}    = t & x_{Shae,3}    = f \\
+\text{Zeitpunkt $t$}         & x_{Stannis,1} = t & x_{Stannis,2} = f & x_{Stannis,3} = f \\
+x_{v,t}                      & x_{Sandor,1}  = f & x_{Sandor,2}  = f & x_{Sandor,3}  = t \\
+\end{array}
+\end{align*}
+Der Mörder war also wahrscheinlich \emph{Sandor Clegane} in der \emph{dritten Stunde}. (Unter den Annahmen, dass Tyrion keinen Selbstmord beging bzw. Sansa und Shae ihn nicht beim Verlassen des Raumes am Ende der zweiten Stunde erdolchten, was ebenfalls zu einem Tod in Stunde drei hätte führen können -- schließlich hatte Tyrion noch Zeit, den Hinweis zu schreiben.)
+
+
+
+\section*{Aufgabe 10.5}
+
+
+
+\section*{Aufgabe 10.6}
 
 
 
