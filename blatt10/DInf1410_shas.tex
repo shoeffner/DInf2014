@@ -5,12 +5,11 @@
 \usepackage[ngerman]{babel}
 \usepackage{amsmath, amssymb}
 \usepackage{array}
+\usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{tikz, tikzsymbols}
 \usepackage{xcolor}
 \usepackage{algorithm2e}
-
-\usepackage{hhline}
 
 \usetikzlibrary{arrows,automata,fit}
 \setlength\parindent{0pt}
@@ -49,12 +48,70 @@ Im uniformen Kostenmaß wäre die Laufzeit immer $\mathcal{O}(n)$, da aber die F
 \left(\max\limits_{x\in\mathbb{R}^n}\left\{c^Tx\middle|Ax\leq b\right\}, k\right), z(\mathcal{L})\geq k
 \end{align*}
 Das heißt, das Entscheidungsproblem ist, ob $c^Tx \geq k$ mit $Ax \leq b$ erfüllt ist.
+Oder anders gesagt, der Algorithmus $\mathcal{A}$ aus Aufgabe b) gibt \texttt{true} zurück, wenn $c^Tx$ größer oder gleich dem Inputparameter $k_i$ ist, sonst \texttt{false}.
 
 \subsection*{b)}
-\begin{algorithm}
+Wir können dank der Einschränkungen von $c$ und $x$ auf "`binäre"' Vektoren annehmen, dass $0 \leq c^Tx \leq n$ ist.
+Das heißt, wir müssen lediglich für alle Zahlen $0\dots n$ das Entscheidungsproblem prüfen, um das Optimierungsproblem zu lösen. 
+
+Naiv könnten wir dazu einfach alle Zahlen testen (Siehe Algorithmus \ref{alg:2naiv}). Dieser Algorithmus hat allerdings dann eine Laufzeit von $\mathcal{O}\left(t_\mathcal{A}\left(m,n\right)n\right)$.
+
+Besser ist eine Binäre Suche. Diesen Algorithmus kennen wir noch aus Informatik A bzw. aus dem Alltag ("`Ich denke mir eine Zahl von 1 bis 100 und sage dir zu deinen Tipps, ob sie größer oder kleiner ist."'). Der Algorithmus \ref{alg:2logn} hat die gewünschte Laufzeit von $\mathcal{O}\left(t_\mathcal{A}\left(m,n\right)\log{n}\right)$. (Der geneigte Leser findet eine Implementation in Java mit Tests \href{http://uni.sebastian-hoeffner.de/DInf/DInf14102b.java}{hier}).
+
+\begin{algorithm}[!ht]
+\DontPrintSemicolon
+max = -$\infty$\;
+\For{i = $0\dots n$}{
+  \eIf{$\mathcal{A}(i)$}{
+    max = i\;
+  }{
+    \Return{max}\;
+  }
+}
+\Return{max}\;
+\label{alg:2naiv}
+\caption{Naiver Algorithmus für das Optimierungsproblem}
 \end{algorithm}
 
 
+\begin{algorithm}[!ht]
+  \DontPrintSemicolon
+  \KwIn{$n$}
+  \KwOut{$\max\limits_{x\in\mathbb{R}^n}\left\{c^Tx\middle|Ax\leq b\right\}$}
+  \tcp{Initializations}
+  array $ks$ := $\left\{0, \dots, n\right\}$\;
+  $left$     := 0\;
+  $right$    := n - 1\;
+  $middle$   := ($left$ + $right$) / 2\;
+  \While{$left < right$}{
+    \eIf{$\mathcal{A}\left(ks\left[middle\right]\right)$}{
+      \tcp{adjust boundaries}
+      $left$   := $middle$ + 1\;
+      $middle$ := ($left$ + $right$) / 2\;
+      \tcp{decision problem is $\geq$, so we check another value}
+      \If{$\neg\mathcal{A}\left(ks\left[left\right]\right)$}{
+        \Return{$left - 1 \geq 0? ks\left[left - 1\right] : -1$}
+      }
+    }{
+      \tcp{adjust boundaries}
+      $right$  := $middle$ - 1\;
+      $middle$ := ($left$ + $right$) / 2\;
+    }
+  }
+  \tcp{left <= right -> middle element is optimum, or not optimizable}
+  \If{$\mathcal{A}\left(ks\left[middle\right]\right)$}{
+    \Return{$ks\left[middle\right]$}
+  }
+  \Return{-1}
+  \caption{Algorithm with procedure}
+\end{algorithm} 
+\begin{algorithm}
+max = -$\infty$\;
+\Return{1}\;
+\Return{max}\;
+\label{alg:2logn}
+\caption{Möglicher Algorithmus in $\mathcal{O}\left(t_\mathcal{A}\left(m,n\right)\log{n}\right)$}
+\end{algorithm}
 
 \section*{Aufgabe 10.3}
 \subsection*{a)}
