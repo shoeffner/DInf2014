@@ -31,7 +31,7 @@ Der Algorithmus $\mathcal{A}$ berechnet $3^{3^x}$.
 
 \subsection*{b)}
 Das uniforme Kostenmaß berücksichtigt nicht, dass die Werte für $y$ sehr schnell sehr groß werden und die Multiplikation rasch über 32 oder 64 bit Zahlen hinausreicht.
-Insbesondere ist dank $\log_3(\log_3(18.446.744.073.709.551.615)) \approx 3.366$ ab einer Eingabe von $x > 3.366$ ein Overflow gegeben.
+Insbesondere ist dank $\log_3(\log_3(18.446.744.073.709.551.615)) \approx 3,366$ ab einer Eingabe von $x > 3,366$ ein Overflow gegeben.
 
 Im uniformen Kostenmaß wäre die Laufzeit immer $\mathcal{O}(n)$, da aber die Funktion $3^{3^x}$ exponentiell wächst, müssen die Multiplikationen später länger dauern.
 
