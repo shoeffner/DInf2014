@@ -26,28 +26,37 @@
 
 \section*{Aufgabe 10.1}
 \subsection*{a)}
-Der Algorithmus $\mathcal{A}$ berechnet $3^{3^x}$.
+Der Algorithmus $\mathcal{A}$ berechnet $3^{\left(3^x\right)}$.
 
 
 \subsection*{b)}
 Das uniforme Kostenmaß berücksichtigt nicht, dass die Werte für $y$ sehr schnell sehr groß werden und die Multiplikation rasch über 32 oder 64 bit Zahlen hinausreicht.
 Insbesondere ist dank $\log_3(\log_3(18.446.744.073.709.551.615)) \approx 3,366$ ab einer Eingabe von $x > 3,366$ ein Overflow gegeben.
 
-Im uniformen Kostenmaß wäre die Laufzeit immer $\mathcal{O}(n)$, da aber die Funktion $3^{3^x}$ exponentiell wächst, müssen die Multiplikationen später länger dauern.
+Im uniformen Kostenmaß wäre die Laufzeit immer $\mathcal{O}(n)$, da aber die Funktion $3^{\left(3^x\right)}$ exponentiell wächst, müssen die Multiplikationen später länger dauern.
 
 
 \subsection*{c)}
+Wir definieren:
+\begin{itemize}
+	\item $\mathcal{K}(x)$: Kosten bei Eingabe $x$
+	\item $y_i$: Wert von $y$ vor $i$-tem Schleifeneintritt
+\end{itemize}
 
-
+Dann sind die Kosten
+\begin{align*}
+\mathcal{K}(x) &= \sum\limits_{i=1}^x 3 \left(log y_i\right)^2
+\end{align*}
+ 
 
 
 \section*{Aufgabe 10.2}
 
 \subsection*{a)}
 \begin{align*}
-\left(\max\limits_{x\in\mathbb{R}^n}\left\{c^Tx\middle|Ax\leq b\right\}, k\right), z(\mathcal{L})\geq k
+\left(\max\limits_{x\in\mathbb{R}^n}\left\{c^Tx\middle|Ax\leq b\right\}, k\right), \exists x: \left(c^Tx\geq k, Ax \leq b\right)
 \end{align*}
-Das heißt, das Entscheidungsproblem ist, ob $c^Tx \geq k$ mit $Ax \leq b$ erfüllt ist.
+Das heißt, das Entscheidungsproblem ist: "`Gibt es ein $x$, sodass $c^Tx \geq k$ mit $Ax \leq b$ erfüllt ist?"'
 Oder anders gesagt, der Algorithmus $\mathcal{A}$ aus Aufgabe b) gibt \texttt{true} zurück, wenn $c^Tx$ größer oder gleich dem Inputparameter $k_i$ ist, sonst \texttt{false}.
 
 \subsection*{b)}
@@ -110,10 +119,15 @@ max = -$\infty$\;
 
 \section*{Aufgabe 10.3}
 \subsection*{a)}
-Man kann die Erfüllbarkeit in linearer Zeit (je nach Betrachtung linear in Relation zur Anzahl Konjunktionsterme oder zur Anzahl Literale) testen, indem man für alle einzelnen Konjunktionsterme prüft, ob sie vollständig \texttt{true} sind -- sobald das zutrifft, können wir abbrechen.
+Man kann die Erfüllbarkeit in linearer Zeit (linear in Relation zur Anzahl Literale) testen, indem man für alle einzelnen Konjunktionsterme prüft, ob sie einen Widerspruch beinhalten -- sobald ein Term keinen Widerspruch enthält, können wir abbrechen. Das liegt daran, dass nur im Fall, dass alle Terme Widersprüche enthalten, eine DNF \texttt{false} sein kann.
 
 \subsection*{b)}
-Der Beweis geht davon aus, dass die Umwandlung in polynomieller Zeit geschieht. Das ist eine gewagte Behauptung!
+Der Beweis geht davon aus, dass die Umwandlung in polynomieller Zeit geschieht. Doch eine aus einer KNF erzeugte DNF hat $2^n$ Terme die Umwandlung muss also exponentiell sein:
+
+\begin{align*}
+KNF &\Rightarrow DNF \\
+\bigwedge\limits_i^n \left(A_i \vee B_i\right) &\Rightarrow \bigvee\limits_{X\in\left\{A,B\right\}^n} \left(X_1 \wedge \dots \wedge X_n\right)
+\end{align*}
 
 
 
@@ -225,10 +239,83 @@ Der Mörder war also wahrscheinlich \emph{Sandor Clegane} in der \emph{dritten S
 
 
 \section*{Aufgabe 10.5}
+\begin{figure}
+  \includegraphics[width=\columnwidth]{hinkelsteine.png}
+  \caption{Veranschaulichung der Aufgabe 10.5}
+  \label{fig:obelix}
+\end{figure}
+
+\subsection*{a)}
+Die Anzahl Hinkelsteine pro Haufen ist auf drei begrenzt. Dadurch ergeben sich folgende mögliche Farbkombinationen $K_1,\dots,K_6$ mit jeweils den Farben $a, b, c$:
+\begin{align*}
+K_1 &= \left\{ a, b, c \right\} \\
+K_2 &= \left\{ a, a, b \right\} \\
+K_3 &= \left\{ a, a, a \right\} \\
+K_4 &= \left\{ a, b \right\} \\
+K_5 &= \left\{ a, a \right\} \\
+K_6 &= \left\{ a \right\} 
+\end{align*}
+
+Die Bedingungen für das \textsc{Sat}problem können nun für jeden Haufentypen bestimmt werden. Im Allgemeinen bedeuten sie: Falls eine Farbe $f_1$ in die Menge der schönen Farben $F_{schön}$ gewählt wurde und es nur einen Stein der Farbe $f_1$ auf dem Haufen $H_i$ gibt, so muss eine weitere Farbe $f_2$ aus dem Haufen $S_i$ in $F_{schön}$ gewählt werden, um das \textsc{Sat}problem zu erfüllen. Einige Klauseln sind dabei automatisch erfüllt, z.B. $K_3$.
+
+In der Musterlösung wurden uns Implikationen gegeben, diese können jedoch durch $a \rightarrow b = \neg a \vee b$ aufgelöst werden. Die aufgelösten Formeln sind hier ebenfalls angegeben.
+
+\begin{align*}
+K_1 &= \left\{ a, b, c \right\} & \Rightarrow &&& \left(a \rightarrow (b \vee c) \right) \wedge \left(b \rightarrow (a \vee c) \right) \wedge \left(c \rightarrow (a \vee b) \right) \\
+    &                           &             &&& \left(\neg a \vee b \vee c \right) \wedge \left(a \vee \neg b \vee c \right) \wedge \left(a \vee b \vee \neg c \right) \\
+K_2 &= \left\{ a, a, b \right\} & \Rightarrow &&& b \rightarrow a \\
+    &                           &             &&& \neg b \vee a \\
+K_3 &= \left\{ a, a, a \right\} & \Rightarrow &&& a \vee \neg a \equiv \text{\texttt{true}} \\
+K_4 &= \left\{ a, b \right\}    & \Rightarrow &&& \left( a \rightarrow b \right) \wedge \left( b \rightarrow a \right) \\
+    &                           &             &&& \left( \neg a \vee b \right) \wedge \left( a \vee \neg b \right) \\
+K_5 &= \left\{ a, a \right\}    & \Rightarrow &&& a \vee \neg a \equiv \text{\texttt{true}} \\
+K_6 &= \left\{ a \right\}       & \Rightarrow &&& \neg a 
+\end{align*}
+
+Diese Klauseln werden nun für jeden Haufen $H$ ausgewählt und mit den entsprechenden Farben aufgefüllt. Für das Beispiel in Abbildung \ref{fig:obelix} sähe das wie folgt aus ($gr$ = grün gewählt, $ge$ = gelb gewählt, $b$ = blau, $r$ = rot).
+\begin{align*}
+       &\left(\neg gr \vee r \right) \\
+\wedge &\left( \left( \neg b \vee r \right) \wedge \left( b \vee \neg r \right) \right) \\
+\wedge &\left( \left(\neg r \vee b \vee ge \right) \wedge \left(r \vee \neg b \vee ge \right) \wedge \left(r \vee b \vee \neg ge \right) \right) \\
+\wedge &\left( \left( \neg gr \vee r \right) \wedge \left( gr \vee \neg r \right) \right) \\
+\wedge &\left( \neg b \right) \\
+\wedge &\left( \left(\neg ge \vee r \vee b \right) \wedge \left(ge \vee \neg r \vee b \right) \wedge \left(ge \vee r \vee \neg b \right) \right) \\
+\wedge &\left( \left( \neg gr \vee ge \right) \wedge \left( gr \vee \neg ge \right) \right) \\
+\end{align*}
+
+Vergessen dürfen wir aber nicht den wichtigsten Constraint: Dass die Farbe $l$ bereits gewählt wurde. Wir ketten dies an die Formel zuvor an ($\wedge l$). Nehmen wir für unser Beispiel an, gelb sei die Farbe $l$.
+\begin{align*}
+       &\left(\neg gr \vee r \right) \\
+\wedge &\left( \left( \neg b \vee r \right) \wedge \left( b \vee \neg r \right) \right) \\
+\wedge &\left( \left(\neg r \vee b \vee ge \right) \wedge \left(r \vee \neg b \vee ge \right) \wedge \left(r \vee b \vee \neg ge \right) \right) \\
+\wedge &\left( \left( \neg gr \vee r \right) \wedge \left( gr \vee \neg r \right) \right) \\
+\wedge &\left( \neg b \right) \\
+\wedge &\left( \left(\neg ge \vee r \vee b \right) \wedge \left(ge \vee \neg r \vee b \right) \wedge \left(ge \vee r \vee \neg b \right) \right) \\
+\wedge &\left( \left( \neg gr \vee ge \right) \wedge \left( gr \vee \neg ge \right) \right) \\
+\wedge & ge
+\end{align*}
+
+
+\subsection*{b)}
+Dieses Problem kann einfacher gelöst werden als gewöhnliche \textsc{Sat}probleme.
+\begin{algorithm}[h]
+\While{$\exists$ Haufen mit genau einem Hinkelstein \tcp{$\mathcal{O}(n)$}}{
+  H = alle Haufen mit genau einem Hinkelstein \tcp{$\mathcal{O}(n)$}
+  X = alle Farben aus H \tcp{$\mathcal{O}(n+m)$}
+  \If{$l \in X$ \tcp{$\mathcal{O}(m)$}}{\Return{false}} 
+  lösche alle Hinkelsteine der Farben X \tcp{$\mathcal{O}(nm)$}
+}
+\Return{true} \tcp{$\mathcal{O}(1)$}
+\end{algorithm}
+Der Algorithmus hat eine Gesamtlaufzeit von $\mathcal{O}(n) \cdot \mathcal{O}(nm) = \mathcal{O}(n^2m)$.
 
 
 
 \section*{Aufgabe 10.6}
+Für $\mathcal{X}=$\textsc{Sat} fixiert man die erste Variable und prüft, ob $\mathcal{A_X}$ \texttt{true} oder \texttt{false} zurückgibt. Falls \texttt{true} hat man eine mögliche Belegung gefunden und fixiert auch die zweite Variable, bevor man erneut testet. Falls die Rückgabe \texttt{false} ist, fixiert man die geprüfte Variable anders. Bleibt das Ergebnis \texttt{false}, gibt es keine Lösung für das Problem. Ansonsten fixiert und testet man so lange, bis alle Variablen fix sind und $\mathcal{A_X}$ \texttt{true} liefert.
+
+Im Allgemeinen Fall funktioniert dies ähnlich, man kann sich das Verfahren als einen Entscheidungsbaum vorstellen: Bei $ja$ gehe in den einen Ast, bei $nein$ in den anderen, bis man an einem Blatt ankommt.
+
 
 
 
