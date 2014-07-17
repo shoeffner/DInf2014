@@ -25,11 +25,209 @@
 
 
 \section*{Aufgabe 11.1}
+Die Reduktion erfolgt in die falsche Richtung. Wir wissen, dass \textsc{Hamiltonkreis} in NP liegt, also können wir für den Beweis, ob der \textsc{Eulerkreis} NP-vollständig ist, eine beliebige \textsc{Hamiltonkreis}-Instanz wählen und diese auf \textsc{Eulerkreis} reduzieren. Umgekehrt reicht es uns jedoch nicht, denn Spezialfälle des \textsc{Hamiltonkreises} könnten in besserer Zeit als NP lösbar sein -- was ja scheinbar für den \textsc{Eulerkreis} zutrifft.
 
 
 
+\section*{Aufgabe 11.2}
+\subsection*{a)}
+
+
+
+\subsection*{b)}
+Reduziere eine beliebige \textsc{Hamiltonkreis}-Instanz auf eine \textsc{TSP}-Instanz.
+
+
+\subsection*{c)}
+
+
+
+\section*{Aufgabe 11.3}
+\subsection*{a)}
+
+
+\subsection*{b)}
+
+
+
+\section*{Aufgabe 11.4}
+Für \texttt{Sat} entscheidet auf Grundlage einer Belegung, \texttt{NonSat} muss aber alle $2^n$ Belegungen prüfen, Nicht-Determinismus hin oder her. 
+
+
+
+\section*{Aufgabe 11.5}
+\subsection*{a)}
+Sei $F = \left\{f_1, \dots, f_m\right\}$ die Menge aller Farben. Seien $H_1, \dots, H_n \subseteq F$ Mengen mit je höchstens drei Elementen. Gibt es eine Teilmenge $F_{\text{schön}}\subseteq F$ der Farben, sodass in jeder Menge $H_1, \dots, H_n$ genau ein Element $h_i \in F_{\text{schön}}$ ist?
+
+
+\subsection*{b)}
+Offensichtlich ist die Klausel nach der Definition der Aufgabenstellung \\$[[x_j \vee x_k \vee x_l]]$.
+
+Ohne die Definition geht alternativ auch \\$(x_j \vee x_k \vee x_l) \wedge \neg ( x_j \wedge x_k ) \wedge \neg (x_j \wedge x_l) \wedge \neg (x_k \wedge x_l)$.
+
+
+\subsection*{c)}
+\textsc{Asterix} ist in \textbf{NP}
+
+Die Prüfung ist in polynomieller Zeit möglich, also ist es in NP.
+
+\bigskip
+
+\textsc{Asterix} ist \textbf{NP-schwer}
+
+Dass das Asterix-Problem NP-schwer ist, wird durch eine Reduktion von 3-\textsc{Sat} auf \textsc{Asterix} gezeigt.
+
+\smallskip
+
+Sei $(S, k)$ eine beliebige \textsc{Sat}-Instanz. 
+Erstelle \textsc{Asterix}-Instanz. Gehe dabei wie folgt vor:
+\begin{itemize}
+  \item Für jedes Literal $x_i$ aus $S$ erstelle ein Literal $x_i'$ und ersetze alle Vorkomnisse $\neg x_i$ durch $x_i'$. Erstelle in der \textsc{Asterix}-Instanz eine Regel $[[x_i \vee x_i']]$.
+	\item Für jede Klausel aus $S$, die drei positive Literale $x_1, x_2, x_3$ enthält, wähle vier bislang ungenutze Variablen $x_a, x_b, x_c, x_d$ und erstelle die Klauseln (also Haufen) $[[x_1 \vee x_a \vee x_b]] \wedge [[x_2 \vee x_b \vee x_c]] \wedge [[x_3 \vee x_c \vee x_d]]$.
+	\item Für jede Klausel aus $S$, die zwei positive Literale $x_1, x_2$ enthält, erstelle die Variablen $x_a$ und $x_b$ und die Klauseln $[[x_1 \vee x_a]] \wedge [[x_2 \vee x_b]]$.
+	\item Füge für alle Klauseln aus $S$, die nur ein Literal $x_i$ enthalten, eine Klausel $[[x_i]]$ hinzu.
+	\item Bilde eine Konjunktion aus allen erstellten Klauseln.
+\end{itemize}
+
+\smallskip
+
+\textbf{Behauptung:} \textsc{Asterix} erfüllbar $\Leftrightarrow$ \textsc{3-Sat} erfüllbar.
+
+\smallskip
+
+\textsc{Asterix} ist erfüllbar, wenn \textsc{3-Sat} erfüllbar ist.
+
+Wenn die \textsc{3-Sat}-Instanz eine Lösung besitzt, dann werden alle Klauseln der \textsc{Asterix}-Instanz ebenfalls erfüllt.
+Besitzt die \textsc{3-Sat}-Instanz keine Lösung, dann besitzt auch die \textsc{Asterix}-Instanz keine.
+
+Diese Erkenntnis wird klar, wenn man sich die Umformungen genau anschaut, da sie im Grunde genommen lediglich eine Formel in eine äquivalente Formel umstellt.
+
+\smallskip
+
+\textsc{3-Sat} ist erfüllbar, wenn \textsc{Asterix} erfüllbar ist.
+
+Besitzt die \textsc{Asterix}-Instanz eine Lösung, dann kann ebenfalls eine Lösung für die \textsc{3-Sat}-Instanz gefunden werden.
+Kann die \textsc{Asterix}-Instanz nicht gelöst werden, dann kann auch die \textsc{3-Sat}-Instanz nicht gelöst werden.
+
+Diese Erkenntnis liegt ebenfalls an der Äquivalenz der beiden Formeln.
+
+\bigskip
+
+\textsc{Asterix} ist in NP und NP-schwer, also NP-vollständig.
+
+
+
+\section*{Aufgabe 11.6}
+\subsection*{a)}
+\subsubsection*{SetCover}
+Gegeben seien
+\begin{itemize}
+	\item ein Universum $\mathcal{U} = \left\{1, 2, \dots, m\right\}$
+  \item eine Menge von Mengen $\mathcal{S} = \left\{S_1, \dots, S_n\right\}$
+  \item mit $\bigcup\limits_{i=1}^n S_i = \mathcal{U}$
+\end{itemize}
+
+Das Mengenüberdeckungsproblem (\textsc{SetCover}, \href{http://en.wikipedia.org/wiki/Set_cover_problem}{Wikipedia Link}) fragt nun nach der kleinsten Teilmenge (= Cover von $\mathcal{S}$) $\mathcal{C} = \left\{C_1, \dots, C_k\right\} \subseteq \mathcal{S}$, die noch immer die Eigenschaft $\bigcup\limits_{i=1}^k C_i = \mathcal{U}$ erfüllt.
+
+Das zugehörige Entscheidungsproblem fragt, ob eine Teilmenge $\mathcal{C} \subseteq \mathcal{S}$ existiert mit $|\mathcal{C}| \leq k$.
+
+Als Beispiel soll das von Wikipedia genügen:
+\begin{itemize}
+	\item $\mathcal{U} = \left\{1, 2, 3, 4, 5\right\}$
+  \item $\mathcal{S} = \left\{ \left\{ 1, 2, 3 \right\}, \left\{ 2, 4 \right\}, \left\{ 3, 4 \right\}, \left\{ 4, 5 \right\} \right\}$
+  \item $\bigcup\limits_{i=1}^n S_i = \mathcal{U}$ gilt.
+\end{itemize}
+Bereits $S_1$ und $S_4$ genügen um $\mathcal{U}$ abzudecken ($S_1 \cup S_4 = \mathcal{U}$, ein Cover $\mathcal{C} \subseteq \mathcal{S}$ ist also $\mathcal{C} = \left\{ \left\{ 1, 2, 3 \right\}, \left\{ 4, 5 \right\} \right\}$.
+
+\subsubsection*{Komplexität von SetCover}
+\textsc{SetCover} ist in \textbf{NP}
+
+Ein möglicher Zeuge $Z$: Für jedes Element aus $\mathcal{C}$ ($\mathcal{O}(n)$), streiche es aus $\mathcal{U}$ ($\mathcal{O}(n)$). Prüfe ob $\mathcal{U} = \emptyset$ ($\mathcal{O}(1))$. Die Gesamtkomplexität des Zeugen $Z$ ist damit: $\mathcal{O}(n^2)$. \textsc{SetCover} $\in NP$ ist also erfüllt.
+
+\bigskip
+
+\textsc{SetCover} ist \textbf{NP-schwer}
+
+Zeige, dass ein bekanntes Problem ein Spezialfall von \textsc{SetCover} ist.
+Ein Kandidat ist das \textsc{VertexCover}. Durch eine Reduktion von \textsc{VertexCover} soll gezeigt werden, dass \textsc{SetCover} NP-schwer ist.
+
+\smallskip
+
+Sei $VC = (G = (V,E), k)$ eine beliebige \textsc{VertexCover}-Instanz.
+
+Erstelle eine \textsc{SetCover}-Instanz $SC = (\mathcal{U, S};  k)$ mit $\mathcal{U} = V$ und $\mathcal{S} = E$, wobei in $\mathcal{S}$ nun die Kanten als Mengen von ihrer Vertices enthalten sind. Eine Kante $E_1$ von $V_1$ nach $V_2$ wird so zu $\left\{V_1, V_2\right\}$. Auf diese 
+
+\smallskip
+
+\textbf{Behauptung:} \textsc{SetCover} erfüllbar $\Leftrightarrow$ \textsc{VertexCover} erfüllbar.
+
+\smallskip
+
+\textsc{VertexCover} ist erfüllbar, wenn \textsc{SetCover} erfüllbar ist.
+
+Sei $\mathcal{C}$ eine Lösung der \textsc{SetCover}-Instanz für $k$. Dann enthält $\mathcal{C} \subseteq \mathcal{S}$ alle Elemente aus $\mathcal{U}$. Weil $\mathcal{U}$ genau der Vertex-Menge $V$ der \textsc{VertexCover}-Instanz entspricht, wurde also eine Lösung gefunden, die alle Vertices mit einer minimalen Anzahl Kanten abdeckt. Die Kantenmenge $E$ erhält man, indem man alle Elemente aus $\mathcal{C}$ wieder als Kanten formuliert. 
+Falls $\mathcal{C}$ keine Lösung der \textsc{SetCover}-Instanz für $k$ ist, so sind in der korrespondierenden \textsc{VertexCover}-Instanz Vertices, die nicht durch Kanten in $E$ verbunden sind. Auch das \textsc{VertexCover} wird so also nicht erfüllt.
+
+\smallskip
+
+\textsc{SetCover} ist erfüllbar, wenn \textsc{VertexCover} erfüllbar ist.
+
+Sei $E$ eine Lösung der \textsc{VertexCover}-Instanz $k$. Dann sind in $E$ die minimal benötigten Kanten um alle Vertices in $V$ zu verbinden. Das heißt, dass $\mathcal{C}$ eine minimale Lösung ist, um alle Elemente aus $\mathcal{U}$ zu vereinigen, womit die \textsc{SetCover}-Instanz ebenfalls erfüllt ist.
+Falls $E$ keine Lösung der \textsc{VertexCover}-Instanz für $k$ ist, sind nicht alle Vertices aus $V$ verbunden, und somit $\mathcal{C}$ auch keine Lösung von $\mathcal{U}$.
+
+\bigskip 
+
+Somit ist \textsc{SetCover} NP-schwer. Da \textsc{SetCover} in NP und ebenfalls NP-schwer ist, ist \textsc{SetCover} NP-vollständig.
+
+
+\subsection*{b)}
+\subsubsection*{Komplexität von Kgb}
+\textsc{Kgb} ist in \textbf{NP}
+
+Gegeben seien
+\begin{itemize}
+	\item $\mathcal{T}$ die Menge der möglichen Kurstermine mit $|\mathcal{T}| = m$
+  \item $\mathcal{T}_g \subseteq \mathcal{T}$ die Menge der benötigen Kurstermine ($|\mathcal{T}_g| = k \leq m$)
+  \item $\mathcal{S}$ die Menge der Studenten mit $|\mathcal{S}| = n$
+  \item $\mathcal{T}_s$ die Menge, die für jeden möglichen Termin $t \in \mathcal{T}$ jeweils eine Menge der Studenten $\subseteq \mathcal{S}$ enthält, die diesen Termin gewählt haben
+\end{itemize}
+
+Ein möglicher Zeuge $Z$: Für jeden Termin $t \in \mathcal{T}_g$, streiche Student $s$ aus $\mathcal{S}$ ($\mathcal{S}=\mathcal{S}\backslash s$). Prüfe  danach ob $\mathcal{S} = \emptyset$. Laufzeit: $\mathcal{O}(nm)$.
+
+\bigskip
+
+\textsc{Kgb} ist \textbf{NP-schwer}
+
+Durch Reduktion von \textsc{SetCover} auf \textsc{Kgb} soll gezeigt werden, dass \textsc{Kgb} NP-schwer ist.
+
+\smallskip
+
+Sei $SC = (\mathcal{U, M}; k)$ eine beliebige \textsc{SetCover}-Instanz.
+
+Erstelle eine \textsc{Kgb}-Instanz $K = (\mathcal{S}, \mathcal{T}_s; k)$ mit $\mathcal{T}_s = \mathcal{M}$ und $\mathcal{S} = \mathcal{U}$. 
+
+\smallskip
+
+\textbf{Behauptung:} \textsc{Kgb} erfüllbar $\Leftrightarrow$ \textsc{SetCover} erfüllbar.
+
+\smallskip
+
+\textsc{Kgb} ist erfüllbar, wenn \textsc{SetCover} erfüllbar ist.
+
+Sei $\mathcal{C}$ eine Lösung der \textsc{SetCover}-Instanz $SC$ für $k$. Dann ist $\mathcal{C}$ genau die Menge der Kurstermin-Studenten-Zuordnungen, die ausreicht um allen Studenten einen möglichen Termin zu geben, also $\mathcal{T}_g$ und somit die Lösung der \textsc{Kgb}-Instanz $K$ für $k$.
+Ist $\mathcal{C}$ keine Lösung von $SC$ für $k$, dann ist auch keine Zuordnung $\mathcal{T}_g$ möglich und somit $K$ für $k$ nicht erfüllbar.
+
+\smallskip
+
+\textsc{SetCover} ist erfüllbar, wenn \textsc{Kgb} erfüllbar ist.
+
+Ist $\mathcal{T}_g$ eine Lösung der \textsc{Kgb}-Instanz $K$ für $k$, so ist dies ebenfalls eine Lösung für die \textsc{SetCover}-Instanz für $k$, da $\mathcal{T}_g$ der Lösung $\mathcal{C}$ von $SC$ entspricht.
+Ist $\mathcal{T}_g$ keine Lösung von $K$ für $k$, dann kann $\mathcal{C}$ auch keine Lösung von $SC$ für $k$ sein, weil $\mathcal{T}_g$ nicht alle Elemente in $\mathcal{S}$ bzw. $\mathcal{U}$ abdeckt.
+
+\bigskip
+
+Somit ist \textsc{Kgb} NP-schwer. Da \textsc{Kgb} in NP und ebenfalls NP-schwer ist, ist \textsc{Kgb} NP-vollständig.
 
 
 
 \end{document}
-
