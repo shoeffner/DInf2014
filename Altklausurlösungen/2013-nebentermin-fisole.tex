@@ -4,13 +4,17 @@
 \usepackage{amsmath,amssymb}
 \usepackage{tikz}
 \usepackage{tikzsymbols}
+\usetikzlibrary{arrows,automata}
+
 \usepackage{tabularx}
 \usepackage{lmodern}
 \usepackage{xcolor}
+\usepackage{pbox}
 \usepackage{algorithm2e}
 \usepackage{titlesec}
-\titlelabel{\thetitle.\ }
-\usetikzlibrary{arrows,automata}
+
+\titlelabel{\thetitle. Aufgabe}
+
 \setlength\parindent{0pt}
 
 \begin{document}
@@ -21,7 +25,7 @@
   \large{Sebastian Höffner, Andrea Suckro, Judith Kemper}
 \end{center}
 
-\section{Aufgabe}
+\section{}
 \begin{enumerate}
 	\item Reguläre Sprachen (Typ 3)
 	\item Kontextfreie Sprachen (Typ 2)
@@ -29,7 +33,7 @@
 \end{enumerate}
 
 
-\section{Aufgabe}
+\section{}
 Alles nach rechts ankreuzen ab\dots
 \begin{enumerate}
 	\item \dots regulär
@@ -38,7 +42,7 @@ Alles nach rechts ankreuzen ab\dots
   \item \dots deterministisch kontextfrei
 \end{enumerate}
 
-\section{Aufgabe}
+\section{}
 \begin{align*}
 S &\rightarrow bA | D\\
 A &\rightarrow aD | aB\\
@@ -47,7 +51,7 @@ C &\rightarrow cC | c\\
 D &\rightarrow cC | b | c
 \end{align*}
 
-\section{Aufgabe}
+\section{}
 \begin{tikzpicture}[->, auto, node distance=2cm]
 	\node[initial,state,accepting]   (A) {};
   \node[state]           (B) [right of = A] {};
@@ -67,7 +71,7 @@ D &\rightarrow cC | b | c
 \end{tikzpicture}
 
 
-\section{Aufgabe}
+\section{}
 Es können Kontextfreie Sprachen dargestellt werden.
 
 Chomskynormalform: $V \rightarrow V \times V$ und $V \rightarrow \Sigma$.
@@ -76,7 +80,7 @@ Greibachnormalform: $V \rightarrow \Sigma \times V^*$.
 
 
 
-\section{Aufgabe}
+\section{}
 \begin{enumerate}
 	\item[Schritt 1] Terminale ausgliedern (z.B. $S \rightarrow SsS$ zu $S \rightarrow SAS, A \rightarrow s$), so hat jede Regel eine der Formen $V\rightarrow \Sigma$ oder $V\rightarrow V^+$.
   \item[Schritt 2] Hilfsgraph erstellen (aus Kanten $V \rightarrow V$)
@@ -87,7 +91,7 @@ Greibachnormalform: $V \rightarrow \Sigma \times V^*$.
   \item[Schritt 3] Variablenketten ($V \rightarrow V \times V^+$) kürzen (mit Hilfsvariablen).
 \end{enumerate}
 
-\section{Aufgabe}
+\section{}
 \begin{tabularx}{\textwidth}{X|X}
 Fehler & Korrektur \\
 \hline
@@ -96,7 +100,7 @@ und $v$ muss b's oder c's enthalten & $v$ oder $x$ muss b's oder c's enthalten\\
 Falls weder Fall 1 noch Fall 2 vorliegt... & Falls weder Fall 1 noch Fall 2 vorliegt, liegt f oder g in $v$ oder $x$, was allerdings schon ausgeschlossen wurde
 \end{tabularx}
 
-\section{Aufgabe}
+\section{}
 \begin{tikzpicture}[->, auto, node distance=3cm]
 	\node[initial,state]   (A) {};
   \node[state]           (B) [right of = A] {};
@@ -112,7 +116,7 @@ Falls weder Fall 1 noch Fall 2 vorliegt... & Falls weder Fall 1 noch Fall 2 vorl
             edge [] node {$\square/\square,R$} (E);
 \end{tikzpicture}
 
-\section{Aufgabe}
+\section{}
 \begin{algorithm}
 $x_3$ := 0\;
 $x_4$ := $x_1$\;
@@ -127,7 +131,7 @@ $x_3$ := $x_3-1$\;
 }
 \end{algorithm}
 
-\section{Aufgabe}
+\section{}
 \begin{algorithm}
 \DontPrintSemicolon
 $x_1:=600$\;
@@ -137,4 +141,47 @@ if$(x_2\neq0)$ goto L1\;
 halt\;
 \end{algorithm}
 Die Kolmogorov Komplexität von diesem Programm liegt bei 49 ($<600$). Wir nutzen dabei die Vermutung aus, dass der String wirklich nur aus aneinander gereihten ab's besteht.
+
+\section{}
+\begin{enumerate}
+	\itemindent3cm
+  \item[P:] sortieren, addieren, ...
+  \item[NP$\backslash$ P:] Hamiltonkreis, BinPacking
+  \item[stark NP-vollständig:] Sat, BinPacking
+  \item[schwach NP-vollständig:] SubsetSum
+\end{enumerate}
+
+\section{}
+Der Beweis erfolg durch Reduktion \emph{von} \textsc{HamiltonKreis}.
+
+Der HamiltonKreis ist:
+\pbox[t]{.5\textwidth}{
+Gegeben ein Graph $G = (V,E)$, gibt es eine Rundtour, die jeden Knoten genau einmal besucht?
+}
+
+Mittels der Reduktion müssen wir zeigen, dass \emph{das angekreuzte Problem ein Spezialfall des TSP ist.}
+
+Die Reduktion zur Erstellung einer TSP-Instanz in polynomieller Zeit ist:
+\begin{enumerate}
+	\item Erstelle einen Graphen $G'$ mit allen Knoten aus $V$ des \emph{HamiltonKreis}es. 
+  \item Erstelle für jeden Knoten Kanten zu allen anderen Knoten, die Menge $E'$.
+  \item Für jede Kante $e\in E$ setze die Kosten für die korrespondiere Kante $e_1\in E'$ auf 1.
+  \item Für jede übrige Kante setze die Kosten auf 2.
+  \item Setze $K = |V|$.
+\end{enumerate}
+
+Man zeigt dies, indem man die folgenden zwei Beweisschritte nutzt:
+\begin{itemize}
+	\item Es gibt eine Lösung des \textsc{HamiltonKreis}instanz gdw es eine Lösung des \textsc{TSP} gibt.
+  \item Es gibt eine Lösung des \textsc{TSP} gdw es eine Lösung der \textsc{HamiltonKreis}-Instanz gibt.
+\end{itemize}
+
+Die zwei Beweisschritte sind:
+\begin{itemize}
+	\item Es gibt eine Lösung des \textsc{HamiltonKreis}instanz gdw es eine Lösung des \textsc{TSP} gibt: \\
+        Wenn das TSP für $K = |V|$ eine Lösung findet, so nutzt diese nur genau Kanten mit den Kosten 1 (und diese nur genau einmal), da sonst die Kosten $K$ überschritten würden. Dadurch wird die Lösung genau zu einem Hamiltonkreis über den Teilgraphen mit den Kanten mit Kosten 1.
+  \item Es gibt eine Lösung des \textsc{TSP} gdw es eine Lösung der \textsc{HamiltonKreis}-Instanz gibt. \\
+        Wenn die \textsc{HamiltonKreis}-Instanz eine Lösung hat, dann gibt es für $K$ eine Lösung der TSP Instanz.
+\end{itemize}
+
 \end{document}
