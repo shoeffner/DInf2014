@@ -107,7 +107,7 @@ Falls weder Fall 1 noch Fall 2 vorliegt... & Falls weder Fall 1 noch Fall 2 vorl
   \node[state]           (C) [right of = B] {};
   \node[state]           (D) [below left of = C] {};
   \node[state]           (E) [left of = D] {};
-  \path (A) edge [loop above] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,L$} (A)
+  \path (A) edge [loop above] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,R$} (A)
             edge [] node {$\square/\square,L$} (B)
         (B) edge [] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,L$} (C)
         (C) edge [loop right] node {$1/0,L$} (C)
