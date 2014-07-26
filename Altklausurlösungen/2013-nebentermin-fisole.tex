@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{tikzsymbols}
+\usepackage{tabularx}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{algorithm2e}
+\usepackage{titlesec}
+\titlelabel{\thetitle.\ }
+\usetikzlibrary{arrows,automata}
+\setlength\parindent{0pt}
+
+\begin{document}
+
+\begin{center}
+  \Large{Informatik D -- Klausur 2013 -- Nebentermin -- Fisole}
+
+  \large{Sebastian Höffner, Andrea Suckro, Judith Kemper}
+\end{center}
+
+\section{Aufgabe}
+\begin{enumerate}
+	\item Reguläre Sprachen (Typ 3)
+	\item Kontextfreie Sprachen (Typ 2)
+	\item Rekursiv aufzählbare Sprachen (Typ 0)
+\end{enumerate}
+
+
+\section{Aufgabe}
+Alles nach rechts ankreuzen ab\dots
+\begin{enumerate}
+	\item \dots regulär
+  \item \dots rekursiv aufzählbar
+  \item \dots regulär (nur ein Wort: \emph{abba})
+  \item \dots deterministisch kontextfrei
+\end{enumerate}
+
+\section{Aufgabe}
+\begin{align*}
+S &\rightarrow bA | D\\
+A &\rightarrow aD | aB\\
+B &\rightarrow bA\\
+C &\rightarrow cC | c\\
+D &\rightarrow cC | b | c
+\end{align*}
+
+\section{Aufgabe}
+\begin{tikzpicture}[->, auto, node distance=2cm]
+	\node[initial,state,accepting]   (A) {};
+  \node[state]           (B) [right of = A] {};
+  \node[state]           (E) [below right of = B] {};
+  \node[state]           (C) [above right of = E] {};
+  \node[state,accepting] (D) [right of = C] {};
+  \node[state]           (F) [below of = E] {};
+  \path (A) edge [] node {$\epsilon,\#/\#$} (B)
+        (B) edge [loop above] node {$a,\star\!\in\!\Sigma/a\star\!\in\!\Sigma$} (B)
+            edge [] node {$\epsilon,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (C)
+            edge [left, pos=0.7] node {$\epsilon,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (E)
+        (E) edge [bend left] node {$c,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (F)
+            edge [right, pos=0.3] node {$\epsilon,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (C)
+        (F) edge [bend left] node {$d,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (E)
+        (C) edge [] node {$\epsilon,\#/\epsilon$} (D)
+            edge [loop above] node {a,a/$\epsilon$} (C);
+\end{tikzpicture}
+
+
+\section{Aufgabe}
+Es können Kontextfreie Sprachen dargestellt werden.
+
+Chomskynormalform: $V \rightarrow V \times V$ und $V \rightarrow \Sigma$.
+
+Greibachnormalform: $V \rightarrow \Sigma \times V^*$.
+
+
+
+\section{Aufgabe}
+\begin{enumerate}
+	\item[Schritt 1] Terminale ausgliedern (z.B. $S \rightarrow SsS$ zu $S \rightarrow SAS, A \rightarrow s$), so hat jede Regel eine der Formen $V\rightarrow \Sigma$ oder $V\rightarrow V^+$.
+  \item[Schritt 2] Hilfsgraph erstellen (aus Kanten $V \rightarrow V$)
+  \begin{enumerate}
+    \item[Schritt 2a] Kreise kontrahieren: Vorkommen der kontrahierten Variablen ersetzen.
+    \item[Schritt 2b] Senken entfernen: Regeln für $V\rightarrow U$ mit allen Regeln $U$ ersetzen.
+  \end{enumerate}
+  \item[Schritt 3] Variablenketten ($V \rightarrow V \times V^+$) kürzen (mit Hilfsvariablen).
+\end{enumerate}
+
+\section{Aufgabe}
+\begin{tabularx}{\textwidth}{X|X}
+Fehler & Korrektur \\
+\hline
+$|v|\geq 1, |x| \geq 1$ & $|vx| \geq 1$\\
+und $v$ muss b's oder c's enthalten & $v$ oder $x$ muss b's oder c's enthalten\\
+Falls weder Fall 1 noch Fall 2 vorliegt... & Falls weder Fall 1 noch Fall 2 vorliegt, liegt f oder g in $v$ oder $x$, was allerdings schon ausgeschlossen wurde
+\end{tabularx}
+
+\section{Aufgabe}
+\begin{tikzpicture}[->, auto, node distance=3cm]
+	\node[initial,state]   (A) {};
+  \node[state]           (B) [right of = A] {};
+  \node[state]           (C) [right of = B] {};
+  \node[state]           (D) [below left of = C] {};
+  \node[state]           (E) [left of = D] {};
+  \path (A) edge [loop above] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,L$} (A)
+            edge [] node {$\square/\square,L$} (B)
+        (B) edge [] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,L$} (C)
+        (C) edge [loop right] node {$1/0,L$} (C)
+            edge [align=center] node {$\square/1,L$ \\ $0/1,L$ } (D)
+        (D) edge [loop below] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,L$} (D)
+            edge [] node {$\square/\square,R$} (E);
+\end{tikzpicture}
+
+\section{Aufgabe}
+\begin{algorithm}
+$x_3$ := 0\;
+$x_4$ := $x_1$\;
+$x_5$ := $x_2$\;
+\While{$x_4 \neq 0$}{
+$x_4$ := $x_4 -1$\;
+$x_3$ := $x_3+3$\;
+}
+\While{$x_5 \neq 0$}{
+$x_5$ := $x_5 -1$\;
+$x_3$ := $x_3-1$\;
+}
+\end{algorithm}
+
+\section{Aufgabe}
+\begin{algorithm}
+\DontPrintSemicolon
+$x_1:=600$\;
+L1:print(ab)\;
+$x_2:=x_2-1$\;
+if$(x_2\neq0)$ goto L1\;
+halt\;
+\end{algorithm}
+Die Kolmogorov Komplexität von diesem Programm liegt bei 49 ($<600$). Wir nutzen dabei die Vermutung aus, dass der String wirklich nur aus aneinander gereihten ab's besteht.
+\end{document}
