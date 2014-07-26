@@ -8,6 +8,7 @@
 \usepackage{lmodern}
 \usepackage{xcolor}
 \usepackage{algorithm2e}
+\usepackage{listings}
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage[ngerman]{babel}
@@ -23,7 +24,147 @@
   \large{Sebastian Höffner, Andrea Suckro}
 \end{center}
 
+\section{}%1
+\begin{itemize}
+	\item reguläre Sprachen
+  \item rekursiv aufzählbare Sprachen
+  \item Deterministisch Kontextfreie Sprachen
+\end{itemize}
 
+\section{}%2
+Nach rechts auffüllen beginnend bei\dots
+\begin{itemize}
+	\item \dots kontextfrei
+	\item \dots regulär $(a|b)^*|(cc|dd)$
+	\item \dots deterministisch kontextfrei
+	\item \dots kontextsensitiv
+\end{itemize}
 
+\section{}%3
+\begin{align*}
+S &\rightarrow a | b | aS | bS | aA | bA \\
+A &\rightarrow c | cB | C \\
+B &\rightarrow a \\
+C &\rightarrow d | dB
+\end{align*}
+
+\section{}%4
+\begin{tikzpicture}[->, auto, node distance=3cm]
+	\node[initial,state,accepting]   (A) {};
+  \node[state] (B) [above of = A] {};
+  \node[state] (C) [right of = B] {};
+  \node[state] (D) [right of = C] {};
+  \node[state] (E) [below of = D] {};
+  \node[state] (F) [right of = D] {};
+  \node[state,accepting] (G) [left of=E] {};
+  \path (A) edge [] node {$a,\#/\#$} (B)
+        (B) edge [bend left, above] node {$b,\star\!\in\!\Sigma/\$\star$} (C)
+        (C) edge [bend left, below] node {$a,\star\!\in\!\Sigma/\star$} (B)
+            edge [] node {$c,\$/\epsilon$} (D)
+        (D) edge [left] node {$c,\star\!\in\!\Sigma/\star$} (E)            
+        (E) edge [right] node {$c,\$/\$$} (F)
+            edge [below] node {$c,\#/\#$} (G)
+        (F) edge [] node {$c,\$/\epsilon$} (D);
+\end{tikzpicture}
+
+\section{}%5
+\subsection{}%a
+\begin{itemize}
+	\item \fbox{Ja}, \emph{jede kontextfreie Sprache erfüllt das PL-KF}. 
+  \item \fbox{Ja}, \emph{es gibt nicht-kontextfreie Sprachen, die das PL-KF erfüllen}. Deshalb können wir nur zeigen, dass Sprachen nicht kontextfrei sind, nicht aber, ob dass sie es sicher sind.
+  \item \fbox{Ja}, \emph{es gibt deterministische kontextfreie Sprachen, die das PL-KF erfüllen}. Sogar reguläre.
+  \item \emph{Beim PL-KF wird ein Wort in \fbox{5} Teilworte zerlegt.}
+\end{itemize}
+
+\subsection{}%b
+Wir nehmen an, $L=\{a^ib^ic^{2i} | i \in \mathbb{N}\}$ sei kontextfrei. Dann gibt es eine Zahl $n = n(L)$, für die für jedes Wort $z \in L$ eine Zerlegung $uvwxy$ existiert, mit $|z|\geq n$, $|vx|\geq 1$, $|vwx| \leq n$, sodass $uv^*wx^*y \in L$.
+
+Wir betrachten das Wort $z = a^nb^nc^{2n}$. Wir betrachten nun alle verschiedene Möglichkeiten, $z$ zu zerlegen.
+\begin{enumerate}
+	\item $v = a^l, x = a^k$ mit $l + k \leq n$, dann ist $w = a^{n-l-k}$. Egal wie wir $v$ und $x$ aufpumpen, die Anzahl $a$s wird nicht mehr zur Anzahl der $b$s passen. Widerspruch.
+  \item $v = b^l, x = b^k$ mit $l + k \leq n$ ist analog zu 1. Widerspruch.
+  \item $v = c^l, x = c^k$ mit $l + k \leq n$ ist analog zu 1. Widerspruch.
+  \item $v = a^l, x = b^k$ mit $l + k \leq n$: Die Anzahl $a$s oder $b$s ist nach aufpumpen nicht mehr passend zur Anzahl $c$s. Widerspruch.
+  \item $v = b^l, x = c^l$ analog zu 4. Widerspruch.
+\end{enumerate}
+Die Sprache $L$ ist also nicht kontextfrei.
+
+\section{}%6
+\begin{tikzpicture}[->, auto, node distance=3cm]
+	\node[initial,state]   (A) {};
+  \node[state] (B) [right of = A] {};
+  \node[state] (C) [below right of = B] {};
+  \node[state] (D) [left of = C] {};
+  \node[state] (E) [below left of = C] {};
+  \node[state] (F) [left of = E] {};
+  \path (A) edge [] node {$\star\!\in\!\Sigma/\star,R$} (B)
+            edge [] node {$\square/0,S$} (D)
+        (B) edge [] node {$\star\!\in\!\Sigma/\star,R$} (C)
+            edge [] node {$\square/0,S$} (D)
+        (C) edge [] node {$\square/0,S$} (D)
+            edge [] node {$\star\!\in\!\Sigma/\star,L$} (E)
+        (E) edge [] node {$\star\!\in\!\Sigma/\star,L$} (F);
+\end{tikzpicture}
+
+\section{}%7
+\begin{enumerate}
+	\item ja (CYK algorithm)
+	\item nein (DKF nur abgeschlossen über Komplement)
+	\item ja? (ich glaube so, aber nicht andersrum (s.u.))
+	\item ja? (ich glaube so, aber nicht andersrum (s.n.))
+	\item nein 
+	\item nein 
+	\item nein (denke semi-entscheidbar?)
+	\item ja (siehe Q\&A session)
+	\item nein (der Klassiker)
+\end{enumerate}
+
+\section{}%8
+\begin{lstlisting}[mathescape]
+    $x_3$ := 0
+    $x_4$ := $x_1$
+    $x_5$ := $x_2$
+L1: if($x_4 \neq 0$) goto L2
+    if($x_5 \neq 0$) goto L3
+    halt
+L2: $x_4 := x_4 - 1$
+    $x_3 := x_3 + 2$
+    goto L1
+L3: $x_5 := x_5 - 1$
+    $x_3 := x_3 + 1$ 
+    goto L1
+\end{lstlisting}
+
+\section{}%9
+\begin{center}
+\begin{tikzpicture}
+    % PSPACE area
+    \draw (0, 1.5em) node[rectangle,fill=green!10,text width=12em,align=center,minimum height=10em] (PSPACEFILL) {};
+    % PSPACE text
+    \draw (0, 5em) node[text width=12em,align=center] (PSPACE) {PSPACE};
+    % NP
+    \draw (0, 0) node[rectangle,fill=gray!20,text width=11em,align=center,minimum height=7em] (NP) {NP};
+    % NP complete
+    \draw (0, 0.75) node[rectangle,fill=red!20,text width=10em,align=center] (NPc) {NP-vollständig};
+    % P
+    \draw (0, -0.75) node[rectangle,fill=red!20, text width=10em,align=center] (P) {P};
+    % np hard border
+    \draw[dashed,thick,red] (-7em,7em) -- (-7em,1em) -- (14em,1em) -- (14em,7em);
+    % np hard label
+    \draw (10em,4em) node[red] (NPh) {NP-schwer};
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}
+	\item[P:] Ist Array sortiert?, Ist Sat-Belegung korrekt?
+  \item[NP$\backslash$P:] BinPacking, SubsetSum
+\end{enumerate}
+
+\section{}%10
+\begin{itemize}
+	\item Zeige, dass $\mathcal{X}\in NP$ (z.B. durch Finden eines deterministisch polynomiellen Zeugens).
+  \item Reduziere in deterministisch polynomieller Zeit eine zufällige, beliebige Instanz $I$ eines passenden Problems $\mathcal{Y}_i$ auf eine frei wählbare Instanz $I'$ aus $\mathcal{X}$.
+  \item Prüfe, ob die Reduktion korrekt ist dadurch, dass $I \text{erfüllbar} \Leftrightarrow I' \text{erfüllbar}$ gilt, d.h. zeige beide Richtungen: I erfüllbar gdw I' erfüllbar und I' erfüllbar gdw I erfüllbar.
+\end{itemize}
+\emph{Ja}, wir können den Beweis genau so durchführen, da wir für $\mathcal{X}$ zeigen, dass es in NP liegt und durch die Reduktion, dass es NP-schwer ist.
 
 \end{document}
