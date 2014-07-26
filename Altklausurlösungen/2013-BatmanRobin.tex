@@ -9,6 +9,8 @@
 \usepackage{xcolor}
 \usepackage{algorithm2e}
 \usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[ngerman]{babel}
 \titlelabel{\thetitle.\ Aufgabe}
 \usetikzlibrary{arrows,automata}
 \setlength\parindent{0pt}
@@ -30,7 +32,7 @@
 \end{itemize}
 
 \section{}
-An den Kanten für eine Turingmaschine steht $A/B,C$. $A$ ist das Zeichen, was wir von dem Band lesen ($\in \Gamma$), B ist was wir auf das Band schreiben (ebenfalls $\in \Gamma$). $C$ ist die nächste Aktion, die die Turingmaschine ausführen soll, wobei $C \in \{R,L,S\}$ (Links,Rechts,Stopp). 
+An den Kanten für eine Turingmaschine steht $A/B,C$. $A$ ist das Zeichen, was wir von dem Band lesen ($\in \Gamma$), B ist was wir auf das Band schreiben (ebenfalls $\in \Gamma$). $C$ ist die nächste Aktion, die die Turingmaschine ausführen soll, wobei $C \in \{R, L, S\}$ (Links, Rechts, Stop). 
 
 \section{}
 mindestens notwendige Sprachklasse:
@@ -81,11 +83,44 @@ B&\rightarrow cA |cS
 \end{align*}
 
 \section{}
-Pumping Lemma für reguläre Grammatik heißt: Für eine Mindestwortlänge $n$ gibt es für jedes Wort einer Sprache $L$ eine Zerlegung in $uvw$ mit $|v|\geq 1$,$|uv|\leq n$,$uv^*w \in L$. Zeigen wir nun für ein Wort aus L $z=a^nb^{n+n}a^n$,$|z|>n$, dass es keine Zerlegung gibt. Da $|uv|\leq n$ gelten muss wissen wir, dass $uv$ nur a's enthält. Sei $l=|v|\geq 1$. Dann ergibt sich für unsere Zerlegung $a^{n-l}a^lb^{2n}a^n$. Da $uv^*w \in L$ gelten muss, prüfen wir das Wort $uw = a^{n-l}b^{2n}a^n$. Nun sind allerdings nicht $i+j$ b's vorhanden, da $2n\neq n-l+n = 2n-l$. Somit ist dieses Wort $\notin L$- die Sprache ist also nicht regulär!
+Pumping Lemma für reguläre Grammatik heißt: Für eine Mindestwortlänge $n$ gibt es für jedes Wort einer Sprache $L$ eine Zerlegung in $uvw$ mit $|v|\geq 1$, $|uv|\leq n$, $uv^*w \in L$. Zeigen wir nun für ein Wort aus L $z=a^nb^{n+n}a^n$,$|z|>n$, dass es keine Zerlegung gibt. Da $|uv|\leq n$ gelten muss wissen wir, dass $uv$ nur a's enthält. Sei $l=|v|\geq 1$. Dann ergibt sich für unsere Zerlegung $a^{n-l}a^lb^{2n}a^n$. Da $uv^*w \in L$ gelten muss, prüfen wir das Wort $uw = a^{n-l}b^{2n}a^n$. Nun sind allerdings nicht $i+j$ b's vorhanden, da $2n\neq n-l+n = 2n-l$. Somit ist dieses Wort $\notin L$- die Sprache ist also nicht regulär!
 
 \section{}
-Der Fehler liegt direkt in der ersten Zeile bei "Für alle Teilmengen $T'$...". Im Post'schen Korrespondenzproblem kann man jedoch Teile beliebig oft benutzen und damit kann man nicht einfach alle Teilmengen aufzählen, sondern es gibt unendlich viele.
+Der Fehler liegt direkt in der ersten Zeile bei "`Für alle Teilmengen $T'$..."'. Im Post'schen Korrespondenzproblem kann man jedoch Teile beliebig oft benutzen und damit kann man nicht einfach alle Teilmengen aufzählen, sondern es gibt unendlich viele.
 
+\section{}
+\begin{center}
+\begin{tabularx}{\textwidth}{lllll|X}
+P & NP & NP-v & NP-s & nichts & \\
+\hline
+$\boxtimes$ & $\square$ & $\square$ & $\square$ & $\square$ & Testen, ob unger. Graph kreisfrei \\
+$\square$ & $\square$ & $\square$ & $\square$ & $\boxtimes$ & Sortieren\\
+$\square$ & $\boxtimes$ & $\boxtimes$ & $\boxtimes$ & $\square$ & BinPacking\\
+$\square$ & $\square$ & $\square$ & $\square$ & $\boxtimes$ & Kolmogorov Komplexität\\
+$\square$ & $\square$ & $\square$ & $\square$ & $\boxtimes$ & Finden der billigstens Rundtour...\\
+$\boxtimes$ & $\square$ & $\square$ & $\square$ & $\square$ & Wortproblem KF-Sprachen \\
+$\boxtimes$ & $\square$ & $\square$ & $\square$ & $\square$ & kanten-gewichteter Graph \\
+\end{tabularx}
+\end{center}
+
+\section{}
+\subsection{}
+Bedingungen:
+\begin{enumerate}
+  \item $\mathcal{X}$ muss in NP liegen
+	\item $\mathcal{Y}$ muss NP-vollständig sein
+\end{enumerate}
+Die NP-Härte wird für $\mathcal{X}$ gezeigt.
+
+\section{}
+\begin{itemize}
+	\item nein (Selbst wenn ein Problem in linearer Zeit gelöst werden kann, kann es auch in exponentieller Zeit gelöst werden. Es wird nicht gesagt "`in minimal exp. Zeit"').
+  \item ja/nein? Für ja spricht Slide 267, für nein: Probleme in EXPTIME müssen nicht zwingend in NP sein.
+  \item ja (z.B. Primes/Co-Primes)
+  \item ja (Halteproblem ist NP-schwer und unentscheidbar, Slide 272)
+  \item ja (Veranschaulichung: Graphik auf \href{http://en.wikipedia.org/wiki/NP-complete}{Wikipedia})
+  \item nein ("`nur"', außerdem können eben gerade die schwachen auch durch pseudopolynomielle Algorithmen bei kleinen Eingabegrößen gelöst werden)
+\end{itemize}
 
 
 \end{document}
