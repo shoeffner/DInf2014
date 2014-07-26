@@ -5,12 +5,12 @@
 \usepackage{tikz}
 \usepackage{tikzsymbols}
 \usetikzlibrary{arrows,automata}
-
 \usepackage{tabularx}
 \usepackage{lmodern}
 \usepackage{xcolor}
 \usepackage{pbox}
 \usepackage{algorithm2e}
+\usepackage{listings}
 \usepackage{titlesec}
 
 \titlelabel{\thetitle. Aufgabe}
@@ -117,35 +117,34 @@ Falls weder Fall 1 noch Fall 2 vorliegt... & Falls weder Fall 1 noch Fall 2 vorl
 \end{tikzpicture}
 
 \section{}
-\begin{algorithm}
-$x_3$ := 0\;
-$x_4$ := $x_1$\;
-$x_5$ := $x_2$\;
-\While{$x_4 \neq 0$}{
-$x_4$ := $x_4 -1$\;
-$x_3$ := $x_3+3$\;
+\begin{lstlisting}[mathescape]
+$x_3$ := 0;
+$x_4$ := $x_1$;
+$x_5$ := $x_2$;
+while($x_4 \neq 0$){
+    $x_4$ := $x_4 -1$;
+    $x_3$ := $x_3+3$;
 }
-\While{$x_5 \neq 0$}{
-$x_5$ := $x_5 -1$\;
-$x_3$ := $x_3-1$\;
+while($x_5 \neq 0$){
+    $x_5$ := $x_5 -1$;
+    $x_3$ := $x_3-1$;
 }
-\end{algorithm}
+\end{lstlisting}
 
 \section{}
-\begin{algorithm}
-\DontPrintSemicolon
-$x_1:=600$\;
-L1:print(ab)\;
-$x_2:=x_2-1$\;
-if$(x_2\neq0)$ goto L1\;
-halt\;
-\end{algorithm}
-Die Kolmogorov Komplexität von diesem Programm liegt bei 49 ($<600$). Wir nutzen dabei die Vermutung aus, dass der String wirklich nur aus aneinander gereihten ab's besteht.
+\begin{lstlisting}[mathescape]
+    $x_1 := 600$
+L1: print(ab)
+    $x_2 := x_2-1$
+    if $(x_2\neq0)$ goto L1
+    halt
+\end{lstlisting}
+Die Kolmogorov Komplexität von diesem Programm liegt bei 49 ($<600$, gezählt ohne benötigte Whitespaces). Wir nutzen dabei die Vermutung aus, dass der String wirklich nur aus aneinander gereihten ab's besteht.
 
 \section{}
 \begin{enumerate}
 	\itemindent3cm
-  \item[P:] sortieren, addieren, ...
+  \item[P:] Ist Array sortiert?
   \item[NP$\backslash$ P:] Hamiltonkreis, BinPacking
   \item[stark NP-vollständig:] Sat, BinPacking
   \item[schwach NP-vollständig:] SubsetSum
