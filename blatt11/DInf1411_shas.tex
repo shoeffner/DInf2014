@@ -83,8 +83,8 @@ Sei $(S, k)$ eine beliebige \textsc{Sat}-Instanz.
 Erstelle \textsc{Asterix}-Instanz. Gehe dabei wie folgt vor:
 \begin{itemize}
   \item Für jedes Literal $x_i$ aus $S$ erstelle ein Literal $x_i'$ und ersetze alle Vorkomnisse $\neg x_i$ durch $x_i'$. Erstelle in der \textsc{Asterix}-Instanz eine Regel $[[x_i \vee x_i']]$.
-	\item Für jede Klausel aus $S$, die drei positive Literale $x_1, x_2, x_3$ enthält, wähle vier bislang ungenutze Variablen $x_a, x_b, x_c, x_d$ und erstelle die Klauseln (also Haufen) $[[x_1 \vee x_a \vee x_b]] \wedge [[x_2 \vee x_b \vee x_c]] \wedge [[x_3 \vee x_c \vee x_d]]$.
-	\item Für jede Klausel aus $S$, die zwei positive Literale $x_1, x_2$ enthält, erstelle die Variablen $x_a$ und $x_b$ und die Klauseln $[[x_1 \vee x_a]] \wedge [[x_2 \vee x_b]]$.
+	\item Für jede Klausel aus $S$, die drei positive Literale $x_1, x_2, x_3$ enthält, wähle vier bislang ungenutze Variablen $x_a, x_b, x_c, x_d$ und erstelle die Klauseln (also Haufen) $[[x_1 \vee x_a \vee x_b]] \wedge [[x_2 \vee x_b \vee x_c]] \wedge [[x_3 \vee x_c \vee x_d]] \wedge (x_1 \vee x_2 \vee x_3)$.
+	\item Für jede Klausel aus $S$, die zwei positive Literale $x_1, x_2$ enthält, erstelle die Variablen $x_a$ und $x_b$ und die Klauseln $[[x_1 \vee x_a]] \wedge [[x_2 \vee x_b]] \wedge (x_1 \vee x_2)$.
 	\item Füge für alle Klauseln aus $S$, die nur ein Literal $x_i$ enthalten, eine Klausel $[[x_i]]$ hinzu.
 	\item Bilde eine Konjunktion aus allen erstellten Klauseln.
 \end{itemize}
