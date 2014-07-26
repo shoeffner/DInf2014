@@ -41,14 +41,15 @@ Nach rechts auffüllen beginnend bei\dots
 \end{itemize}
 
 \section{}%3
+\subsection{}%a
 \begin{align*}
 S &\rightarrow a | b | aS | bS | aA | bA \\
 A &\rightarrow c | cB | C \\
 B &\rightarrow a \\
-C &\rightarrow d | dB
+C &\rightarrow d | dC
 \end{align*}
 
-\section{}%4
+\subsection{}%b
 \begin{tikzpicture}[->, auto, node distance=3cm]
 	\node[initial,state,accepting]   (A) {};
   \node[state] (B) [above of = A] {};
@@ -66,6 +67,26 @@ C &\rightarrow d | dB
             edge [below] node {$c,\#/\#$} (G)
         (F) edge [] node {$c,\$/\epsilon$} (D);
 \end{tikzpicture}
+
+\section{}%4
+\begin{tikzpicture}[->, auto, node distance=3cm]
+	\node[initial,state]   (Z1) {$Z_1$};
+  \node[state,accepting] (Z2Z3) [right of = Z1] {$Z_{2,3}$};  
+  \node[state,accepting] (Z4) [below of = Z2Z3, node distance = 2cm] {$Z_4$};  
+  \node[state,accepting] (Z1Z4) [right of = Z2Z3] {$Z_{1,4}$};  
+  \node[state,accepting] (Z3) [below of = Z4, node distance = 2cm] {$Z_3$};  
+  \path (Z1) edge [bend left] node {a} (Z2Z3)
+             edge [bend right, left] node {b} (Z4)
+        (Z2Z3) edge [bend left] node {b} (Z1)
+             edge [bend left] node {c} (Z1Z4)
+        (Z4) edge [] node {d} (Z3)
+        (Z1Z4) edge [bend left] node {d} (Z3)
+               edge [bend left, right] node {b} (Z4)
+               edge [bend left] node {a} (Z2Z3)
+        (Z3) edge [bend left] node {b,c} (Z1)
+        ;
+\end{tikzpicture}
+
 
 \section{}%5
 \subsection{}%a
@@ -110,8 +131,8 @@ Die Sprache $L$ ist also nicht kontextfrei.
 \begin{enumerate}
 	\item ja (CYK algorithm)
 	\item nein (DKF nur abgeschlossen über Komplement)
-	\item ja? (ich glaube so, aber nicht andersrum (s.u.))
-	\item ja? (ich glaube so, aber nicht andersrum (s.n.))
+	\item ja (so, aber nicht andersrum (s.u.))
+	\item ja (so, aber nicht andersrum (s.n.))
 	\item nein 
 	\item nein 
 	\item nein (denke semi-entscheidbar?)
@@ -121,17 +142,12 @@ Die Sprache $L$ ist also nicht kontextfrei.
 
 \section{}%8
 \begin{lstlisting}[mathescape]
-    $x_3$ := 0
+    $x_3$ := $x_2$
     $x_4$ := $x_1$
-    $x_5$ := $x_2$
 L1: if($x_4 \neq 0$) goto L2
-    if($x_5 \neq 0$) goto L3
     halt
 L2: $x_4 := x_4 - 1$
     $x_3 := x_3 + 2$
-    goto L1
-L3: $x_5 := x_5 - 1$
-    $x_3 := x_3 + 1$ 
     goto L1
 \end{lstlisting}
 
@@ -165,6 +181,6 @@ L3: $x_5 := x_5 - 1$
   \item Reduziere in deterministisch polynomieller Zeit eine zufällige, beliebige Instanz $I$ eines passenden Problems $\mathcal{Y}_i$ auf eine frei wählbare Instanz $I'$ aus $\mathcal{X}$.
   \item Prüfe, ob die Reduktion korrekt ist dadurch, dass $I \text{erfüllbar} \Leftrightarrow I' \text{erfüllbar}$ gilt, d.h. zeige beide Richtungen: I erfüllbar gdw I' erfüllbar und I' erfüllbar gdw I erfüllbar.
 \end{itemize}
-\emph{Ja}, wir können den Beweis genau so durchführen, da wir für $\mathcal{X}$ zeigen, dass es in NP liegt und durch die Reduktion, dass es NP-schwer ist.
+\emph{Nein}, wir können den Beweis nicht so durchführen, da die Reduktion ggf. nicht funktioniert.
 
 \end{document}
