@@ -59,10 +59,10 @@ C &\rightarrow d | dC
   \node[state] (F) [right of = D] {};
   \node[state,accepting] (G) [left of=E] {};
   \path (A) edge [] node {$a,\#/\#$} (B)
-        (B) edge [bend left, above] node {$b,\star\!\in\!\Sigma/\$\star$} (C)
+        (B) edge [bend left, above] node {$b,\star\!\in\!\Gamma/\$\star$} (C)
         (C) edge [bend left, below] node {$a,\star\!\in\!\Sigma/\star$} (B)
             edge [] node {$c,\$/\epsilon$} (D)
-        (D) edge [left] node {$c,\star\!\in\!\Sigma/\star$} (E)            
+        (D) edge [left] node {$c,\star\!\in\!\Gamma/\star$} (E)            
         (E) edge [right] node {$c,\$/\$$} (F)
             edge [below] node {$c,\#/\#$} (G)
         (F) edge [] node {$c,\$/\epsilon$} (D);
@@ -134,8 +134,8 @@ Die Sprache $L$ ist also nicht kontextfrei.
 	\item ja (so, aber nicht andersrum (s.u.))
 	\item ja (so, aber nicht andersrum (s.n.))
 	\item nein 
-	\item nein 
-	\item nein (denke semi-entscheidbar?)
+	\item ja (nur periodisch ist entscheidbar) 
+	\item nein
 	\item ja (siehe Q\&A session)
 	\item nein (der Klassiker)
 \end{enumerate}
@@ -181,6 +181,6 @@ L2: $x_4 := x_4 - 1$
   \item Reduziere in deterministisch polynomieller Zeit eine zufällige, beliebige Instanz $I$ eines passenden Problems $\mathcal{Y}_i$ auf eine frei wählbare Instanz $I'$ aus $\mathcal{X}$.
   \item Prüfe, ob die Reduktion korrekt ist dadurch, dass $I \text{erfüllbar} \Leftrightarrow I' \text{erfüllbar}$ gilt, d.h. zeige beide Richtungen: I erfüllbar gdw I' erfüllbar und I' erfüllbar gdw I erfüllbar.
 \end{itemize}
-\emph{Nein}, wir können den Beweis nicht so durchführen, da die Reduktion ggf. nicht funktioniert.
+\emph{Ja}, wir können den Beweis so durchführen.
 
 \end{document}
