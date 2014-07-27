@@ -8,6 +8,7 @@
 \usepackage{lmodern}
 \usepackage{xcolor}
 \usepackage{algorithm2e}
+\usepackage{listings}
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage[ngerman]{babel}
@@ -23,7 +24,111 @@
   \large{Sebastian Höffner, Andrea Suckro}
 \end{center}
 
+\section{}%1
+\begin{itemize}
+	\item Deterministischer Kellerautomat
+  \item Linear beschränkter Automat
+  \item Turingmaschine (Nicht- und Deterministisch)
+  \item Endlicher Automat (Nicht- und Deterministisch)
+\end{itemize}
 
+\section{}%2
+$a,b/c$
+\begin{enumerate}
+	\item[$a$:] Eingabe/zu lesendes Symbol ($a \in \Sigma$)
+  \item[$b$:] Oberstes Symbol des Stacks ($b \in \Gamma$). Wird immer entfernt (häufig ist es deshalb in $c$ ganz rechts vorhanden, damit der Stack \emph{nicht verändert} wird).
+  \item[$c$:] Symbolkette, die, rechts beginnend, auf den Stack gepusht werden.
+\end{enumerate}
+
+\section{}%3
+Auffüllen nach rechts, beginnend mit\dots
+\begin{itemize}
+	\item \dots deterministisch kontextfrei
+	\item \dots regulär $ab^+c$
+	\item \dots regulär $(0|\dots|9)^*.(0|\dots|9)^*$
+	\item \dots rekursiv aufzählbar
+\end{itemize}
+
+\section{}%4
+$ba^*b(cc|dd)$
+
+\section{}%5
+\begin{align*}
+S &\rightarrow abba | abAba \\
+A &\rightarrow aAa | bAb | cAc | aa | bb | cc
+\end{align*}
+
+\section{}%6
+\begin{tikzpicture}[->, auto, node distance=3cm]
+	\node[initial,state]   (A) {};
+  \node[state,accepting] (B) [right of=A] {};
+  \node[state] (C) [right of = B] {};
+  \path (A) edge [] node {$a/\square,R$} (B)
+        (B) edge [bend left, above] node {$b/\square,R$} (C)
+        (C) edge [bend left, below] node {$b/\square,R$} (B);
+\end{tikzpicture}
+
+\section{}%7
+\begin{align*}
+A_1 &\rightarrow aA_2 | aA_3 \\
+A_2 &\rightarrow aA_4 | bA_2 | cA_3 | a\\
+A_3 &\rightarrow dA_2 \\
+A_4 &\rightarrow \epsilon
+\end{align*}
+Vereinfachen zu
+\begin{align*}
+S &\rightarrow aA | aB \\
+A &\rightarrow a | bA | cB\\
+B &\rightarrow dA \\
+\end{align*}
+
+\section{}%8
+\subsection{}%a
+Sei $L$ eine reguläre Sprache. Es gibt eine Zahl $n:=n(L)$, so dass sich \emph{jedes} Wort $z \in L$ mit $|z| \geq n$ so in drei Teile $u$, $v$, $w$ zerlegen läßt (d.h. z = uvw), dass die folgenden Eigenschaften gelten: $|v| \geq 1$, $|uv| \leq n$, $uv^iw \in L \text{ für alle } i \geq 0$.
+
+\subsection{}%b
+Wir nehmen an, $L = \{b^ia^jb^{i+j} | i,j\in \mathbb{N}\}$ sei regulär. Dann gelten die o.g. Eigenschaften.
+
+Wir betrachten das Wort $z = b^na^nb^{2n}$. Dann ist $v = b^l$ und $u = b^{m-l}, 1 \leq l \leq m \leq n-1$. Wenn wir nun $v$ entfernen ($z' = uv^0w$), passt die Anzahl $b$s vor den $a$s nicht mehr zur Anzahl der $b$s danach, da $|u|+|a^n| = |b^{m-l}|+|a^n| = n+m-l < 2n = |b^2n|$. Es liegt also ein Widerspruch vor, somit ist $L$ nicht regulär.
+
+\section{}%9
+Im PCP dürfen Tupel mehrfach verwendet werden, d.h. es gibt nicht endlich viele Möglichkeiten/Permutationen, sondern unendlich viele.
+
+\section{}%10
+\begin{center}
+\begin{tabularx}{\textwidth}{lllll|X}
+P & NP & NP-v & NP-s & nichts & \\
+\hline
+$\square$ & $\boxtimes$ & $\boxtimes$ & $\boxtimes$ & $\square$ & SubsetSum \\
+$\square$ & $\boxtimes$ & $\boxtimes$ & $\boxtimes$ & $\square$ & Wang Kachelung \\
+$\boxtimes$ & $\square$ & $\square$ & $\square$ & $\square$ & Kreise in ger. Graph \\
+$\square$ & $\square$ & $\square$ & $\square$ & $\boxtimes$ & Sortieren \\
+$\boxtimes$ & $\square$ & $\square$ & $\square$ & $\square$ & Wortproblem DKF Sprachen \\
+$\square$ & $\boxtimes$ & $\boxtimes$ & $\boxtimes$ & $\square$ & Spannbaum mit Gewicht $\leq k$ \\
+$\square$ & $\square$ & $\square$ & $\square$ & $\boxtimes$ & kürzeste Rundtour \\
+\end{tabularx}
+\end{center}
+
+\section{}%11
+\subsection{}%a
+Existiert eine Teilmenge $M'\subseteq M$ mit Gesamtwert $W \geq k_1$ und Gesamtgewicht $G \leq k_2$?
+
+\subsection{}%b
+\begin{enumerate}
+	\item $\mathcal{X}$ muss NP-vollständig sein.
+  \item $\mathcal{Y}$ muss in NP liegen.
+\end{enumerate}
+Die NP-Härte wird für $\mathcal{Y}$ gezeigt.
+
+\section{}%12
+\begin{itemize}
+	\item nein
+  \item nein
+  \item ja (nein? Die, die wir kennen schon.)
+  \item ja (nein weil "`pseudopolynomiell"'?)
+  \item nein
+  \item nein
+\end{itemize}
 
 
 \end{document}
