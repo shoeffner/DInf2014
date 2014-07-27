@@ -60,12 +60,12 @@ D &\rightarrow cC | b | c
   \node[state,accepting] (D) [right of = C] {};
   \node[state]           (F) [below of = E] {};
   \path (A) edge [] node {$\epsilon,\#/\#$} (B)
-        (B) edge [loop above] node {$a,\star\!\in\!\Sigma/a\star\!\in\!\Sigma$} (B)
-            edge [] node {$\epsilon,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (C)
-            edge [left, pos=0.7] node {$\epsilon,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (E)
-        (E) edge [bend left] node {$c,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (F)
-            edge [right, pos=0.3] node {$\epsilon,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (C)
-        (F) edge [bend left] node {$d,\star\!\in\!\Sigma/\star\!\in\!\Sigma$} (E)
+        (B) edge [loop above] node {$a,\star\!\in\!\Sigma/a\star$} (B)
+            edge [] node {$\epsilon,\star\!\in\!\Sigma/\star$} (C)
+            edge [left, pos=0.7] node {$\epsilon,\star\!\in\!\Sigma/\star$} (E)
+        (E) edge [bend left] node {$c,\star\!\in\!\Sigma/\star$} (F)
+            edge [right, pos=0.3] node {$\epsilon,\star\!\in\!\Sigma/\star$} (C)
+        (F) edge [bend left] node {$d,\star\!\in\!\Sigma/\star$} (E)
         (C) edge [] node {$\epsilon,\#/\epsilon$} (D)
             edge [loop above] node {a,a/$\epsilon$} (C);
 \end{tikzpicture}
@@ -107,12 +107,12 @@ Falls weder Fall 1 noch Fall 2 vorliegt... & Falls weder Fall 1 noch Fall 2 vorl
   \node[state]           (C) [right of = B] {};
   \node[state]           (D) [below left of = C] {};
   \node[state]           (E) [left of = D] {};
-  \path (A) edge [loop above] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,R$} (A)
+  \path (A) edge [loop above] node {$\star\!\in\!\Sigma/\star,R$} (A)
             edge [] node {$\square/\square,L$} (B)
-        (B) edge [] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,L$} (C)
+        (B) edge [] node {$\star\!\in\!\Sigma/\star,L$} (C)
         (C) edge [loop right] node {$1/0,L$} (C)
             edge [align=center] node {$\square/1,L$ \\ $0/1,L$ } (D)
-        (D) edge [loop below] node {$\star\!\in\!\Sigma/\star\!\in\!\Sigma,L$} (D)
+        (D) edge [loop below] node {$\star\!\in\!\Sigma/\star,L$} (D)
             edge [] node {$\square/\square,R$} (E);
 \end{tikzpicture}
 
