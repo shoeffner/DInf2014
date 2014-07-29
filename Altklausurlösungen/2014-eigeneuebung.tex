@@ -1,0 +1,355 @@
+\documentclass{article}
+\usepackage[left=2cm,top=2cm,right=2cm,bottom=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{tikzsymbols}
+\usepackage{tabularx}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{algorithm2e}
+\usepackage{titlesec}
+\usepackage{cjhebrew}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usepackage{listings}
+\lstset{mathescape,backgroundcolor=\color{gray!10}}
+\usepackage{environ}
+\usepackage[ngerman]{babel}
+\titlelabel{\thetitle.\ Aufgabe}
+\usetikzlibrary{arrows,automata}
+\setlength\parindent{0pt}
+
+
+
+\newtoggle{solutions}
+\toggletrue{solutions}
+%\togglefalse{solutions}
+
+\newcommand{\sk}{\par\smallskip\par}
+
+\NewEnviron{solution}[1][2]{\sk\textbf{Lösung:}\begin{center}\begin{tikzpicture}\draw [gray!10,fill] (0,0) rectangle (.9\textwidth,#1cm) node[midway,black,align=left] {\iftoggle{solutions}{\parbox{.8\textwidth}{\BODY}}{}};\end{tikzpicture}\end{center}}
+
+\makeatletter
+\lstnewenvironment{solutioncode}[1][2]{
+  \lstset{mathescape,backgroundcolor=\color{gray!10}}
+  \setbox\@tempboxa=\hbox\bgroup\color@setgroup
+}{
+  \color@endgroup\egroup
+  \begin{tikzpicture}
+    \iftoggle{solutions}{
+      \node (lst) {\makebox[.75\linewidth][l]{\box\@tempboxa}};
+    }{
+      \draw [gray!10, fill] (0,0) rectangle (.95\textwidth,#1cm);
+    }
+  \end{tikzpicture}
+}
+\makeatother
+
+\newcommand{\sol}[1]{\iftoggle{solutions}{\emph{ Lösung:} #1}{}}
+
+\newcommand{\ssol}[1]{\iftoggle{solutions}{#1}{}}
+
+\newcommand{\mpsol}{\ensuremath\iftoggle{solutions}{\boxtimes}{\square}}
+
+\newcommand{\questionbox}[1]{\begin{tikzpicture}\draw [gray!10,fill] (0,0) rectangle (5cm,0.6cm) node[midway,black,align=center] {\ssol{#1}};\end{tikzpicture}}
+
+\newcommand{\solmark}[2][red!30]{\iftoggle{solutions}{\colorbox{#1}{#2}}{#2}}
+
+\begin{document}
+
+\begin{center}
+\Large Übungsaufgaben \iftoggle{solutions}{-- mit Lösungen}{}
+\end{center}
+
+
+\section{}
+Geben Sie jeweils die größtmögliche Sprachklasse an, die der Automat darstellen kann. \sk
+\begin{tabularx}{\textwidth}{lX}
+Turingmaschine & \questionbox{rekursiv auzählbar} \\
+Deterministischer Endlicher Automat & \questionbox{regulär} \\
+Nicht-Deterministischer Kellerautomat & \questionbox{kontextfrei}
+\end{tabularx}
+
+
+\section{}
+Geben Sie an, zu welchen Sprachklassen die folgenden Sprachen gehören. Kreuzen Sie \emph{alle} korrekten Antworten an. \sk
+\begin{center}
+\begin{tabularx}{\textwidth}{Xrrrrr}
+Sprache & \rotatebox{90}{regulär} & \rotatebox{90}{determ. kontextfrei} & \rotatebox{90}{kontextfrei} & \rotatebox{90}{kontextsensitiv} & \rotatebox{90}{rekursiv aufzählbar} \\
+\hline
+$\left\{\omega | \omega \text{ ist ein korrektes Prolog-Programm} \right\}$ & $\square$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ \\
+$\left\{a^ib^ic^i \right\}$ & $\square$ & $\square$ & $\square$ & $\mpsol$ & $\mpsol$ \\
+$\left\{a^ib^ic | i \geq 1 \right\} \cap \left\{a^jb^ic | i\geq 1, j\geq 2 \right\} $ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ \\
+$\left\{\omega | \omega \text{ ist ein grammatisch korrekter deutscher Satz.} \right\}$ & $\square$ & $\square$ & $\square$ & $\square$ & $\mpsol$ \\
+$\left\{a^ib^j | i \geq j \right\}$ & $\square$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ \\
+$\left\{a^ib^j | i \geq j, i < 10 \right\}$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ 
+\end{tabularx}
+\end{center}
+
+
+\section{}
+Erstellen Sie eine reguläre Grammatik (nach den strikten Regeln) zu folgendem regulären Ausdruck:
+\begin{align*}
+(a|b)^+d^*a
+\end{align*}
+\begin{solution}[3]
+\begin{tabular}[t]{l|r}
+Zwischenschritt & Grammatik\\
+\hline
+\vtop{\null\hbox{\begin{tikzpicture}[->,auto,node distance=1cm]
+	\node[initial,state,inner sep=2pt,minimum size=0pt] (S) {S};
+  \node[state,inner sep=2pt,minimum size=0pt] (A) [right of=S]{A};
+  \node[state,accepting,inner sep=2pt,minimum size=0pt] (B) [right of=A] {B};
+  \path (S) edge[loop above] node{a,b} (S)
+            edge node{a,b} (A)
+        (A) edge[loop above] node{d} (A)
+            edge node{a} (B);
+\end{tikzpicture} }}& \vtop{\null\hbox{
+$\begin{aligned}
+S &\rightarrow aS\,|\,bS\,|\,aA\,|\,bA\\
+A &\rightarrow dA\,|\,a
+\end{aligned}$}}
+\end{tabular}
+\end{solution}
+
+\newpage
+\section{}
+Wandeln Sie den gegebenen Nicht-Deterministischen Endlichen Automaten gemäß dem Verfahren in der Vorlesung in einen Deterministischen Kellerautomaten um. 
+\begin{center}\begin{tikzpicture}[->, auto, node distance=3.5cm]
+	\node[initial,state] (1) {$Z_1$};
+  \node[state,accepting] (2) [right of=1] {$Z_2$};
+  \node[state] (3) [below of=1] {$Z_3$};
+  \node[state] (4) [right of=3] {$Z_4$};
+  \path (1) edge [bend left=15] node {a,b} (2)
+            edge [] node {a} (3)
+        (2) edge [bend left=15] node {c} (1)
+            edge [bend left=15] node {b} (3)
+            edge [bend left=15] node {c} (4)
+        (3) edge [bend left=15] node {b} (2)
+        (4) edge [bend left=15] node {$\epsilon$} (2)
+            edge [] node {b} (3);
+\end{tikzpicture}\end{center}
+
+\begin{solution}[6]
+\begin{tikzpicture}[->, auto, node distance=3.5cm]
+	\node[initial,state] (1) {$Z_1$};
+  \node[state,accepting] (2) [right of=1] {$Z_2$};
+  \node[state] (3) [right of=2] {$Z_3$};
+  \node[state,accepting] (4) [below of=1] {$Z_{2,3}$};
+  \node[state,accepting] (5) [below of=2] {$Z_{1,2,4}$};
+  \path (1) edge [] node {a} (4)
+            edge [] node {b} (2)
+        (2) edge [bend left=15] node {b} (3)
+            edge [] node {c} (5)
+        (3) edge [bend left=15] node {b} (2)
+        (4) edge [loop left] node {b} (4)
+            edge [bend left=15] node {c} (5)
+        (5) edge [loop right] node {c} (5)
+            edge [bend left=15] node {b} (4);
+\end{tikzpicture}
+\end{solution}
+
+
+\section{}
+Geben Sie eine Turingmaschine an, die für eine binär kodierte Zahl $\alpha\geq4$ berechnet: $\lfloor\alpha/4\rfloor+2$.
+\begin{solution}[7]
+\begin{tikzpicture}[->, auto, node distance=3cm]
+	\node[initial,state] (1) {};
+  \node[state] (2) [right of=1] {};
+  \node[state] (3) [right of=2] {};
+  \node[state] (4) [below right of=3] {};
+  \node[state] (5) [below left of=4] {};
+  \node[state] (7) [above left of=5] {};
+  \node[state] (6) [below left of=7] {};
+  \node[state] (8) [left of=6] {};
+  \path (1) edge [loop above] node {$\star\!\in\!\Sigma/\star,R$} (1)
+            edge node {$\square/\square,L$} (2)
+        (2) edge node {$\star\!\in\!\Sigma/\square,L$} (3)
+        (3) edge node {$\star\!\in\!\Sigma/\square,L$} (4)
+        (4) edge node {$\star\!\in\!\Sigma/\star,L$} (5)
+        (5) edge node {$0/1,L$} (6)
+            edge node {$1/0,L$} (7)
+        (6) edge [loop below] node {$\star\!\in\!\Sigma/\star,L$} (6)
+            edge node {$\square/\square,R$} (8)
+        (7) edge [loop above] node {$1/0,L$} (7)
+            edge node[left,pos=0.6] {$0/1,L$} (6);
+\end{tikzpicture}
+\end{solution}
+
+
+\section{}
+Geben Sie eine Turingmaschine an, die prüft für zwei unär kodierte Zahlen $a, b \geq 1$, ob $a>b$. Die Zahlen sind auf dem Band durch ein einzelnes $\square$ getrennt.
+
+\emph{Hinweis:} Eine möglicher Startzustand des Bands wäre z.B. $\square \underset{\uparrow}{a}aa\square aa\square$.
+
+\begin{solution}[6.5]
+\begin{tikzpicture}[->, auto, node distance=1.8cm]
+	\node[initial,state] (1) {};
+  \node[state] (2) [above right of=1] {};
+  \node[state,accepting] (7) [below right of=2] {};
+  \node[state] (3) [above right of=7] {};
+  \node[state] (4) [below right of=3] {};
+  \node[state] (5) [below left of=4] {};
+  \node[state] (6) [below left of=7] {};
+  \path (1) edge node {$a/\square,R$} (2)
+        (2) edge node {$\square/\square,R$} (3)
+        (3) edge node {$\square/\square,L$} (4)
+        (4) edge node {$a/\square,L$} (5)
+        (5) edge node {$\square/\square,L$} (6)
+        (6) edge node {$\square/\square,R$} (1)
+        (3) edge node {$\square/\square,S$} (7)
+        (2) edge [loop above] node {$a/a,R$} (2)
+        (3) edge [loop above] node {$a/a,R$} (3)
+        (5) edge [loop below] node {$a/a,L$} (5)
+        (6) edge [loop below] node {$a/a,L$} (6);
+\end{tikzpicture}
+\end{solution}
+
+\section{}
+Schreiben Sie ein GOTO-Programm, das $x_3 = x_1^2 + x_2$ für $x_1, x_2 \in \mathbb{N}$ berechnet. Verändern Sie dabei die Eingabeparameter $x_1$ und $x_2$ nicht. 
+Nutzen Sie nur folgende Befehle:
+\begin{itemize}
+	\item $x_i := x_j \pm c$, mit $c \in \mathbb{N}$
+	\item if($x_i\neq0$) goto $L_j$
+	\item goto $L_i$
+	\item halt
+  \item $L_i:$
+\end{itemize}
+
+\begin{solutioncode}[6]
+    $x_3 := x_2$
+    $x_4 := x_1$
+$L_0:$ if($x_4 \neq 0$) goto $L_1$
+    halt
+$L_1:$ $x_5 := x_1$
+$L_2:$ if($x_5 \neq 0$) goto $L_3$
+    $x_4 := x_4 - 1$
+    goto $L_0$
+$L_3:$ $x_5 := x_5 - 1$
+    $x_3 := x_3 + 1$
+    goto $L_2$
+\end{solutioncode}
+
+\newpage
+\section{}
+Vervollständigen Sie die unten genannte Definition und wenden Sie das Pumping Lemma anschließend für die Sprache $L=\left\{a^ib^ic^i|i\geq 0\right\}$ an, um zu zeigen, dass diese nicht kontextfrei ist.
+
+\fbox{\parbox{0.9\textwidth}{
+Das Pumping Lemma für Kontextfreie Sprachen ist folgendermaßen definiert:
+Gegeben sei eine kontextfreie Sprache $L$. Es existiert ein $n:=n(L)$ für das gilt, dass für $\begin{cases}\mpsol\text{jedes}\\\square\text{ein}\\\square\text{kein}\end{cases}$ Wort $z\in L$ mit $|z| \geq n$ eine Zerlegung $uvwxy$ existiert mit
+\begin{tabular}{l|l|l}
+$\mpsol$ $|vwx| \leq n$, & $\square$ $|vw| \geq 1$, & $\square$ $\forall i\geq 0: uv^iwx^iy \notin L$, \\
+$\square$ $|uwy| \leq n$, & $\mpsol$ $|vx| \geq 1$ & $\mpsol$ $\forall i\geq 0: uv^iwx^iy \in L$
+\end{tabular}.
+}}
+
+\begin{solution}[8]
+Angenommen $L=\left\{a^ib^ic^i|i\geq 0\right\}$ ist eine kontextfreie Sprache. Dann existiert ein $n:=n(L)$ für das gilt, dass für jedes Wort $z\in L$ mit $|z|\geq n$ eine Zerlegung $uvwxy$ existiert mit $|vwx| \leq n$, $|vw| \geq 1$ und $\forall i\geq 0: uv^iwx^iy \in L$.
+\sk
+Wir betrachten das Wort $z = a^nb^nc^n$.
+\sk
+Nun müssen wir verschiedene mögliche Zerlegungen untersuchen:
+\sk
+$vwx = a^n$. Dann enthalten $v$ bzw. $x$ mindestens ein $a$. Pumpen wir, verändert sich die Anzahl $a$s zur Anzahl $b$s und $c$s. Das ist ein Widerspruch. Analog sind die Fälle $vwx = b^n$ bzw. $vwx = c^n$.
+\sk
+$vwx = a^kb^l$, mit $k, l \geq 1$ und $k+l\leq n$. Sind in $v$ und $x$ $a$s bzw. $b$s enthalten, die gepumpt werden, so bleibt mindestens die Anzahl $c$s erhalten und passt so nicht mehr zur Anzahl der $a$s und $b$s. Das gilt unabhängig davon, ob in $v$ und $x$ unterschiedlich oder gleich viele Zeichen vorhanden sind. Dies führt also ebenfalls zu einem Widerspruch. Analog ist der Fall $vwx = b^kc^l$.
+\sk
+Da wir für jede mögliche Zerlegung zu einem Widerspruch kommen, ist keine Zerlegung möglich und $L$ somit nicht kontextfrei. $\square$
+\end{solution}
+
+
+\section{}
+Geben Sie eine Ihnen aus der Vorlesung oder Übung bekannte Definition für Regeln von Grammatiken für kontextsensitive Sprachen (ohne $\epsilon$) an.
+
+\begin{solution}[2]
+$x\rightarrow y$  $x \in (V\cup\Sigma)^*V(V\cup\Sigma)^*, y \in (V\cup\Sigma)^*$ $|x| \leq |y|$
+
+\sk
+
+$uAw \rightarrow uyw$ $A \in V, u, w, y \in \left\{V\cup\Sigma\right\}^*$ $|y| \geq 1$
+\end{solution}
+
+
+\section{}
+Nennen Sie für jede genannte Komplexitätsklasse jeweils zwei Probleme, die in ihr liegen. Nennen sie insgesamt sechs verschiedene Probleme.
+
+\begin{tabularx}{\textwidth}{lXX}
+P              & \questionbox{Primes (AKS)} & \questionbox{Zusammenhangstest} \\
+NP-vollständig & \questionbox{SubsetSum} & \questionbox{Partition} \\
+Co-NP          & \questionbox{Factorization} & \questionbox{Tautologie}
+\end{tabularx}
+
+
+\section{}
+Finden Sie zwei Fehler in folgendem NP-Vollständigkeits-Beweis, markieren Sie sie und begründen Sie unten, warum es sich dabei um Fehler handelt.
+
+\fbox{\parbox{0.9\textwidth}{
+Wir wollen zeigen, dass \textsc{BinPacking} \emph{NP}-vollständig ist.
+\sk
+\textsc{BinPacking}\\
+Gegeben seien eine Menge $A = \left\{a_1,\dots,a_n|a_i \in \mathbb{N}\right\}$, eine "`Behältergröße"' $b \in\mathbb{N}$ und eine "`Behälterzahl"' $k \in\mathbb{N}$. Existiert eine Aufteilung von $A$ in $k$ disjunkte Teilmengen $B_1,\dots,B_k$, so dass $\sum B_i \leq b$ für alle $1 \leq i \leq k$?
+\sk
+Wir zeigen, dass \textsc{BinPacking} $\in$ \emph{NP} ist, indem wir einen Zeugen nehmen, der alle $\sum B_i$ prüft. Dies geht in polynomieller Zeit.
+\sk
+Nun müssen wir noch zeigen, dass \textsc{BinPacking} \emph{NP}-schwer ist. 
+
+\solmark{Dazu reduzieren wir \textsc{BinPacking} auf das als \emph{NP}-vollständig bekannte Problem \textsc{Partition}.} 
+
+Wir wählen eine beliebige \textsc{Partition}-Instanz $I$ und bauen eine passende \textsc{BinPacking}-Instanz $J$. 
+
+Dazu setzen wir $k = 2$ (\textsc{Partition} hat zwei Teilmengen) sowie $b = \frac{1}{2}\sum A$. Diese Reduktion geschieht deterministisch in polynomieller Zeit.
+
+\solmark{Ist die entstehende \textsc{BinPacking}-Instanz $J$ erfüllbar, ist auch die \textsc{Partition}-Instanz erfüllbar}, da die beiden Bins genau so gewählt wurden, dass sie den zwei Teilmengen entsprechen.
+
+\sk
+
+\textsc{BinPacking} ist also \emph{NP}-vollständig. \begin{flushright}$\square$\end{flushright}
+}}
+
+\begin{solution}[4]
+Fehler 1: Die Reduktion wird in die verkehrte Richtung beschrieben. Es könnte sein, dass \textsc{BinPacking} leichter ist, als \textsc{Partition}, deshalb hilft uns diese Reduktion nicht weiter. \emph{Trotzdem wird im weiteren Verlauf die richtige Reduktion angewandt!}
+
+Fehler 2: Dies ist nicht genug. Es muss in beide Richtungen gezeigt werden, dass wenn eine Instanz erfüllbar ist, auch die andere erfüllbar ist.
+\end{solution}
+
+
+\section{}
+Betrachten Sie folgendes Optimierungsproblem. Geben Sie das korrespondierende Entscheidungsproblem an.
+
+\fbox{\parbox{0.9\textwidth}{
+Tyrion Lannister hat viel Geld, kann aber nur eine bestimmte Menge tragen, da sein Geldbeutel unter dem Gewicht sonst reißt.
+In seiner Schatztruhe befinden sich $M = \{m_1, m_2, \dots, m_n\}$ Gold-, Silber- und Kupfermünzen. Jede dieser Münzen hat ein Gewicht $g_i$ und einen Wert $w_i$. Tyrions Geldbeutel reißt bei einem Gewicht von $G$.
+Da Tyrion gerne Shae mit seinem Mengen an Geld beeindrucken will, versucht er, seinen Beutel mit einer Teilmenge der Münzen $M'$ zu füllen, sodass sie maximal viel wert ($W$) sind, aber der Beutel nicht reißt.
+}}
+
+\begin{solution}[4]
+Tyrion Lannister hat viel Geld, kann aber nur eine bestimmte Menge tragen, da sein Geldbeutel unter dem Gewicht sonst reißt.
+In seiner Schatztruhe befinden sich $M = \{m_1, m_2, \dots, m_n\}$ Gold-, Silber- und Kupfermünzen. Jede Münze hat ein Gewicht $g_i$ und einen Wert $w_i$. Tyrions Geldbeutel reißt bei einem Gewicht von $G$.
+Gibt es eine Teilmenge der Münzen $M'$ mit einem Gewicht G und einem Wert $W \geq k$?
+\end{solution}
+
+
+\section{}
+Kreuzen Sie \emph{ja} für jede korrekte Aussage an, \emph{nein} für falsche Aussagen.
+
+\begin{tabular}{ll|l}
+ja & nein & Aussage \\
+\hline
+$\mpsol$ & $\square$ & Für zwei DKF-Grammatiken ist entscheidbar, ob $\mathcal{L}(G_1) \stackrel{?}{=} \mathcal{L}(G_2)$. \\
+$\square$ & $\mpsol$ & Kontextfreie Sprachen sind über dem Komplement abgeschlossen. \\
+$\square$ & $\mpsol$ & Eine akzeptierende Turingmaschine akzeptiert, wenn sie terminiert. \\
+$\mpsol$ & $\square$ & Eine Sprache $L$ ist entscheidbar, gdw. $L$ und $\overline{L}$ semi-entscheidbar sind. \\
+$\mpsol$ & $\square$ & PCP ist semi-entscheidbar. \\
+$\square$ & $\mpsol$ & Das Sortieren eines Integer-Arrays ist $\in$ \textbf{NP}. \\
+$\mpsol$ & $\square$ & Es gibt Probleme, die sowohl $\in$ \textbf{NP} als auch $\in$ \textbf{Co-NP}. \\
+$\square$ & $\mpsol$ & Das Halteproblem ist semi-entscheidbar, aber nicht unentscheidbar.
+\end{tabular}
+
+\vfill{}
+\begin{flushright}
+\</s> \emph{Live long and prosper!}
+\end{flushright}
+
+\end{document}
