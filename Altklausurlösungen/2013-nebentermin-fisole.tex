@@ -38,18 +38,39 @@ Alles nach rechts ankreuzen ab\dots
 \begin{enumerate}
 	\item \dots regulär
   \item \dots rekursiv aufzählbar
-  \item \dots regulär (nur ein Wort: \emph{abba})
+  \item \dots regulär ($\emptyset$)
   \item \dots deterministisch kontextfrei
 \end{enumerate}
 
 \section{}
+\begin{center}
+NDEA Zwischenschritt\par
+\begin{tikzpicture}[->, auto, node distance=2cm]
+	\node[initial,state]   (S) {S};
+  \node[state]           (A) [above of = S] {A};
+  \node[state,accepting] (B) [right of = S] {B};
+  \node[state,accepting] (C) [below of = S] {C};
+  \path (S) edge [bend left] node {b} (A)
+        (A) edge [bend left] node {a} (S)
+        (S) edge [] node {c} (B)
+        (B) edge [loop above] node{c} (B)
+        (S) edge [] node {b} (C);
+\end{tikzpicture}
+\end{center}
 \begin{align*}
-S &\rightarrow bA | cC | b | c\\
-A &\rightarrow aD | aB\\
-B &\rightarrow bA\\
-C &\rightarrow cC | c\\
-D &\rightarrow cC | b | c
+S &\rightarrow bA | cB | bC \\
+A &\rightarrow aS \\
+B &\rightarrow cB | \epsilon \\
+C &\rightarrow \epsilon \\
 \end{align*}
+
+Vereinfacht:
+\begin{align*}
+S &\rightarrow bA | cB | c | b \\
+A &\rightarrow aS \\
+B &\rightarrow cB | c \\
+\end{align*}
+
 
 \section{}
 \begin{tikzpicture}[->, auto, node distance=2cm]
