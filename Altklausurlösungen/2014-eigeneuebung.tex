@@ -25,7 +25,7 @@
 
 \newtoggle{solutions}
 \toggletrue{solutions}
-\togglefalse{solutions}
+%\togglefalse{solutions}
 
 \newcommand{\sk}{\par\smallskip\par}
 
@@ -81,7 +81,7 @@ Sprache & \rotatebox{90}{regulär} & \rotatebox{90}{determ. kontextfrei} & \rota
 \hline
 $\left\{\omega | \omega \text{ ist ein korrektes Prolog-Programm} \right\}$ & $\square$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ \\
 $\left\{a^ib^ic^i \right\}$ & $\square$ & $\square$ & $\square$ & $\mpsol$ & $\mpsol$ \\
-$\left\{a^ib^ic | i \geq 1 \right\} \cap \left\{a^jb^ic | i\geq 1, j\geq 2 \right\} $ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ \\
+$\left\{a^ib^ic | i \geq 1 \right\} \cup \left\{a^jb^ic | i\geq 1, j\geq 2 \right\} $ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ \\
 $\left\{\omega | \omega \text{ ist ein grammatisch korrekter deutscher Satz.} \right\}$ & $\square$ & $\square$ & $\square$ & $\square$ & $\mpsol$ \\
 $\left\{a^ib^j | i \geq j \right\}$ & $\square$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ \\
 $\left\{a^ib^j | i \geq j, i < 10 \right\}$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ & $\mpsol$ 
@@ -116,7 +116,7 @@ A &\rightarrow dA\,|\,a
 
 \newpage
 \section{}
-Wandeln Sie den gegebenen Nicht-Deterministischen Endlichen Automaten gemäß dem Verfahren in der Vorlesung in einen Deterministischen Kellerautomaten um. 
+Wandeln Sie den gegebenen Nicht-Deterministischen Endlichen Automaten gemäß dem Verfahren in der Vorlesung in einen Deterministischen Endlichen Automaten um. 
 \begin{center}\begin{tikzpicture}[->, auto, node distance=3.5cm]
 	\node[initial,state] (1) {$Z_1$};
   \node[state,accepting] (2) [right of=1] {$Z_2$};
@@ -147,7 +147,7 @@ Wandeln Sie den gegebenen Nicht-Deterministischen Endlichen Automaten gemäß de
         (4) edge [loop left] node {b} (4)
             edge [bend left=15] node {c} (5)
         (5) edge [loop right] node {c} (5)
-            edge [bend left=15] node {b} (4);
+            edge [bend left=15] node {b,a} (4);
 \end{tikzpicture}
 \end{solution}
 
@@ -174,7 +174,7 @@ Geben Sie eine Turingmaschine an, die für eine binär kodierte Zahl $\alpha\geq
         (6) edge [loop below] node {$\star\!\in\!\Sigma/\star,L$} (6)
             edge node {$\square/\square,R$} (8)
         (7) edge [loop above] node {$1/0,L$} (7)
-            edge node[left,pos=0.6] {$0/1,L$} (6);
+            edge node[left, align=left] {$0/1,L$\\$\square/1,L$} (6);
 \end{tikzpicture}
 \end{solution}
 
@@ -273,7 +273,7 @@ $uAw \rightarrow uyw$ $A \in V, u, w, y \in \left\{V\cup\Sigma\right\}^*$ $|y| \
 
 
 \section{}
-Nennen Sie für jede genannte Komplexitätsklasse jeweils zwei Probleme, die in ihr liegen. Nennen sie insgesamt sechs verschiedene Probleme.
+Nennen Sie für jede genannte Komplexitätsklasse jeweils zwei Probleme, die in ihr liegen. Nennen Sie insgesamt sechs verschiedene Probleme.
 
 \begin{tabularx}{\textwidth}{lXX}
 P              & \questionbox{Primes (AKS)} & \questionbox{Zusammenhangstest} \\
